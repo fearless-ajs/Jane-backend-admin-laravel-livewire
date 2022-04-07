@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use App\Models\Company;
+use App\Models\CompanyPermission;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Livewire\Component;
+
+class CreatePermissionForm extends LiveNotify
+{
+    public $name;
+    public $description;
+
+    public function updated($field){
+        $this->validateOnly($field, [
+           'name'           => 'required|string|max:255',
+           'description'    => 'required|string|max:255'
+        ]);
+    }
+
+    public function create(){
+        $this->validate([
+            'name'           => 'required|string|max:255',
+            'description'    => 'required|string|max:100'
+        ]);
+
+        $company = Company::where('user_id', Auth::user()->id)->first();
+
+        // Check if the permission already exist for the company
+        if (CompanyPermission::where('name', $this->name)->where('company_id', $company->id)->first()){
+            return $this->emit('alert', ['type' => 'error', 'message' => 'Permission exist']);
+        }
+
+        // CLose the modal
+        CompanyPermission::create([
+           'company_id'     => $company->id,
+           'name'           => Str::slug($this->name),
+           'display_name'   => $this->name,
+           'description'    => $this->description
+        ]);
+
+        $this->reset();
+        $this->emit('refreshCompanyPermissions');
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Permission created']);
+    }
+
+    public function render()
+    {
+        return view('livewire.company.components.create-permission-form');
+    }
+}
