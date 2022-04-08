@@ -13,10 +13,17 @@ class CompanyPermissionList extends Component
 {
     use WithPagination;
     public $company;
+    public $editPermission;
+
     protected $listeners = ['refreshCompanyPermissions'  =>  '$refresh'];
 
     public function mount(){
         $this->company = Company::where('user_id', Auth::user()->id)->first();
+    }
+
+    public function setEditPermission($permission_id){
+        $this->editPermission = $permission_id;
+        $this->emit('refreshEditCompanyPermission');
     }
 
     public function remove($company_permission_id){

@@ -26,16 +26,14 @@ class CreatePermissionForm extends LiveNotify
             'description'    => 'required|string|max:100'
         ]);
 
-        $company = Company::where('user_id', Auth::user()->id)->first();
-
         // Check if the permission already exist for the company
-        if (CompanyPermission::where('name', $this->name)->where('company_id', $company->id)->first()){
+        if (CompanyPermission::where('name', $this->name)->where('company_id', Auth::user()->company_id)->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Permission exist']);
         }
 
         // CLose the modal
         CompanyPermission::create([
-           'company_id'     => $company->id,
+           'company_id'     => Auth::user()->company_id,
            'name'           => Str::slug($this->name),
            'display_name'   => $this->name,
            'description'    => $this->description

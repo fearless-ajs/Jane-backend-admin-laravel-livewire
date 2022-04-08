@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email')->unique();
+            $table->enum('user_type', ['company-worker', 'contact', 'super-admin'])->default('company');
+            $table->bigInteger('parent_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_token')->nullable();
             $table->string('password');

@@ -40,6 +40,7 @@ class SignUpForm extends LiveNotify
            'lastname'           => $this->lastname,
            'firstname'          => $this->firstname,
            'email'              => $this->email,
+           'user_type'          => 'company-worker',
            'verification_token' => Str::random(50),
            'password'           => $this->password
         ]);
