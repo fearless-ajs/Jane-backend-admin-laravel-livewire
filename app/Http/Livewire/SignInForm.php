@@ -35,6 +35,8 @@ class SignInForm extends Component
             if (Auth::user()->hasRole('company')){
                 return redirect()->intended(route('company'));
             }
+
+            return true;
         }
 
         return $this->emit('alert', ['type' => 'error', 'message' => 'invalid credentials']);

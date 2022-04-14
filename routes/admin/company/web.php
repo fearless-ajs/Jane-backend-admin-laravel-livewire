@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth')->group(function () {
-    Route::middleware('role:company')->group(function (){
+    Route::middleware('role:Company')->group(function (){
         Route::get('/',                         [AdminViewController::class, 'dashboard'])->name('admin');
         Route::get('/users',                    [AdminViewController::class, 'usersList'])->name('admin.users');
 

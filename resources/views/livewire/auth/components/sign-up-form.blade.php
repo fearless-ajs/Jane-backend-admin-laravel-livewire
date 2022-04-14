@@ -47,4 +47,5 @@
     </div>
     <button class="btn btn-primary w-100" type="submit" wire:loading.remove wire:target="register" tabindex="4">Sign up</button>
     <button class="btn btn-primary w-100" type="button" disabled wire:loading wire:target="register" tabindex="4"> <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+
 </form>

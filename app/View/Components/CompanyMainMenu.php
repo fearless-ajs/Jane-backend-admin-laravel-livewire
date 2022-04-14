@@ -23,6 +23,6 @@ class CompanyMainMenu extends Component
      */
     public function render()
     {
-        return view('components.company.company-main-menu');
+        return view('components.Company.Company-main-menu');
     }
 }

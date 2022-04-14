@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\WelcomeMail;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -36,16 +38,23 @@ class SignUpForm extends LiveNotify
             'terms'                 => 'required'
         ]);
 
-       User::create([
+      $user =  User::create([
            'lastname'           => $this->lastname,
            'firstname'          => $this->firstname,
            'email'              => $this->email,
-           'user_type'          => 'company-worker',
+           'user_type'          => 'Company-worker',
            'verification_token' => Str::random(50),
            'password'           => $this->password
         ]);
 
-       // Display a notification about verification link
+        try {
+            retry(5, function () use ($user) {
+                Mail::to($user->email)->send(new WelcomeMail($user));
+            });
+        } catch (\Exception $e) {
+
+        }
+        // Display a notification about verification link
         $this->reset();
         $this->alert('success', 'User registered', 'please check your email to verify your account');
     }

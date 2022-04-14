@@ -18,12 +18,14 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email')->unique();
-            $table->enum('user_type', ['company-worker', 'contact', 'super-admin'])->default('company');
+            $table->string('image')->nullable()->default('user-avatar.jpg');
+            $table->enum('user_type', ['Company-worker', 'contact', 'super-admin'])->default('Company');
             $table->bigInteger('parent_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_token')->nullable();
             $table->string('password');
             $table->boolean('enabled')->default(true);
+            $table->dateTime('last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

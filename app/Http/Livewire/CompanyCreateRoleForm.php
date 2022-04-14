@@ -16,7 +16,7 @@ class CompanyCreateRoleForm extends Component
     public $name;
     public $description;
 
-    // All company permissions
+    // All Company permissions
     public $permissions;
     public $assignAllPermissions;
     public $selectedPermissions = [];
@@ -50,12 +50,12 @@ class CompanyCreateRoleForm extends Component
             'description'    => 'required|string|max:100'
         ]);
 
-        // Check if the role exist for the company
+        // Check if the role exist for the Company
         if (CompanyRole::where('company_id', Auth::user()->company_id)->where('name', Str::slug($this->name))->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Role exist']);
         }
 
-        // Create the company role
+        // Create the Company role
         $company_role = CompanyRole::create([
             'company_id'    => Auth::user()->company_id,
             'display_name'  => $this->name,
@@ -93,6 +93,6 @@ class CompanyCreateRoleForm extends Component
 
     public function render()
     {
-        return view('livewire.company.components.company-create-role-form');
+        return view('livewire.Company.components.Company-create-role-form');
     }
 }

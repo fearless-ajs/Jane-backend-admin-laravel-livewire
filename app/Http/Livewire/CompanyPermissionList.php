@@ -37,7 +37,7 @@ class CompanyPermissionList extends Component
 
     public function render()
     {
-        return view('livewire.company.components.company-permission-list', [
+        return view('livewire.Company.components.Company-permission-list', [
             'permissions' => CompanyPermission::where('company_id', $this->company->id)->paginate(100)
         ]);
     }

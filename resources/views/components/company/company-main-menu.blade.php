@@ -33,9 +33,9 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('company')}}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span><span class="badge badge-light-warning rounded-pill ms-auto me-1">2</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('Company')}}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span><span class="badge badge-light-warning rounded-pill ms-auto me-1">2</span></a>
                 <ul class="menu-content">
-                    <li class="@if(Route::currentRouteName() == 'company') active @endif"><a class="d-flex align-items-center" href="{{route('company')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="eCommerce">Company</span></a>
+                    <li class="@if(Route::currentRouteName() == 'Company') active @endif"><a class="d-flex align-items-center" href="{{route('Company')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="eCommerce">Company</span></a>
                     </li>
                 </ul>
             </li>
@@ -113,9 +113,9 @@
 
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Roles and access control</span><i data-feather="more-horizontal"></i>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">Workers</span></a>
+            <li class=" nav-item @if(Route::currentRouteName() == 'Company.workers') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">Workers</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="app-user-list.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'Company.workers') active @endif" href="{{route('Company.workers')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
                     </li>
                     <li><a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">View</span></a>
                         <ul class="menu-content">
@@ -133,11 +133,13 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item  @if(Route::currentRouteName() == 'company.permissions' || Route::currentRouteName() == 'company.roles') active @endif "><a class="d-flex align-items-center" href="#"><i data-feather="shield"></i><span class="menu-title text-truncate" data-i18n="Roles &amp; Permission">Roles &amp; Permission</span></a>
+            <li class=" nav-item  @if(Route::currentRouteName() == 'Company.permissions' || Route::currentRouteName() == 'Company.roles' || Route::currentRouteName() == 'Company.teams') active @endif "><a class="d-flex align-items-center" href="#"><i data-feather="shield"></i><span class="menu-title text-truncate" data-i18n="Roles &amp; Permission">Roles &amp; Permission</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.roles') active @endif" href="{{route('company.roles')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Roles">Roles</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'Company.teams') active @endif" href="{{route('Company.teams')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Roles">Teams</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.permissions') active @endif" href="{{route('company.permissions')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Permission">Permission</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'Company.roles') active @endif" href="{{route('Company.roles')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Roles">Roles</span></a>
+                    </li>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'Company.permissions') active @endif" href="{{route('Company.permissions')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Permission">Permission</span></a>
                     </li>
                 </ul>
             </li>

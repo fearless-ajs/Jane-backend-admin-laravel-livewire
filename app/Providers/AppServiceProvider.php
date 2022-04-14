@@ -27,14 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // When a new contact is created
-        User::created(function ($user){
-            // retry( is used for handling communication that could fail)
-            retry(5, function () use ($user) {
-                Mail::to($user->email)->send(new WelcomeMail($user));
-            });
-        });
-
         // When a contact mail is changed
         User::updated(function ($user){
             if ($user->isDirty('email')){

@@ -13,6 +13,6 @@ class CompanyRolesViewController extends Controller
             'keywords' => 'Company roles',
             'description' => 'Company roles'
         ];
-        return view('livewire.company.pages.company-roles-page', ['data' => $data]);
+        return view('livewire.Company.pages.Company-roles-page', ['data' => $data]);
     }
 }

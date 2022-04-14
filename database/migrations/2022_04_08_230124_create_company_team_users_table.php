@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('company_permission_accesses', function (Blueprint $table) {
+        Schema::create('company_team_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained('companies');
-            $table->bigInteger('company_permission_id');
-            $table->string('resource'); // What component the Company permission has access to
+            $table->foreignId('user_id')->constrained('users');
+            $table->bigInteger('company_team_id');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_permission_accesses');
+        Schema::dropIfExists('company_team_users');
     }
 };

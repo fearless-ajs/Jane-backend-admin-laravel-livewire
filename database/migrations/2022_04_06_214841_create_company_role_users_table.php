@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained('companies');
             $table->foreignId('user_id')->constrained('users');
             $table->bigInteger('company_role_id');
-            $table->bigInteger('company_team_id');
+            $table->bigInteger('company_team_id')->nullable();
             $table->timestamps();
         });
     }

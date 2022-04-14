@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\View\Company;
 
 use App\Http\Controllers\Controller;
+use App\Models\Worker;
 use Illuminate\Http\Request;
 
 class CompanyUsersViewController extends Controller
@@ -13,7 +14,17 @@ class CompanyUsersViewController extends Controller
             'keywords' => 'Company dashboard',
             'description' => 'Company dashboard'
         ];
-        return view('livewire.company.pages.company-workers-list-page', ['data' => $data]);
+        return view('livewire.Company.pages.Company-workers-list-page', ['data' => $data]);
+    }
+
+    public function workerProfile ($worker){
+        $worker = Worker::findOrFail($worker);
+        $data = [
+            'title' => $worker->user->lastname. '  ' .$worker->user->firstname ,
+            'keywords' => 'Company dashboard',
+            'description' => 'Company dashboard'
+        ];
+        return view('livewire.Company.pages.Company-workers-info-page', ['data' => $data, 'worker' => $worker]);
     }
 
 }

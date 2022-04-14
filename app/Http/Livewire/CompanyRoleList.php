@@ -23,11 +23,12 @@ class CompanyRoleList extends Component
         CompanyRole::find($role_id)->delete();
         // Refresh the list
         $this->emit('refreshCompanyRoles');
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Role deleted']);
     }
 
     public function render()
     {
-        return view('livewire.company.components.company-role-list', [
+        return view('livewire.Company.components.Company-role-list', [
             'roles' => CompanyRole::where('company_id', Auth::user()->company_id)->paginate(100)
         ]);
     }

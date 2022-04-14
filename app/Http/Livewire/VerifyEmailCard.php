@@ -29,32 +29,32 @@ class VerifyEmailCard extends LiveNotify
         $user->email_verified_at = Carbon::now();
 
 
-        // Attach company role to user
-        $user->attachRole('company');
-        // Create a company profile
+        // Attach Company role to user
+        $user->attachRole('Company');
+        // Create a Company profile
         $company =  Company::create([
            'user_id'     => $user->id,
            'name'        =>  $user->lastname . ' ' . $user->firstname,
            'email'       =>  $user->email,
         ]);
 
-       // Create a default super-admin company role
+       // Create a default super-admin Company role
         $company_role = CompanyRole::create([
            'company_id' => $company->id,
            'display_name'  => 'Super Administrator',
            'name'          => 'super-administrator',
-           'description'   => 'This is the general overseer of the company, usually the creator of the company account'
+           'description'   => 'This is the general overseer of the Company, usually the creator of the Company account'
        ]);
 
-        // Create a default company Administrative team
+        // Create a default Company Administrative team
         $company_team = CompanyTeam::create([
             'company_id'    => $company->id,
             'display_name'  => 'Administrator',
             'name'          => 'administrator',
-            'description'   => 'This is the team company administrators'
+            'description'   => 'This is the team Company administrators'
         ]);
 
-        // Set the new user to super admin of the company
+        // Set the new user to super admin of the Company
         CompanyRoleUser::create([
             'company_id'        => $company->id,
             'user_id'           => $user->id,

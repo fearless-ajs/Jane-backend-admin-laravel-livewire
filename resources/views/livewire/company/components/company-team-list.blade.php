@@ -1,6 +1,6 @@
 <div class="row">
-    @if($roles)
-        @foreach($roles as $role)
+    @if($teams)
+        @foreach($teams as $team)
             <div class="col-xl-4 col-lg-6 col-md-6">
                 <div class="card">
                     <div class="card-body">
@@ -26,14 +26,14 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                             <div class="role-heading">
-                                <h4 class="fw-bolder">{{$role->display_name}}</h4>
+                                <h4 class="fw-bolder">{{$team->display_name}}</h4>
                                 <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal" data-bs-target="#editRoleModal">
-                                    <small class="fw-bolder">Edit Role</small>
+                                    <small class="fw-bolder">Edit Team</small>
                                 </a>
                             </div>
-                            <a href="javascript:void(0);" wire:click="remove({{$role->id}})" class="text-body"><i data-feather="copy" class="font-medium-5"></i>
-                                <span wire:loading wire:target="remove({{$role->id}})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <span wire:loading.remove wire:target="remove({{$role->id}})">Remove</span>
+                            <a href="javascript:void(0);" wire:click="remove({{$team->id}})" class="text-body"><i data-feather="copy" class="font-medium-5"></i>
+                                <span wire:loading wire:target="remove({{$team->id}})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span wire:loading.remove wire:target="remove({{$team->id}})">Remove</span>
                             </a>
                         </div>
                     </div>
@@ -51,10 +51,10 @@
                 </div>
                 <div class="col-sm-7">
                     <div class="card-body text-sm-end text-center ps-sm-0">
-                        <a href="javascript:void(0)" data-bs-target="#addRoleModal" data-bs-toggle="modal" class="stretched-link text-nowrap add-new-role">
-                            <span class="btn btn-primary mb-1">Add New Role</span>
+                        <a href="javascript:void(0)" data-bs-target="#addTeamModal" data-bs-toggle="modal" class="stretched-link text-nowrap add-new-role">
+                            <span class="btn btn-primary mb-1">Add New team</span>
                         </a>
-                        <p class="mb-0">Add role, if it does not exist</p>
+                        <p class="mb-0">Add team, if it does not exist</p>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
     </div>
 
 
-        <!-- Edit Role Modal -->
-        @livewire('company-edit-role-form')
-        <!--/ Edit Role Modal -->
+    <!-- Edit Role Modal -->
+    @livewire('company-edit-role-form')
+    <!--/ Edit Role Modal -->
 </div>

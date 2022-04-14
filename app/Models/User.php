@@ -23,6 +23,8 @@ class User extends Authenticatable
         'firstname',
         'lastname',
         'email',
+        'Company-worker',
+        'company_id',
         'password',
         'verification_token',
         'enabled',
@@ -52,5 +54,13 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
+    public function company (){
+        return $this->belongsTo(Company::class);
+    }
+
+    public function userRoles()
+    {
+        return $this->hasMany(CompanyRoleUser::class);
+    }
 
 }

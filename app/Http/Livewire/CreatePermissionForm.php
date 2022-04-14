@@ -26,7 +26,7 @@ class CreatePermissionForm extends LiveNotify
             'description'    => 'required|string|max:100'
         ]);
 
-        // Check if the permission already exist for the company
+        // Check if the permission already exist for the Company
         if (CompanyPermission::where('name', $this->name)->where('company_id', Auth::user()->company_id)->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Permission exist']);
         }
@@ -46,6 +46,6 @@ class CreatePermissionForm extends LiveNotify
 
     public function render()
     {
-        return view('livewire.company.components.create-permission-form');
+        return view('livewire.Company.components.create-permission-form');
     }
 }

@@ -4,12 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Models\CompanyPermission;
 use App\Models\CompanyPermissionRole;
+use App\Models\CompanyPermissionTeam;
 use App\Models\CompanyRole;
+use App\Models\CompanyTeam;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-class CompanyEditRoleForm extends Component
+class CompanyCreateTeamForm extends Component
 {
     public $name;
     public $description;
@@ -18,13 +20,6 @@ class CompanyEditRoleForm extends Component
     public $permissions;
     public $assignAllPermissions;
     public $selectedPermissions = [];
-
-    // Privileges
-//    public $read   = [];
-//    public $write  = [];
-//    public $update = [];
-//    public $delete = [];
-
 
     public function mount()
     {
@@ -54,7 +49,7 @@ class CompanyEditRoleForm extends Component
         }
 
         // Create the Company role
-        $company_role = CompanyRole::create([
+        $company_team = CompanyTeam::create([
             'company_id'    => Auth::user()->company_id,
             'display_name'  => $this->name,
             'name'          => Str::slug($this->name),
@@ -64,9 +59,9 @@ class CompanyEditRoleForm extends Component
         // Check if assign all permission is selected
         if ($this->assignAllPermissions){
             foreach ($this->permissions as $permission){
-                CompanyPermissionRole::create([
+                CompanyPermissionTeam::create([
                     'company_id'            => Auth::user()->company_id,
-                    'company_role_id'       => $company_role->id,
+                    'company_team_id'       => $company_team->id,
                     'company_permission_id' => $permission->id
                 ]);
             }
@@ -75,21 +70,22 @@ class CompanyEditRoleForm extends Component
                 return $this->emit('alert', ['type' => 'error', 'message' => 'Please a select at least one permission']);
             }
             foreach ($this->selectedPermissions as $permission){
-                CompanyPermissionRole::create([
+                CompanyPermissionTeam::create([
                     'company_id'            => Auth::user()->company_id,
-                    'company_role_id'       => $company_role->id,
+                    'company_team_id'       => $company_team->id,
                     'company_permission_id' => $permission
                 ]);
             }
         }
 
         $this->resetExcept('permissions');
-        $this->emit('refreshCompanyRoles');
-        return $this->emit('alert', ['type' => 'success', 'message' => 'Role created!']);
+        $this->emit('refreshCompanyTeams');
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Team created!']);
     }
+
 
     public function render()
     {
-        return view('livewire.Company.components.Company-edit-role-form');
+        return view('livewire.Company.components.Company-create-team-form');
     }
 }

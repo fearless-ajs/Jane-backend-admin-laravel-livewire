@@ -229,7 +229,7 @@ $(function () {
             'Chandler Bing': assetPath + 'images/portrait/small/avatar-s-1.jpg',
             'Ross Geller': assetPath + 'images/portrait/small/avatar-s-4.jpg',
             'Monica Geller': assetPath + 'images/portrait/small/avatar-s-6.jpg',
-            'Joey Tribbiani': assetPath + 'images/portrait/small/avatar-s-2.jpg',
+            'Joey Tribbiani': assetPath + 'images/portrait/small/user-avatar.jpg',
             'Rachel Green': assetPath + 'images/portrait/small/avatar-s-11.jpg'
           };
 

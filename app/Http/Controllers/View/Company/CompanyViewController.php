@@ -13,7 +13,7 @@ class CompanyViewController extends Controller
             'keywords' => 'Admin dashboard',
             'description' => 'Admin dashboard'
         ];
-        return view('livewire.company.pages.company-dashboard-page', ['data' => $data]);
+        return view('livewire.Company.pages.Company-dashboard-page', ['data' => $data]);
     }
 
     public function usersList (){
@@ -22,7 +22,7 @@ class CompanyViewController extends Controller
             'keywords' => 'Users',
             'description' => 'Users'
         ];
-        return view('livewire.company.pages.companies-users-list-page', ['data' => $data]);
+        return view('livewire.Company.pages.companies-users-list-page', ['data' => $data]);
     }
 
 }
