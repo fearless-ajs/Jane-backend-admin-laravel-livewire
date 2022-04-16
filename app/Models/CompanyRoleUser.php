@@ -11,6 +11,6 @@ class CompanyRoleUser extends Model
     protected $guarded = [];
 
     public function role(){
-        return $this->belongsTo(CompanyRole::class, 'company_role_id', '');
+        return $this->belongsTo(CompanyRole::class, 'company_role_id');
     }
 }

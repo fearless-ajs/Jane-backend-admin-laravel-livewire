@@ -9,4 +9,8 @@ class CompanyTeamUser extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function team(){
+        return $this->belongsTo(CompanyTeam::class, 'company_team_id');
+    }
 }

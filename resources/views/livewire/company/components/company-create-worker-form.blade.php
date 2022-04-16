@@ -74,13 +74,13 @@
 
                 <div class="mb-1">
                     <label class="form-label" for="basic-icon-default-company">Password</label>
-                    <input type="text" wire:model.lazy="password"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('password')? 'is-invalid' : '' }}" placeholder="Create password"/>
+                    <input type="text" wire:model.lazy="password"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('password')? 'is-invalid' : '' }}" placeholder="Update password"/>
                     @error('password') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="mb-1">
                     <label class="form-label" for="basic-icon-default-company">Confirm password</label>
-                    <input type="text" wire:model.lazy="password_confirmation"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('password_confirmation')? 'is-invalid' : '' }}" placeholder="Confirm password"/>
+                    <input type="text" wire:model.lazy="password_confirmation"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('password_confirmation')? 'is-invalid' : '' }}" placeholder="Confirm new password"/>
                     @error('password_confirmation') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
 

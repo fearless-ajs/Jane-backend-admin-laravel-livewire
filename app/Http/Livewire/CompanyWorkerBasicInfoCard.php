@@ -8,6 +8,8 @@ class CompanyWorkerBasicInfoCard extends Component
 {
     public $worker;
 
+    protected $listeners = ['refreshWorkerBasicInfoCard' => '$refresh'];
+
     public function mount($worker){
         $this->worker = $worker;
     }

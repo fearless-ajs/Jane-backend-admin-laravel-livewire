@@ -63,4 +63,9 @@ class User extends Authenticatable
         return $this->hasMany(CompanyRoleUser::class);
     }
 
+    public function userTeams()
+    {
+        return $this->hasMany(CompanyTeamUser::class);
+    }
+
 }

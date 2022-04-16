@@ -24,7 +24,7 @@
                 <td>{{$worker->country}}</td>
                 <td>{{$worker->available}}</td>
                 <td>{{$worker->created_at->diffForHumans()}}</td>
-                <td><a href="{{route('Company.workers.profile', $worker->id)}}">Profile</a> </td>
+                <td><a href="{{route('company.workers.profile', $worker->id)}}">Profile</a> </td>
                 <td>Delete</td>
 
             </tr>
