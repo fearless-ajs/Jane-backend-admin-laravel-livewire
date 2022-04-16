@@ -7,22 +7,26 @@ use Livewire\Component;
 class CompanyWorkersInfo extends Component
 {
     public $worker;
-    public $rolesAndPermissionCard = true;
+    public $rolesCard = true;
+    public $teamsCard;
     public $securityCard;
 
-    protected $listeners = [
-      'showRolesAndPermissionCard',
-      'showSecurityCard'
-    ];
+    public function showRolesCard(){
+        $this->securityCard  = false;
+        $this->teamsCard     = false;
+        $this->rolesCard     = true;
+    }
 
-    public function showRolesAndPermissionCard(){
-        $this->securityCard           = false;
-        $this->rolesAndPermissionCard = true;
+    public function showTeamsCard(){
+        $this->securityCard  = false;
+        $this->rolesCard     = false;
+        $this->teamsCard     = true;
     }
 
     public function showSecurityCard(){
-        $this->rolesAndPermissionCard = false;
-        $this->securityCard           = true;
+        $this->rolesCard        = false;
+        $this->teamsCard        = false;
+        $this->securityCard     = true;
     }
 
     public function mount($worker){

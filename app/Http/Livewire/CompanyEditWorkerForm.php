@@ -23,11 +23,7 @@ class CompanyEditWorkerForm extends LiveNotify
     public $state;
     public $city;
     public $address;
-    public $role=[];
-    public $team=[];
     public $status;
-    public $password;
-    public $password_confirmation;
 
     public $roles;
     public $teams;
@@ -57,8 +53,6 @@ class CompanyEditWorkerForm extends LiveNotify
         $this->address      = $this->worker->address;
 
 
-        // fetch user roles and teams
-
     }
 
     public function updated($field){
@@ -71,10 +65,6 @@ class CompanyEditWorkerForm extends LiveNotify
             'state'                 => 'required|string|max:255',
             'city'                  => 'required|string|max:255',
             'address'               => 'required|string|max:255',
-            'role'                  => 'array',
-            'team'                  => 'array',
-            'password'              => 'nullable|min:6',
-            'password_confirmation' => 'required_with:password|same:password',
         ]);
     }
 
@@ -88,10 +78,6 @@ class CompanyEditWorkerForm extends LiveNotify
             'state'                 => 'required|string|max:255',
             'city'                  => 'required|string|max:255',
             'address'               => 'required|string|max:255',
-            'role'                  => 'array',
-            'team'                  => 'array',
-            'password'              => 'nullable|min:6',
-            'password_confirmation' => 'required_with:password|same:password',
         ]);
 
         // Save Worker information
@@ -111,48 +97,6 @@ class CompanyEditWorkerForm extends LiveNotify
             'email'              => $this->email,
         ]);
 
-        // Check if new password is supplied and save the new one
-        if ($this->password){
-            User::where('id', $this->worker->user->id)->update([
-                'password'  => $this->password
-            ]);
-        }
-
-
-        // Check if new roles is supplied
-        if(count($this->role) > 0){
-            // Check if the role exist first then ignore
-            foreach ($this->role as $role){
-                if (!CompanyRoleUser::where('user_id', $this->worker->user_id)
-                    ->where('company_role_id', $role)
-                    ->where('company_id', Auth::user()->company_id)->first())
-                {
-                    CompanyRoleUser::create([
-                        'company_id'        => Auth::user()->company_id,
-                        'user_id'           => $this->worker->user->id,
-                        'company_role_id'   => $role,
-                    ]);
-                }
-            }
-
-        }
-
-        // Check if new teams is supplied
-        if(count($this->team) > 0){
-            // Check if the team exist first then ignore
-            foreach ($this->team as $team){
-                if (!CompanyTeamUser::where('user_id', $this->worker->user_id)
-                    ->where('company_team_id', $team)
-                    ->where('company_id', Auth::user()->company_id)->first())
-                {
-                    CompanyTeamUser::create([
-                        'company_id'        => Auth::user()->company_id,
-                        'user_id'           => $this->worker->user_id,
-                        'company_team_id'   => $team,
-                    ]);
-                }
-            }
-        }
 
         // Refresh the edit component
         $this->emit('refreshWorkerEditForm');
@@ -160,7 +104,6 @@ class CompanyEditWorkerForm extends LiveNotify
         $this->emit('refreshWorkerBasicInfoCard');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Worker information updated']);
     }
-
 
 
     public function render()

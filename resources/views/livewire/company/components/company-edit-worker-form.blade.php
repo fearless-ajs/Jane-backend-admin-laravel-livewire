@@ -58,61 +58,6 @@
                         <input type="text" wire:model.lazy="address"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('address')? 'is-invalid' : '' }}" placeholder="Address"/>
                         @error('address') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="country">Role:
-                            @if($worker->user->userRoles)
-                                @foreach($worker->user->userRoles as $role)
-                                    <small style="font-size: 90%">{{$role->role->name}}
-                                        @if(!$loop->last)
-                                            <span>,</span>
-                                        @endif
-                                    </small>
-                                @endforeach
-                            @endif
-                        </label>
-                        <select wire:model.lazy="role" multiple  class="select2 form-select">
-                            @if($roles)
-                                @foreach($roles as $role)
-                                    <option value="{{$role->id}}">{{$role->display_name}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        @error('role') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="col-12 col-md-6 mb-1">
-                        <label class="form-label" for="user-role">Team:
-                            @if($worker->user->userTeams)
-                                @foreach($worker->user->userTeams as $team)
-                                    <small style="font-size: 90%">{{$team->team->name}}
-                                        @if(!$loop->last)
-                                            <span>,</span>
-                                        @endif
-                                    </small>
-                                @endforeach
-                            @endif
-                        </label>
-                        <select wire:model.lazy="team" multiple class="select2 form-select">
-                            @if($teams)
-                                @foreach($teams as $team)
-                                    <option value="{{$team->id}}">{{$team->display_name}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        @error('team') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
-
-                    <hr />
-
-                    <div class="col-12 col-md-6 mt-0">
-                        <label class="form-label" for="basic-icon-default-fullname">Change password</label>
-                        <input type="text" wire:model.lazy="password" class="form-control dt-full-name  {{$errors->has('password')? 'is-invalid' : '' }}"  placeholder="Worker's lastname"/>
-                        @error('password') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="col-12 col-md-6 mt-0">
-                        <label class="form-label" for="basic-icon-default-fullname">Confirm password</label>
-                        <input type="text" wire:model.lazy="password_confirmation" class="form-control dt-full-name  {{$errors->has('password_confirmation')? 'is-invalid' : '' }}"  placeholder="Worker's firstname" />
-                        @error('password_confirmation') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
 
                     <div class="col-12 text-center mt-2 pt-50">
                         <button type="submit"  wire:loading.remove wire:target="updateWorker"  class="btn btn-primary me-1">Save changes</button>
