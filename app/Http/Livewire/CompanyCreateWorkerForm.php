@@ -24,12 +24,10 @@ class CompanyCreateWorkerForm extends LiveNotify
     public $city;
     public $address;
     public $role;
-    public $team;
     public $password;
     public $password_confirmation;
 
     public $roles;
-    public $teams;
 
     public function mount(){
         $this->fetchData();
@@ -46,7 +44,6 @@ class CompanyCreateWorkerForm extends LiveNotify
             'city'                  => 'required|string|max:255',
             'address'               => 'required|string|max:255',
             'role'                  => 'required|numeric',
-            'team'                  => 'numeric',
             'password'              => 'required|min:6',
             'password_confirmation' => 'required_with:password|same:password',
         ]);
@@ -54,7 +51,6 @@ class CompanyCreateWorkerForm extends LiveNotify
 
     public function fetchData(){
         $this->roles  = CompanyRole::where('company_id', Auth::user()->company_id)->get();
-        $this->teams  = CompanyTeam::where('company_id', Auth::user()->company_id)->get();
     }
 
     public function create(){
@@ -68,7 +64,6 @@ class CompanyCreateWorkerForm extends LiveNotify
             'city'                  => 'required|string|max:255',
             'address'               => 'required|string|max:255',
             'role'                  => 'required|numeric',
-            'team'                  => 'numeric',
             'password'              => 'required|min:6',
             'password_confirmation' => 'required_with:password|same:password',
         ]);
@@ -102,15 +97,6 @@ class CompanyCreateWorkerForm extends LiveNotify
             'company_role_id'   => $this->role,
         ]);
 
-        // Create the user team
-        if ($this->team){
-            CompanyTeamUser::create([
-                'company_id'        => Auth::user()->company_id,
-                'user_id'           => $user->id,
-                'company_team_id'   => $this->team,
-            ]);
-        }
-
         // Attach the general Company role to the user
         $user->attachRole('Company');
 
@@ -124,7 +110,7 @@ class CompanyCreateWorkerForm extends LiveNotify
         }
 
         // Display a notification about verification link
-        $this->resetExcept(['roles', 'teams']);
+        $this->resetExcept(['roles']);
         $this->emit('refreshWorkersList');
         $this->alert('success', 'Worker created', 'A mail has been sent to the worker');
     }

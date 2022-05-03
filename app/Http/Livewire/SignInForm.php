@@ -33,7 +33,7 @@ class SignInForm extends Component
             }
 
             if (Auth::user()->hasRole('company')){
-                return redirect()->intended(route('company'));
+                return redirect()->intended(route('company.dashboard'));
             }
 
             return true;

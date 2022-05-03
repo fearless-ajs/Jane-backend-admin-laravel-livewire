@@ -3,7 +3,7 @@
         <form class="add-new-user modal-content pt-0" wire:submit.prevent="create">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
             <div class="modal-header mb-1">
-                <h5 class="modal-title" id="exampleModalLabel">Add Worker</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
             </div>
             <div class="modal-body flex-grow-1">
                 <div class="mb-1">
@@ -57,19 +57,6 @@
                         @endif
                     </select>
                     @error('role') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                </div>
-
-                <div class="mb-1">
-                    <label class="form-label" for="user-role">Team</label>
-                    <select wire:model.lazy="team" class="select2 form-select">
-                        <option value="">Select team</option>
-                        @if($teams)
-                            @foreach($teams as $team)
-                                <option value="{{$team->id}}">{{$team->display_name}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    @error('team') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="mb-1">

@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\View\Admin\AdminViewController;
+use App\Http\Controllers\View\Company\CompanyContactViewController;
+use App\Http\Controllers\View\Company\CompanyInvoiceViewController;
 use App\Http\Controllers\View\Company\CompanyPermissionsViewController;
+use App\Http\Controllers\View\Company\CompanyProductViewController;
 use App\Http\Controllers\View\Company\CompanyRolesViewController;
+use App\Http\Controllers\View\Company\CompanyServiceViewController;
 use App\Http\Controllers\View\Company\CompanyTeamsViewController;
 use App\Http\Controllers\View\Company\CompanyUsersViewController;
 use App\Http\Controllers\View\Company\CompanyViewController;
@@ -19,18 +23,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->name('company.')->group(function () {
     Route::middleware('role:company')->group(function (){
         // Roles based access control routes
-        Route::get('/roles',                    [CompanyRolesViewController::class, 'roles'])->name('company.roles');
-        Route::get('/teams',                    [CompanyTeamsViewController::class, 'teams'])->name('company.teams');
-        Route::get('/permissions',              [CompanyPermissionsViewController::class, 'permissions'])->name('company.permissions');
+        Route::get('/roles',                    [CompanyRolesViewController::class, 'roles'])->name('roles');
+        Route::get('/teams',                    [CompanyTeamsViewController::class, 'teams'])->name('teams');
+        Route::get('/permissions',              [CompanyPermissionsViewController::class, 'permissions'])->name('permissions');
 
+        Route::get('/',                         [CompanyViewController::class, 'dashboard'])->name('dashboard');
+        Route::get('/users',                    [CompanyViewController::class, 'usersList'])->name('users');
+        Route::get('/workers',                  [CompanyusersViewController::class, 'workers'])->name('workers');
+        Route::get('/workers/{id}',             [CompanyusersViewController::class, 'workerProfile'])->name('workers.profile');
 
-        Route::get('/',                         [CompanyViewController::class, 'dashboard'])->name('company');
-        Route::get('/users',                    [CompanyViewController::class, 'usersList'])->name('company.users');
-        Route::get('/workers',                  [CompanyusersViewController::class, 'workers'])->name('company.workers');
-        Route::get('/workers/{id}',             [CompanyusersViewController::class, 'workerProfile'])->name('company.workers.profile');
+        Route::get('/contacts',                 [CompanyContactViewController::class, 'contacts'])->name('contacts');
+        Route::get('/contacts/{id}',            [CompanyContactViewController::class, 'contactProfile'])->name('contacts.profile');
+
+        Route::get('/products',                 [CompanyProductViewController::class, 'products'])->name('products');
+        Route::get('/products/{id}',            [CompanyProductViewController::class, 'productDetails'])->name('product-details');
+
+        Route::get('/services',                 [CompanyServiceViewController::class, 'services'])->name('services');
+        Route::get('/services/{id}',            [CompanyServiceViewController::class, 'serviceDetails'])->name('service-details');
+
+        Route::get('/invoices',                 [CompanyInvoiceViewController::class, 'invoices'])->name('invoices');
+        Route::get('/create-invoice',          [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
 
     });
 });

@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/charts/apexcharts.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/toastr.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/forms/select/select2.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- END: Vendor CSS-->
 
@@ -30,13 +32,24 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/themes/bordered-layout.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/themes/semi-dark-layout.css')}}">
 
+
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/core/menu/menu-types/vertical-menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-validation.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/authentication.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-toastr.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/page-profile.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css')}}">
     <link rel="stylesheet" href="{{asset('app-assets/css/toastr.css')}}">
     <!-- END: Page CSS-->
+
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/nouislider.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-sliders.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-number-input.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce-details.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-invoice-list.css')}}">
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
@@ -54,16 +67,25 @@
 <x-company-main-menu />
 
 <!-- BEGIN: Content-->
-<div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper container-xxl p-0">
-        <div class="content-header row">
-        </div>
+@if(Route::currentRouteName() == 'company.products')
+    <div class="app-content content ecommerce-application">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
         @yield('content')
-
     </div>
-</div>
+@else
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+            </div>
+            @yield('content')
+
+        </div>
+    </div>
+@endif
+
 
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
@@ -87,16 +109,26 @@
 <!-- BEGIN: Page Vendor JS-->
 <script src="{{asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
 <!-- END: Page Vendor JS-->
+<script src="{{asset('app-assets/vendors/js/extensions/wNumb.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/extensions/nouislider.min.js')}}"></script>
 <script  src="{{asset('app-assets/js/toastr.js')}}"></script>
 
 <!-- BEGIN: Theme JS-->
 <script src="{{asset('app-assets/js/core/app-menu.js')}}"></script>
 <script src="{{asset('app-assets/js/core/app.js')}}"></script>
+<script src="{{asset('app-assets/js/scripts/pages/app-ecommerce-details.js')}}"></script>
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
 <script src="{{asset('app-assets/js/scripts/pages/auth-login.js')}}"></script>
 <!-- END: Page JS-->
+
+<!-- BEGIN: Page JS-->
+<script src="{{asset('app-assets/js/scripts/pages/app-ecommerce.js')}}"></script>
+<!-- END: Page JS-->
+
+<script src="{{asset('app-assets/js/scripts/pages/app-invoice.js')}}"></script>
+
 <script>
     window.livewire.on('alert', param => {
         toastr[param['type']](param['message'], param['type']);

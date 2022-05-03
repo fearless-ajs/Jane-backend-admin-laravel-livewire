@@ -7,11 +7,13 @@ use App\Models\CompanyRole;
 use App\Models\CompanyRoleUser;
 use App\Models\CompanyTeam;
 use App\Models\User;
+use App\Traits\CompanyDefaultPermissions;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class VerifyEmailCard extends LiveNotify
 {
+    use CompanyDefaultPermissions;
     public $loading = false;
     public $failed   = false;
     public $success   = false;
@@ -46,24 +48,18 @@ class VerifyEmailCard extends LiveNotify
            'description'   => 'This is the general overseer of the Company, usually the creator of the Company account'
        ]);
 
-        // Create a default Company Administrative team
-        $company_team = CompanyTeam::create([
-            'company_id'    => $company->id,
-            'display_name'  => 'Administrator',
-            'name'          => 'administrator',
-            'description'   => 'This is the team Company administrators'
-        ]);
-
         // Set the new user to super admin of the Company
         CompanyRoleUser::create([
             'company_id'        => $company->id,
             'user_id'           => $user->id,
             'company_role_id'   => $company_role->id,
-            'company_team_id'   => $company_team->id
         ]);
 
         $user->company_id = $company->id;
         $user->save();
+
+        // Create default roles
+        $this->createDefaultPermissions($company->id);
 
         $this->success = true;
         $this->loading = false;

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('display_name');
             $table->string('name');
             $table->text('description');
+            $table->enum('type', ['default', 'custom'])->default('default');
             $table->timestamps();
         });
     }

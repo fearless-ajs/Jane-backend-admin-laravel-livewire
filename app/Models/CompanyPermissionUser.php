@@ -9,4 +9,8 @@ class CompanyPermissionUser extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function permission(){
+        return $this->belongsTo(CompanyPermission::class, 'company_permission_id');
+    }
 }

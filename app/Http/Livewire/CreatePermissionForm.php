@@ -36,7 +36,8 @@ class CreatePermissionForm extends LiveNotify
            'company_id'     => Auth::user()->company_id,
            'name'           => Str::slug($this->name),
            'display_name'   => $this->name,
-           'description'    => $this->description
+           'description'    => $this->description,
+           'type'           => 'custom'
         ]);
 
         $this->reset();

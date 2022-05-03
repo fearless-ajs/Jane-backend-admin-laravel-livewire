@@ -1,6 +1,6 @@
 <div class="card-datatable table-responsive pt-0">
     <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#modals-slide-in">
-        Add worker
+        Add user
     </button>
     <table class="user-list-table table">
         <thead class="table-light">
@@ -11,6 +11,7 @@
             <th>Country</th>
             <th>Status</th>
             <th>Created_at</th>
+            <th></th>
             <th></th>
         </tr>
         </thead>

@@ -18,6 +18,7 @@
                         <td>{{$permission->display_name}}</td>
                         <td>{{$permission->description}}</td>
                         <td>{{$permission->created_at->diffForHumans()}}</td>
+                        @if($permission->type != 'default')
                         <td>
                             <button type="button" class="btn btn-primary" wire:click="setEditPermission({{$permission->id}})" data-bs-toggle="modal" data-bs-target="#editPermissionModal">
                                 Edit
@@ -27,6 +28,7 @@
                             <button type="button" wire:click="remove({{$permission->id}})" class="btn btn-danger me-1" wire:loading.remove wire:target="remove({{$permission->id}})">Remove</button>
                             <button type="button" disabled class="btn btn-danger me-1" wire:loading wire:target="remove({{$permission->id}})"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                         </td>
+                        @endif
                     </tr>
                 @endforeach
                 {{ $permissions->links('components.general.pagination-links') /* For pagination links */}}

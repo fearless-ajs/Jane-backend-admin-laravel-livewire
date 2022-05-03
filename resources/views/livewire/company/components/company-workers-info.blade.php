@@ -16,7 +16,7 @@
                     <li class="nav-item">
                         <a class="nav-link @if($teamsCard) active @endif" href="#" wire:click="showTeamsCard">
                             <i class="fa fa-user font-medium-3 me-50"></i>
-                            <span class="fw-bold">Teams</span></a>
+                            <span class="fw-bold">Permissions</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if($securityCard) active @endif" href="#" wire:click="showSecurityCard">

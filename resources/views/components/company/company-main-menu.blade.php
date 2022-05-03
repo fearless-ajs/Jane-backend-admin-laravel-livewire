@@ -33,87 +33,68 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('company')}}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span><span class="badge badge-light-warning rounded-pill ms-auto me-1">2</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('company.dashboard')}}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span><span class="badge badge-light-warning rounded-pill ms-auto me-1">2</span></a>
                 <ul class="menu-content">
-                    <li class="@if(Route::currentRouteName() == 'company') active @endif"><a class="d-flex align-items-center" href="{{route('company')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="eCommerce">company</span></a>
+                    <li class="@if(Route::currentRouteName() == 'company.dashboard') active @endif"><a class="d-flex align-items-center" href="{{route('company.dashboard')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="eCommerce">company</span></a>
                     </li>
                 </ul>
             </li>
             <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
             </li>
+
+            @if(Auth::user()->userHasPermission('manage emails') || Auth::user()->userHasRole('Super Administrator') )
             <li class=" nav-item"><a class="d-flex align-items-center" href="app-email.html"><i data-feather="mail"></i><span class="menu-title text-truncate" data-i18n="Email">Email</span></a>
             </li>
+            @endif
+
             <li class=" nav-item"><a class="d-flex align-items-center" href="app-calendar.html"><i data-feather="calendar"></i><span class="menu-title text-truncate" data-i18n="Calendar">Calendar</span></a>
             </li>
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">Invoice</span></a>
+            @if(Auth::user()->userHasPermission('manage invoice') || Auth::user()->userHasRole('Super Administrator'))
+            <li class="nav-item @if(Route::currentRouteName() == 'company.invoices' || Route::currentRouteName() == 'company.create-invoice') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">Invoice</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="app-invoice-list.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.invoices') active @endif" href="{{route('company.invoices')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-invoice-preview.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Preview">Preview</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="app-invoice-edit.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Edit">Edit</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="app-invoice-add.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Add">Add</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.create-invoice') active @endif" href="{{route('company.create-invoice')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Add">Add</span></a>
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if(Auth::user()->userHasPermission('manage contacts') || Auth::user()->userHasRole('Super Administrator'))
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">Contact</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="app-user-list.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">View</span></a>
-                        <ul class="menu-content">
-                            <li><a class="d-flex align-items-center" href="app-user-view-account.html"><span class="menu-item text-truncate" data-i18n="Account">Account</span></a>
-                            </li>
-                            <li><a class="d-flex align-items-center" href="app-user-view-security.html"><span class="menu-item text-truncate" data-i18n="Security">Security</span></a>
-                            </li>
-                            <li><a class="d-flex align-items-center" href="app-user-view-billing.html"><span class="menu-item text-truncate" data-i18n="Billing &amp; Plans">Billing &amp; Plans</span></a>
-                            </li>
-                            <li><a class="d-flex align-items-center" href="app-user-view-notifications.html"><span class="menu-item text-truncate" data-i18n="Notifications">Notifications</span></a>
-                            </li>
-                            <li><a class="d-flex align-items-center" href="app-user-view-connections.html"><span class="menu-item text-truncate" data-i18n="Connections">Connections</span></a>
-                            </li>
-                        </ul>
+                    <li><a class="d-flex align-items-center" href="{{route('company.contacts')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
                     </li>
                 </ul>
             </li>
+            @endif
 
-
+            @if(Auth::user()->userHasPermission('manage products') || Auth::user()->userHasRole('Super Administrator'))
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Market area</span><i data-feather="more-horizontal"></i>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Product</span></a>
+            <li class=" nav-item @if(Route::currentRouteName() == 'company.products') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Product</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-shop.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Shop</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-details.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Details</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-wishlist.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Wish List">Wish List</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-checkout.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Checkout">Checkout</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.products') active @endif" href="{{route('company.products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Shop</span></a>
                     </li>
                 </ul>
             </li>
+            @endif
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Service</span></a>
-                <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-shop.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Shop</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-details.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Details</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-wishlist.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Wish List">Wish List</span></a>
-                    </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-checkout.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Checkout">Checkout</span></a>
-                    </li>
-                </ul>
-            </li>
+            @if(Auth::user()->userHasPermission('manage products') || Auth::user()->userHasRole('Super Administrator'))
+                <li class=" nav-item @if(Route::currentRouteName() == 'company.services') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Services</span></a>
+                    <ul class="menu-content">
+                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.services') active @endif" href="{{route('company.services')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Workspace</span></a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
 
-
+            @if(Auth::user()->userHasPermission('manage roles') || Auth::user()->userHasRole('Super Administrator'))
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Roles and access control</span><i data-feather="more-horizontal"></i>
             </li>
-            <li class=" nav-item @if(Route::currentRouteName() == 'company.workers') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">Workers</span></a>
+            <li class=" nav-item @if(Route::currentRouteName() == 'company.workers') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">Users</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.workers') active @endif" href="{{route('company.workers')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
                     </li>
@@ -121,15 +102,13 @@
             </li>
             <li class=" nav-item  @if(Route::currentRouteName() == 'company.permissions' || Route::currentRouteName() == 'company.roles' || Route::currentRouteName() == 'company.teams') active @endif "><a class="d-flex align-items-center" href="#"><i data-feather="shield"></i><span class="menu-title text-truncate" data-i18n="Roles &amp; Permission">Roles &amp; Permission</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.teams') active @endif" href="{{route('company.teams')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Roles">Teams</span></a>
-                    </li>
                     <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.roles') active @endif" href="{{route('company.roles')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Roles">Roles</span></a>
                     </li>
                     <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.permissions') active @endif" href="{{route('company.permissions')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Permission">Permission</span></a>
                     </li>
                 </ul>
             </li>
-
+            @endif
             <li class=" nav-item"><a class="d-flex align-items-center" href="https://pixinvent.ticksy.com/" target="_blank"><i data-feather="life-buoy"></i><span class="menu-title text-truncate" data-i18n="Raise Support">Raise Support</span></a>
             </li>
         </ul>

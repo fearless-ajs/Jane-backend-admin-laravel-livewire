@@ -55,7 +55,7 @@
                         <span class="fw-bolder me-25">Roles:</span>
                         @if($worker->user->userRoles)
                             @foreach($worker->user->userRoles as $role)
-                                <span>{{$role->role->name}}</span>
+                                <span>{{$role->role->display_name}}</span>
                                 @if(!$loop->last)
                                     <span>,</span>
                                 @endif
@@ -64,10 +64,10 @@
 
                     </li>
                     <li class="mb-75">
-                        <span class="fw-bolder me-25">Teams:</span>
-                        @if($worker->user->userTeams)
-                            @foreach($worker->user->userTeams as $team)
-                                <span>{{$team->team->name}}</span>
+                        <span class="fw-bolder me-25">Permissions:</span>
+                        @if($worker->user->userPermissions)
+                            @foreach($worker->user->userPermissions as $permission)
+                                <span>{{$permission->permission->display_name}}</span>
                                 @if(!$loop->last)
                                     <span>,</span>
                                 @endif
