@@ -20,13 +20,13 @@ return new class extends Migration
             $table->bigInteger('updated_by')->nullable();
             $table->string('name');
             $table->string('slug');
-            $table->bigInteger('vat')->nullable(); // percentage
-            $table->string('category');
-            $table->bigInteger('price');
-            $table->string('usage_unit');
-            $table->bigInteger('unit_number');
+            $table->string('vat')->nullable(); // percentage
+            $table->string('category')->nullable();
+            $table->string('price')->nullable();
+            $table->string('usage_unit')->nullable();
+            $table->string('unit_number')->nullable();
             $table->text('description');
-            $table->bigInteger('money_back_days')->nullable();
+            $table->string('money_back_days')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

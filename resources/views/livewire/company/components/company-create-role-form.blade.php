@@ -12,18 +12,18 @@
                 <!-- Add role form -->
                 <form  class="row" wire:submit.prevent="create">
                     <div class="col-12 mb-1">
-                        <label class="form-label" for="modalRoleName">Role Name</label>
+                        <label class="form-label" for="modalRoleName">Role Name*</label>
                         <input type="text" wire:model.lazy="name" name="modalPermissionName" class="form-control {{$errors->has('name')? 'is-invalid' : '' }}" placeholder="Enter role name" autofocus  />
                         @error('name') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12">
-                        <label class="form-label" for="modalRoleName">Role Description</label>
+                        <label class="form-label" for="modalRoleName">Role Description*</label>
                         <textarea wire:model.lazy="description" class="form-control {{$errors->has('description')? 'is-invalid' : '' }}" placeholder="Describe the duty of this role"></textarea>
                         @error('description') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-12">
-                        <h4 class="mt-2 pt-50">Role Permissions</h4>
+                        <h4 class="mt-2 pt-50">Role Permissions*</h4>
                         <!-- Permission table -->
                         <div class="table-responsive">
                             <table class="table table-flush-spacing">

@@ -45,7 +45,9 @@ Route::middleware('auth')->name('company.')->group(function () {
         Route::get('/services/{id}',            [CompanyServiceViewController::class, 'serviceDetails'])->name('service-details');
 
         Route::get('/invoices',                 [CompanyInvoiceViewController::class, 'invoices'])->name('invoices');
-        Route::get('/create-invoice',          [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
+        Route::get('/invoices/{id}',            [CompanyInvoiceViewController::class, 'previewInvoice'])->name('preview-invoice');
+        Route::get('/invoices/print/{id}',      [CompanyInvoiceViewController::class, 'printInvoice'])->name('print-invoice');
+        Route::get('/create-invoice',           [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
 
     });
 });

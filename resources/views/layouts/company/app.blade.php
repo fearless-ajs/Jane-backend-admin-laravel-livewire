@@ -40,27 +40,32 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-toastr.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/page-profile.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css')}}">
-    <link rel="stylesheet" href="{{asset('app-assets/css/toastr.css')}}">
-    <!-- END: Page CSS-->
 
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/nouislider.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-sliders.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-number-input.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce-details.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-invoice-list.css')}}">
+    @if(Route::currentRouteName() == 'company.print-invoice')
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-invoice-print.css')}}">
+    @endif
 
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
-    <!-- END: Custom CSS-->
+<link rel="stylesheet" href="{{asset('app-assets/css/toastr.css')}}">
+<!-- END: Page CSS-->
 
-    @livewireStyles
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/nouislider.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-sliders.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-number-input.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce-details.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-invoice-list.css')}}">
+
+<!-- BEGIN: Custom CSS-->
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
+<!-- END: Custom CSS-->
+
+@livewireStyles
 </head>
 <!-- END: Head-->
 
-<!-- BEGIN: Body-->
 
+<!-- BEGIN: Body-->
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
 <x-company-app-header />
 
@@ -68,22 +73,22 @@
 
 <!-- BEGIN: Content-->
 @if(Route::currentRouteName() == 'company.products')
-    <div class="app-content content ecommerce-application">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
-        @yield('content')
-    </div>
+<div class="app-content content ecommerce-application">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    @yield('content')
+</div>
 @else
-    <div class="app-content content ">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper container-xxl p-0">
-            <div class="content-header row">
-            </div>
-            @yield('content')
-
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
         </div>
+        @yield('content')
+
     </div>
+</div>
 @endif
 
 
@@ -92,7 +97,7 @@
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; {{ now()->year }}<a class="ms-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Binutu</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+<p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; {{ now()->year }}<a class="ms-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Binutu</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 
@@ -123,6 +128,10 @@
 <script src="{{asset('app-assets/js/scripts/pages/auth-login.js')}}"></script>
 <!-- END: Page JS-->
 
+@if(Route::currentRouteName() == 'company.print-invoice')
+    <script src="{{asset('app-assets/js/scripts/pages/app-invoice-print.js')}}"></script>
+@endif
+
 <!-- BEGIN: Page JS-->
 <script src="{{asset('app-assets/js/scripts/pages/app-ecommerce.js')}}"></script>
 <!-- END: Page JS-->
@@ -130,46 +139,52 @@
 <script src="{{asset('app-assets/js/scripts/pages/app-invoice.js')}}"></script>
 
 <script>
-    window.livewire.on('alert', param => {
-        toastr[param['type']](param['message'], param['type']);
-    });
+window.livewire.on('alert', param => {
+    toastr[param['type']](param['message'], param['type']);
+});
 </script>
 
 
 <script>
-    $(window).on('load', function() {
-        if (feather) {
-            feather.replace({
-                width: 14,
-                height: 14
-            });
-        }
-    })
+$(window).on('load', function() {
+    if (feather) {
+        feather.replace({
+            width: 14,
+            height: 14
+        });
+    }
+})
 </script>
 
 <script  src="{{asset('app-assets/js/sweetalert.js')}}"></script>
 <script>
-    window.addEventListener('swal:modal', event => {
-        swal({
-            title: event.detail.title,
-            text: event.detail.text,
-            icon: event.detail.type
-        });
+window.addEventListener('swal:modal', event => {
+    swal({
+        title: event.detail.title,
+        text: event.detail.text,
+        icon: event.detail.type
     });
+});
 
-    window.addEventListener('swal:confirm', event => {
-        swal({
-            title: event.detail.title,
-            text: event.detail.text,
-            icon: event.detail.type,
-            buttons: true,
-            dangerMode: true
-        }).then((willDelete) => {
+window.addEventListener('swal:confirm', event => {
+    swal({
+        title: event.detail.title,
+        text: event.detail.text,
+        icon: event.detail.type,
+        buttons: true,
+        dangerMode: true
+    }).then((willDelete) => {
 
-            if(willDelete){
-                window.livewire.emit('delete', event.detail.id);
-            }
-        });
+        if(willDelete){
+            window.livewire.emit('delete', event.detail.id);
+        }
+    });
+});
+</script>
+
+<script>
+    window.livewire.on('close-current-modal', param => {
+        $('.current-modal').modal('hide');
     });
 </script>
 

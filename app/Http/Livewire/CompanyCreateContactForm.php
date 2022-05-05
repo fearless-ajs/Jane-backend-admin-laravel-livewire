@@ -135,6 +135,7 @@ class CompanyCreateContactForm extends Component
 
         $this->resetExcept(['products', 'services']);
         $this->emit('refreshContactList');
+        $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Contact created']);
     }
 

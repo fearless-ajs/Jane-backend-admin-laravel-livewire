@@ -26,13 +26,13 @@ class CompanyEditServiceForm extends Component
     public function updated($field){
         $this->validateOnly($field, [
             'name'                   => 'required|max:255',
-            'price'                  => 'required|numeric|min:1',
-            'vat'                    => 'required|numeric|min:1|max:100',
+            'price'                  => 'nullable|numeric|min:1',
+            'vat'                    => 'nullable|numeric|min:1|max:100',
             'category'               => 'nullable|string|max:255',
             'description'            => 'required|string|max:1000',
-            'usage_unit'             => 'required|string|max:255',
-            'unit_number'            => 'required|numeric|max:255',
-            'money_back'             => 'required|numeric|min:0',
+            'usage_unit'             => 'nullable|string|max:255',
+            'unit_number'            => 'nullable|numeric|max:255',
+            'money_back'             => 'nullable|numeric|min:0',
             'active'                 => 'nullable',
         ]);
     }
@@ -55,13 +55,13 @@ class CompanyEditServiceForm extends Component
     public function updateService(){
         $this->validate([
             'name'                   => 'required|max:255',
-            'price'                  => 'required|numeric|min:1',
-            'vat'                    => 'required|numeric|min:1|max:100',
+            'price'                  => 'nullable|numeric|min:1',
+            'vat'                    => 'nullable|numeric|min:1|max:100',
             'category'               => 'nullable|string|max:255',
             'description'            => 'required|string|max:1000',
-            'usage_unit'             => 'required|string|max:255',
-            'unit_number'            => 'required|numeric|max:255',
-            'money_back'             => 'required|numeric|min:0',
+            'usage_unit'             => 'nullable|string|max:255',
+            'unit_number'            => 'nullable|numeric|max:255',
+            'money_back'             => 'nullable|numeric|min:0',
             'active'                 => 'nullable',
         ]);
 
@@ -79,6 +79,7 @@ class CompanyEditServiceForm extends Component
         ]);
 
         $this->emit('refreshServiceDetails');
+        $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Service updated']);
 
     }

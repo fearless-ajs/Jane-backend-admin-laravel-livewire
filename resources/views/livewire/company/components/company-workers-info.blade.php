@@ -34,7 +34,7 @@
 
                 <!-- Roles and permission card -->
                 @if($teamsCard)
-                    @livewire('company-worker-team-info-card', ['worker' => $worker])
+                    @livewire('company-worker-permission-info-card', ['worker' => $worker])
                 @endif
             <!--/ Roles and permission card -->
 

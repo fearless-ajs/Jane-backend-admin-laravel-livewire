@@ -23,7 +23,12 @@
                     <td>{{$contact->primary_email}}</td>
                     <td>{{$contact->mobile_phone}}</td>
                     <td>{{$contact->country}}</td>
-                    <td>{{$contact->available}}</td>
+                    @if($contact->available)
+                        <td>Available</td>
+                    @else
+                        <td> Unavailable</td>
+                    @endif
+
                     <td>{{$contact->created_at->diffForHumans()}}</td>
                     <td><a href="{{route('company.contacts.profile', $contact->id)}}">Details</a> </td>
                     <td wire:loading wire:target="remove({{$contact->id}})" >

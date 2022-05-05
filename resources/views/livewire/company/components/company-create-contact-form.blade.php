@@ -1,4 +1,4 @@
-<div class="modal fade" wire:ignore.self id="addContactModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade current-modal" wire:ignore.self id="addContactModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
         <div class="modal-content">
             <div class="modal-header bg-transparent">
@@ -11,7 +11,7 @@
                 </div>
                 <form class="row gy-1 pt-75" wire:submit.prevent="addContact">
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">Title</label>
+                        <label class="form-label" for="basic-icon-default-fullname">Title*</label>
                         <select wire:model.lazy="title"  class="select2 form-select">
                             <option value="">Select title</option>
                             <option value="Mr">Mr</option>
@@ -23,12 +23,12 @@
                         @error('title') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">lastname</label>
+                        <label class="form-label" for="basic-icon-default-fullname">lastname*</label>
                         <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Lastname" />
                         @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">firstname</label>
+                        <label class="form-label" for="basic-icon-default-fullname">firstname*</label>
                         <input type="text" wire:model.lazy="firstname" class="form-control dt-full-name  {{$errors->has('first')? 'is-invalid' : '' }}"  placeholder="Firstname" />
                         @error('firstname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -54,34 +54,34 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">Primary email</label>
+                        <label class="form-label" for="basic-icon-default-email">Primary email*</label>
                         <input type="email" wire:model.lazy="primary_email"  class="form-control dt-email  {{$errors->has('primary_email')? 'is-invalid' : '' }}" placeholder="Primary email" >
                         @error('primary_email') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">date of birth</label>
+                        <label class="form-label" for="basic-icon-default-email">date of birth*</label>
                         <input type="date" wire:model.lazy="date_of_birth"  class="form-control dt-email  {{$errors->has('date_of_birth')? 'is-invalid' : '' }}" placeholder="Date of birth">
                         @error('date_of_birth') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-contact">Country</label>
+                        <label class="form-label" for="basic-icon-default-contact">Country*</label>
                         <input type="text" wire:model.lazy="country"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('country')? 'is-invalid' : '' }}" placeholder="Nationality"/>
                         @error('country') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-company">State</label>
+                        <label class="form-label" for="basic-icon-default-company">State*</label>
                         <input type="text" wire:model.lazy="state"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('state')? 'is-invalid' : '' }}" placeholder="State"/>
                         @error('state') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-company">City</label>
+                        <label class="form-label" for="basic-icon-default-company">City*</label>
                         <input type="text" wire:model.lazy="city"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('city')? 'is-invalid' : '' }}" placeholder="City"/>
                         @error('city') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-company">Address</label>
+                        <label class="form-label" for="basic-icon-default-company">Address*</label>
                         <input type="text" wire:model.lazy="address"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('address')? 'is-invalid' : '' }}" placeholder="Address"/>
                         @error('address') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -119,7 +119,7 @@
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label" for="basic-icon-default-company">Contact description</label>
+                        <label class="form-label" for="basic-icon-default-company">Contact description*</label>
                         <textarea class="form-control" placeholder="description" wire:model.lazy="description"></textarea>
                         @error('description') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>

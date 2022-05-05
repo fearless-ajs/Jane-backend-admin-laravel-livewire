@@ -2,13 +2,13 @@
     <form wire:submit.prevent="create" class="row" >
 
         <div class="col-12 mb-1">
-            <label class="form-label" for="modalPermissionName">Permission Name</label>
+            <label class="form-label" for="modalPermissionName">Permission Name*</label>
             <input type="text" wire:model.lazy="name" name="modalPermissionName" class="form-control {{$errors->has('name')? 'is-invalid' : '' }}" placeholder="Permission Name" autofocus data-msg="Please enter permission name" />
             @error('name') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
         </div>
 
         <div class="col-12">
-            <label class="form-label" for="modalPermissionName">Description</label>
+            <label class="form-label" for="modalPermissionName">Description*</label>
             <textarea wire:model.lazy="description" class="form-control {{$errors->has('description')? 'is-invalid' : '' }}" placeholder="Describe the permission"></textarea>
             @error('description') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
         </div>

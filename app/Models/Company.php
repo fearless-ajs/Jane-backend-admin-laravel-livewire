@@ -9,4 +9,8 @@ class Company extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function bankingInfo(){
+        return $this->hasOne(CompanyTransactionInfo::class,  'company_id');
+    }
 }

@@ -1,4 +1,4 @@
-<div class="modal fade" wire:ignore.self id="addProductModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade current-modal" wire:ignore.self id="addProductModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
         <div class="modal-content">
             <div class="modal-header bg-transparent">
@@ -11,7 +11,7 @@
                 </div>
                 <form class="row gy-1 pt-75" wire:submit.prevent="addProduct">
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">Product name</label>
+                        <label class="form-label" for="basic-icon-default-fullname">Product name*</label>
                         <input type="text" wire:model.lazy="name" class="form-control dt-full-name  {{$errors->has('name')? 'is-invalid' : '' }}"  placeholder="Product name"/>
                         @error('name') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -21,7 +21,7 @@
                         @error('brand') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">Unit price</label>
+                        <label class="form-label" for="basic-icon-default-email">Unit price*</label>
                         <input type="text" wire:model.lazy="price"  class="form-control dt-email  {{$errors->has('price')? 'is-invalid' : '' }}" placeholder="Price">
                         @error('price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">Quantity</label>
+                        <label class="form-label" for="basic-icon-default-email">Quantity*</label>
                         <input type="text" wire:model.lazy="quantity"  class="form-control dt-email  {{$errors->has('quantity')? 'is-invalid' : '' }}" placeholder="Available quantity" >
                         @error('quantity') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -54,7 +54,7 @@
                         @error('manufacturer') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12">
-                        <label class="form-label" for="basic-icon-default-company">Product description</label>
+                        <label class="form-label" for="basic-icon-default-company">Product description*</label>
                         <textarea class="form-control" placeholder="description" wire:model.lazy="description"></textarea>
                         @error('description') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-company">Product image</label>
+                        <label class="form-label" for="basic-icon-default-company">Product image*</label>
                         <input type="file" wire:model.lazy="image"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('image')? 'is-invalid' : '' }}"/>
                         @error('image') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>

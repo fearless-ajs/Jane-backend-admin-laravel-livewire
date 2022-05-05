@@ -51,37 +51,40 @@ class CompanyEditProductForm extends Component
 
     public function updated($field){
         $this->validateOnly($field, [
+
             'name'                   => 'required|max:255',
-            'brand'                  => 'required|max:255',
+            'brand'                  => 'nullable|max:255',
             'price'                  => 'required|numeric|min:1',
-            'vat'                    => 'required|numeric|min:1|max:100',
+            'vat'                    => 'nullable|numeric|min:1|max:100',
             'quantity'               => 'required|numeric|min:1',
-            'previous_price'         => 'required|numeric|min:1',
+            'previous_price'         => 'nullable|numeric|min:1',
             'currency'               => 'nullable|string|max:23',
             'category'               => 'nullable|string|max:255',
-            'manufacturer'           => 'required|string|max:255',
+            'manufacturer'           => 'nullable|string|max:255',
             'description'            => 'required|string|max:1000',
-            'money_back'             => 'required|numeric|min:0',
-            'warranty'               => 'required',
+            'money_back'             => 'nullable|numeric|min:0',
+            'warranty'               => 'nullable',
             'active'                 => 'nullable',
             'image'                  => 'nullable|image:mimes, jpeg, jpg, png',
+
+
         ]);
     }
 
     public function updateProduct(){
         $this->validate([
             'name'                   => 'required|max:255',
-            'brand'                  => 'required|max:255',
+            'brand'                  => 'nullable|max:255',
             'price'                  => 'required|numeric|min:1',
-            'vat'                    => 'required|numeric|min:1|max:100',
+            'vat'                    => 'nullable|numeric|min:1|max:100',
             'quantity'               => 'required|numeric|min:1',
-            'previous_price'         => 'required|numeric|min:1',
+            'previous_price'         => 'nullable|numeric|min:1',
             'currency'               => 'nullable|string|max:23',
             'category'               => 'nullable|string|max:255',
-            'manufacturer'           => 'required|string|max:255',
+            'manufacturer'           => 'nullable|string|max:255',
             'description'            => 'required|string|max:1000',
-            'money_back'             => 'required|numeric|min:0',
-            'warranty'               => 'required',
+            'money_back'             => 'nullable|numeric|min:0',
+            'warranty'               => 'nullable',
             'active'                 => 'nullable',
             'image'                  => 'nullable|image:mimes, jpeg, jpg, png',
         ]);
@@ -112,6 +115,7 @@ class CompanyEditProductForm extends Component
             'image'                 => ($productImage)?$productImage:$this->product->image
         ]);
         $this->emit('refreshProductDetails');
+        $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Product updated']);
     }
 

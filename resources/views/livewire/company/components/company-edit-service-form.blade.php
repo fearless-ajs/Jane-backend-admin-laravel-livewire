@@ -1,4 +1,4 @@
-<div class="modal fade" wire:ignore.self id="editServiceModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade current-modal" wire:ignore.self id="editServiceModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
         <div class="modal-content">
             <div class="modal-header bg-transparent">
@@ -11,7 +11,7 @@
                 </div>
                 <form class="row gy-1 pt-75" wire:submit.prevent="updateService">
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">Service name</label>
+                        <label class="form-label" for="basic-icon-default-fullname">Service name*</label>
                         <input type="text" wire:model.lazy="name" class="form-control dt-full-name  {{$errors->has('name')? 'is-invalid' : '' }}"  placeholder="Service name"/>
                         @error('name') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -25,9 +25,12 @@
                         <label class="form-label" for="basic-icon-default-email">Usage unit</label>
                         <select  wire:model.lazy="usage_unit"  class="select2 form-select {{$errors->has('usage_unit')? 'is-invalid' : '' }}" >
                             <option value="">Select usage unit</option>
-                            <option value="hours">Hours</option>
-                            <option value="days">Days</option>
-                            <option value="incident">Incident</option>
+                            <option value="hourly">Hourly</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                            <option value="one-time">One time</option>
                         </select>
                         @error('usage_unit') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -58,7 +61,7 @@
                     {{--                        @error('currency') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
                     {{--                    </div>--}}
                     <div class="col-12">
-                        <label class="form-label" for="basic-icon-default-company">Service description</label>
+                        <label class="form-label" for="basic-icon-default-company">Service description*</label>
                         <textarea class="form-control" placeholder="description" wire:model.lazy="description"></textarea>
                         @error('description') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>

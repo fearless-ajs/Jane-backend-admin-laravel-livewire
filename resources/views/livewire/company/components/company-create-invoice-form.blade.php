@@ -1,5 +1,5 @@
 <div class="row invoice-add">
-    <form>
+    <form wire:submit.prevent="generateInvoice">
         <!-- Invoice Add Left starts -->
         <div class="col-xl-9 col-md-8 col-12">
             <div class="card invoice-preview-card">
@@ -52,12 +52,12 @@
                                 @error('invoice_number') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
                             <div class="d-flex align-items-center mb-1">
-                                <span class="title">Date:</span>
-                                <input type="date" wire:model.lazy="date" class="form-control invoice-edit-input date-picker {{$errors->has('date')? 'is-invalid' : '' }}" />
-                                @error('date') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                <span class="title">Date:* </span>
+                                <input type="date" wire:model.lazy="date_issued" class="form-control invoice-edit-input date-picker {{$errors->has('date_issued')? 'is-invalid' : '' }}" />
+                                @error('date_issued') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
                             <div class="d-flex align-items-center">
-                                <span class="title">Due Date:</span>
+                                <span class="title">Due Date:* </span>
                                 <input type="date" wire:model.lazy="due_date"  class="form-control invoice-edit-input due-date-picker {{$errors->has('due_date')? 'is-invalid' : '' }}" />
                                 @error('due_date') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
@@ -72,7 +72,7 @@
                 <div class="card-body invoice-padding pt-0">
                     <div class="row row-bill-to invoice-spacing">
                         <div class="col-xl-8 mb-lg-1 col-bill-to ps-0">
-                            <h6 class="invoice-to-title">Invoice To:</h6>
+                            <h6 class="invoice-to-title">Invoice To:*</h6>
                             <div class="invoice-customer">
                                 <select wire:model.lazy="to" class="invoiceto form-select">
                                     <option>Select contact </option>
@@ -155,14 +155,13 @@
 
                 <!-- Product Details starts -->
                 <div class="card-body invoice-padding invoice-product-details">
-                    <form class="source-item">
                         <div data-repeater-list="group-a">
                             <div class="repeater-wrapper" data-repeater-item>
                                 <div class="row">
                                     <div class="col-12 d-flex product-details-border position-relative pe-0">
                                         <div class="row w-100 pe-lg-0 pe-1 py-2">
                                             <div class="col-lg-5 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
-                                                <p class="card-text col-title mb-md-50 mb-0">Item</p>
+                                                <p class="card-text col-title mb-md-50 mb-0">Item*</p>
                                                 <select wire:model="product_item" class="form-select item-details">
                                                     <option value="">Select Item</option>
                                                     @if($products)
@@ -172,24 +171,24 @@
                                                     @endif
 
                                                 </select>
-                                                <textarea  wire:model.lazy="product_item_note" class="form-control mt-2 {{$errors->has('product_item_note')? 'is-invalid' : '' }}" rows="1" placeholder="Description..."></textarea>
+                                                <textarea  wire:model.lazy="product_item_note" class="form-control mt-2 {{$errors->has('product_item_note')? 'is-invalid' : '' }}" rows="1" placeholder="Description(Required)..."></textarea>
                                                 @error('product_item_note') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                             </div>
 
                                             <div class="col-lg-2 col-12 my-lg-0 my-2">
-                                                <p class="card-text col-title mb-md-2 mb-0">Qty</p>
+                                                <p class="card-text col-title mb-md-2 mb-0">Qty*</p>
                                                 <input type="number" wire:model="product_quantity" class="form-control {{$errors->has('product_quantity')? 'is-invalid' : '' }}" value="1" placeholder="1" />
                                                 @error('product_quantity') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                             </div>
 
                                             <div class="col-lg-3 col-12 my-lg-0 my-2">
-                                                <p class="card-text col-title mb-md-2 mb-0">Unit price(Naira)</p>
+                                                <p class="card-text col-title mb-md-2 mb-0">Unit price(Naira)*</p>
                                                 <input type="number" disabled wire:model.lazy="product_unit_price" class="form-control {{$errors->has('product_unit_price')? 'is-invalid' : '' }}" placeholder="Unit price" />
                                                 @error('product_unit_price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                             </div>
 
                                             <div class="col-lg-2 col-12 mt-lg-0 mt-2">
-                                                <p class="card-text col-title mb-md-50 mb-0">Total price(Naira)</p>
+                                                <p class="card-text col-title mb-md-50 mb-0">Total price(Naira)*</p>
                                                 <p class="card-text mb-0">₦{{$product_total_price}}</p>
                                             </div>
                                         </div>
@@ -217,7 +216,122 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                </div>
+                <!-- Product Details ends -->
+
+
+                <hr class="invoice-spacing mt-0" />
+
+
+                @if(count($service_selected_items) > 0)
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="py-1">Service description</th>
+                                <th class="py-1">Rate</th>
+                                <th class="py-1">Price</th>
+                                <th class="py-1">Volume</th>
+                                <th class="py-1">Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($service_selected_items as $s_item)
+                                <tr>
+                                    <td class="py-1">
+                                        <p class="card-text fw-bold mb-25">{{$s_item['name']}}</p>
+                                        <p class="card-text text-nowrap">
+                                            {{Str::limit($s_item['note'], 50, $end='...')}}
+                                        </p>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$s_item['usage']}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">₦{{$s_item['unit_price']}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$s_item['volume']}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">₦{{$s_item['total_price']}}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                 @endif
+
+                 <!-- Product Details starts -->
+                <div class="card-body invoice-padding invoice-product-details">
+                        <div data-repeater-list="group-a">
+                            <div class="repeater-wrapper" data-repeater-item>
+                                <div class="row">
+                                    <div class="col-12 d-flex product-details-border position-relative pe-0">
+                                        <div class="row w-100 pe-lg-0 pe-1 py-2">
+                                            <div class="col-lg-5 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
+                                                <p class="card-text col-title mb-md-50 mb-0">Service*</p>
+                                                <select wire:model="service_item" class="form-select item-details">
+                                                    <option value="">Select Service</option>
+                                                    @if($services)
+                                                        @foreach($services as $service)
+                                                            <option value="{{$service->id}}">{{$service->name}}</option>
+                                                        @endforeach
+                                                    @endif
+
+                                                </select>
+                                                <textarea  wire:model.lazy="service_item_note" class="form-control mt-2 {{$errors->has('service_item_note')? 'is-invalid' : '' }} mb-2" rows="1" placeholder="Description(Required)..."></textarea>
+                                                @error('service_item_note') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                            </div>
+
+                                            <div class="col-lg-2 col-12 my-lg-0 my-2">
+                                                <p class="card-text col-title mb-md-2 mb-0">Usage*</p>
+                                                <input type="text" disabled wire:model="service_unit" class="form-control {{$errors->has('service_unit')? 'is-invalid' : '' }}" value="1" placeholder="1" />
+                                                @error('service_unit') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                            </div>
+
+                                            <div class="col-lg-3 col-12 my-lg-0 my-2">
+                                                <p class="card-text col-title mb-md-2 mb-0">Unit price(Naira)*</p>
+                                                <input type="number" disabled wire:model.lazy="service_unit_price" class="form-control {{$errors->has('service_unit_price')? 'is-invalid' : '' }}" placeholder="Unit price" />
+                                                @error('service_unit_price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                            </div>
+
+                                            <div class="col-lg-2 col-12 my-lg-0 my-2">
+                                                <p class="card-text col-title mb-md-2 mb-0">Volume needed*</p>
+                                                <input type="number" wire:model="service_volume" class="form-control {{$errors->has('service_volume')? 'is-invalid' : '' }}" value="1" placeholder="1" />
+                                                @error('service_volume') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                            </div>
+
+                                            <div class="col-lg-5 col-12 mt-lg-0 mt-4 ">
+                                                <p class="card-text col-title mb-md-50 mb-0">Total price(Naira) ₦{{$service_total_price}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="
+                                                d-flex
+                                                flex-column
+                                                align-items-center
+                                                justify-content-between
+                                                border-start
+                                                invoice-product-actions
+                                                py-50
+                                                px-25
+                                              ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-12 px-0">
+                                <button type="button" wire:click="addServiceItem" class="btn btn-primary btn-sm btn-add-new" data-repeater-create>
+                                    <i  wire:loading.remove wire:target="addServiceItem" class="me-25 fa fa-plus"></i>
+                                    <span class="spinner-border spinner-border-sm" wire:loading wire:target="addServiceItem" role="status" aria-hidden="true"></span>
+                                    <span class="align-middle">Add Service</span>
+                                </button>
+                            </div>
+                        </div>
                 </div>
                 <!-- Product Details ends -->
 
@@ -225,65 +339,44 @@
                 <hr class="invoice-spacing mt-0" />
 
                 <div class="card-body invoice-padding pt-0">
-                    <div class="row row-bill-to invoice-spacing">
-                        <div class="col-xl-8 mb-lg-1 col-bill-to ps-0">
-                            <h6 class="invoice-to-title">Sales person:</h6>
-                            <div class="invoice-customer">
-                                <select class="invoiceto form-select">
-                                    <option value="">Select user in charge</option>
-                                    @if($workers)
-                                        @foreach($workers as $worker)
-                                            <option value="{{$worker->id}}">{{$worker->user->lastname. ' '.$worker->user->firstname }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mt-2 mb-1">
+                                <h6 class="invoice-to-title">Sales person:*</h6>
+                                <div class="invoice-customer">
+                                    <select wire:model.lazy="worker" class="invoiceto form-select {{$errors->has('worker')? 'is-invalid' : '' }}">
+                                        <option value="">Select user in charge</option>
+                                        @if($workers)
+                                            @foreach($workers as $worker)
+                                                <option value="{{$worker->id}}">{{$worker->user->lastname. ' '.$worker->user->firstname }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @error('worker') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 p-0 ps-xl-2 mt-xl-0 mt-2">
-                            <h6 class="mb-2">Payment Details:</h6>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td class="pe-1">Total Due:</td>
-                                    <td><strong>$12,110.55</strong></td>
-                                </tr>
-                                <tr>
-                                    <td class="pe-1">Bank name:</td>
-                                    <td>American Bank</td>
-                                </tr>
-                                <tr>
-                                    <td class="pe-1">Country:</td>
-                                    <td>United States</td>
-                                </tr>
-                                <tr>
-                                    <td class="pe-1">IBAN:</td>
-                                    <td>ETD95476213874685</td>
-                                </tr>
-                                <tr>
-                                    <td class="pe-1">SWIFT code:</td>
-                                    <td>BR91905</td>
-                                </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="card-body invoice-padding py-0">
                     <!-- Invoice Note starts -->
                     <div class="row">
                         <div class="col-12">
                             <div class="mt-2 mb-1">
-                                <p class="mb-50">Accept payments via</p>
-                                <select class="form-select">
+                                <p class="mb-50">Accept payments via*</p>
+                                <select multiple wire:model.lazy="payment_methods" class="form-select {{$errors->has('payment_methods')? 'is-invalid' : '' }}">
                                     <option value="Bank Account">Bank Account</option>
                                     <option value="Paypal">Paypal</option>
-                                    <option value="UPI Transfer">UPI Transfer</option>
+                                    <option value="UPI Transfer">Bank Transfer</option>
                                 </select>
+                                @error('payment_methods') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
                             <div class="mb-2">
-                                <label for="note" class="form-label fw-bold">Note:</label>
-                                <textarea class="form-control" rows="2" id="note" placeholder="Drop a note on the invoice"></textarea>
+                                <label for="note" class="form-label fw-bold">Note:*</label>
+                                <textarea wire:model.lazy="note" class="form-control {{$errors->has('note')? 'is-invalid' : '' }}" rows="2" id="note" placeholder="Drop a note on the invoice"></textarea>
+                                @error('note') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
@@ -301,8 +394,20 @@
         <div class="col-xl-3 col-md-4 col-12">
             <div class="card">
                 <div class="card-body">
-                    <button class="btn btn-primary w-100 mb-75" disabled>Send Invoice</button>
-                    <button type="button" class="btn btn-outline-primary w-100">Save</button>
+                    <div class="demo-inline-spacing mb-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" wire:model="status" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="send" checked />
+                            <label class="form-check-label" for="inlineRadio1">Send Invoice</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" wire:model="status" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="draft" />
+                            <label class="form-check-label" for="inlineRadio2">Save to draft</label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100 mb-75"  wire:loading wire:target="generateInvoice"  type="button" disabled>Please wait <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                    <button class="btn btn-primary w-100 mb-75" wire:loading.remove wire:target="generateInvoice" type="submit">Generate invoice </button>
+
                 </div>
             </div>
         </div>
