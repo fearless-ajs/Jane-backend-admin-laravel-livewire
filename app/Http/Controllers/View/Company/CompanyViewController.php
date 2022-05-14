@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\View\Company;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyViewController extends Controller
 {
@@ -24,5 +26,16 @@ class CompanyViewController extends Controller
         ];
         return view('livewire.Company.pages.companies-users-list-page', ['data' => $data]);
     }
+
+    public function settings (){
+        $company = Company::find(Auth::user()->company_id);
+        $data = [
+            'title' => 'Settings',
+            'keywords' => 'Settings',
+            'description' => 'Settings'
+        ];
+        return view('livewire.Company.pages.companies-users-list-page', ['data' => $data, 'company' => $company]);
+    }
+
 
 }

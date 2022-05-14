@@ -53,7 +53,7 @@ Route::middleware('auth')->name('company.')->group(function () {
         Route::get('/invoices/edit/{id}',       [CompanyInvoiceViewController::class, 'editInvoice'])->name('edit-invoice');
         Route::get('/create-invoice',           [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
 
-        Route::get('/settings',        [CompanyUsersViewController::class, 'myProfile'])->name('settings');
+        Route::get('/settings',                 [CompanyViewController::class, 'settings'])->name('settings');
 
     });
 });
