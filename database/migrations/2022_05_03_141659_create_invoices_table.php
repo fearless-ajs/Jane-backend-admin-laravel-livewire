@@ -27,9 +27,12 @@ return new class extends Migration
             $table->bigInteger('products_total_price');
             $table->bigInteger('services_total_price');
 
+            $table->text('note')->nullable();
+
             $table->string('status'); // sent or draft
             $table->boolean('signed')->default(false);
             $table->string('signature_code')->nullable();
+            $table->bigInteger('last_updated_by_id');
 
             $table->timestamps();
         });

@@ -72,7 +72,7 @@
 <x-company-main-menu />
 
 <!-- BEGIN: Content-->
-@if(Route::currentRouteName() == 'company.products')
+@if(Route::currentRouteName() == 'company.products' || Route::currentRouteName() == 'company.services')
 <div class="app-content content ecommerce-application">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>

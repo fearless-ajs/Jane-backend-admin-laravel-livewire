@@ -34,12 +34,25 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-validation.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/authentication.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-toastr.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/page-profile.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css')}}">
     <link rel="stylesheet" href="{{asset('app-assets/css/toastr.css')}}">
+
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
     <!-- END: Custom CSS-->
+
+
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/nouislider.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-sliders.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-number-input.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce-details.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-invoice-list.css')}}">
+
 
     @livewireStyles
 </head>
@@ -53,16 +66,25 @@
 <x-admin-main-menu />
 
 <!-- BEGIN: Content-->
-<div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper container-xxl p-0">
-        <div class="content-header row">
-        </div>
+@if(Route::currentRouteName() == 'admin.company-products' || Route::currentRouteName() == 'admin.company-services')
+    <div class="app-content content ecommerce-application">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
         @yield('content')
-
     </div>
-</div>
+@else
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+            </div>
+            @yield('content')
+
+        </div>
+    </div>
+@endif
+
 
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
@@ -87,6 +109,15 @@
 <script src="{{asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
 <!-- END: Page Vendor JS-->
 <script  src="{{asset('app-assets/js/toastr.js')}}"></script>
+
+@if(Route::currentRouteName() == 'company.print-invoice')
+    <script src="{{asset('app-assets/js/scripts/pages/app-invoice-print.js')}}"></script>
+@endif
+
+<!-- BEGIN: Page JS-->
+<script src="{{asset('app-assets/js/scripts/pages/app-ecommerce.js')}}"></script>
+<!-- END: Page JS-->
+
 
 <!-- BEGIN: Theme JS-->
 <script src="{{asset('app-assets/js/core/app-menu.js')}}"></script>
@@ -139,6 +170,12 @@
         });
     });
 </script>
+<script>
+    window.livewire.on('close-current-modal', param => {
+        $('.current-modal').modal('hide');
+    });
+</script>
+
 
 </body>
 <!-- END: Body-->

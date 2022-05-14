@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Mail\WelcomeMail;
 use App\Models\User;
+use App\Models\Worker;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -46,6 +47,9 @@ class SignUpForm extends LiveNotify
            'verification_token' => Str::random(50),
            'password'           => $this->password
         ]);
+
+      // Create a company profile
+
 
         try {
             retry(5, function () use ($user) {

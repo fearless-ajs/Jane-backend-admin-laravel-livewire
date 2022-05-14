@@ -31,11 +31,11 @@
                                         </g>
                                     </g>
                                 </svg>
-                                <h3 class="text-primary invoice-logo">Vuexy</h3>
+                                <h3 class="text-primary invoice-logo">Binutu</h3>
                             </div>
-                            <p class="card-text mb-25">Office 149, 450 South Brand Brooklyn</p>
-                            <p class="card-text mb-25">San Diego County, CA 91905, USA</p>
-                            <p class="card-text mb-0">+1 (123) 456 7891, +44 (876) 543 2198</p>
+                            <p class="card-text mb-25 w-50">{{Auth::user()->company->address}}</p>
+                            <p class="card-text mb-25">{{Auth::user()->company->city}}, {{Auth::user()->company->state}}, {{Auth::user()->company->country}}</p>
+                            <p class="card-text mb-0">{{Auth::user()->company->phone}}, {{Auth::user()->company->email}}</p>
                         </div>
 
 
@@ -78,7 +78,7 @@
                                     <option>Select contact </option>
                                     @if($contacts)
                                         @foreach($contacts as $contact)
-                                            <option value="{{$contact->id}}">{{$contact->user->lastname. ' '.$contact->user->firstname }}</option>
+                                            <option value="{{$contact->id}}">{{$contact->lastname. ' '.$contact->firstname }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -90,24 +90,20 @@
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td class="pe-1">Total Due:</td>
-                                    <td><strong>$12,110.55</strong></td>
-                                </tr>
-                                <tr>
                                     <td class="pe-1">Bank name:</td>
-                                    <td>American Bank</td>
+                                    <td>{{Auth::user()->company->bankingInfo->bank_name}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">Country:</td>
-                                    <td>United States</td>
+                                    <td>{{Auth::user()->company->bankingInfo->country}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">IBAN:</td>
-                                    <td>ETD95476213874685</td>
+                                    <td>{{Auth::user()->company->bankingInfo->iban}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">SWIFT code:</td>
-                                    <td>BR91905</td>
+                                    <td>{{Auth::user()->company->bankingInfo->swift_code}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -125,6 +121,7 @@
                             <th class="py-1">Unit Price</th>
                             <th class="py-1">Quantity</th>
                             <th class="py-1">Total Price</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -144,6 +141,9 @@
                             </td>
                             <td class="py-1">
                                 <span class="fw-bold">₦{{$p_item['total_price']}}</span>
+                            </td>
+                            <td class="py-1">
+                                <span class="fa fa-trash" style="cursor:pointer;" wire:click="removeProduct({{$loop->index}})"></span>
                             </td>
                         </tr>
                         @endforeach
@@ -177,7 +177,7 @@
 
                                             <div class="col-lg-2 col-12 my-lg-0 my-2">
                                                 <p class="card-text col-title mb-md-2 mb-0">Qty*</p>
-                                                <input type="number" wire:model="product_quantity" class="form-control {{$errors->has('product_quantity')? 'is-invalid' : '' }}" value="1" placeholder="1" />
+                                                <input type="number" wire:model="product_quantity" class="form-control {{$errors->has('product_quantity')? 'is-invalid' : '' }} @if ($product_quantity_error) is-invalid @endif " value="1" placeholder="1" />
                                                 @error('product_quantity') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                             </div>
 
@@ -233,6 +233,7 @@
                                 <th class="py-1">Price</th>
                                 <th class="py-1">Volume</th>
                                 <th class="py-1">Total</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -255,6 +256,9 @@
                                     </td>
                                     <td class="py-1">
                                         <span class="fw-bold">₦{{$s_item['total_price']}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fa fa-trash" style="cursor:pointer;" wire:click="removeService({{$loop->index}})"></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -375,8 +379,8 @@
                             </div>
                             <div class="mb-2">
                                 <label for="note" class="form-label fw-bold">Note:*</label>
-                                <textarea wire:model.lazy="note" class="form-control {{$errors->has('note')? 'is-invalid' : '' }}" rows="2" id="note" placeholder="Drop a note on the invoice"></textarea>
-                                @error('note') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                <textarea wire:model.lazy="invoice_note" class="form-control {{$errors->has('invoice_note')? 'is-invalid' : '' }}" rows="2" id="note" placeholder="Drop a note on the invoice"></textarea>
+                                @error('invoice_note') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>

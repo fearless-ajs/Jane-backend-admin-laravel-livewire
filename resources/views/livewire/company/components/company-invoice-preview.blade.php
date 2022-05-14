@@ -119,7 +119,7 @@
                         <tr class="border-bottom">
                             <td class="py-1">
                                 <p class="card-text fw-bold mb-25">{{$service->service->name}}</p>
-                                <p class="card-text text-nowrap">{{$service->description}}</p>
+                                <p class="card-text text-nowrap">{{Str::limit($service->description, 60, $end='...')}}</p>
                             </td>
                             <td class="py-1">
                                 <span class="fw-bold">{{$service->usage}}</span>
@@ -158,7 +158,7 @@
                             <tr class="border-bottom">
                                 <td class="py-1">
                                     <p class="card-text fw-bold mb-25">{{$product->product->name}}</p>
-                                    <p class="card-text text-nowrap">{{$product->description}}</p>
+                                    <p class="card-text text-nowrap">{{Str::limit($product->description, 60, $end='...')}}</p>
                                 </td>
                                 <td class="py-1">
                                     <span class="fw-bold">₦{{number_format($product->unit_price)}}</span>
@@ -222,8 +222,7 @@
                 <div class="row">
                     <div class="col-12">
                         <span class="fw-bold">Note:</span>
-                        <span>It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance
-                                                projects. Thank You!</span>
+                        <span>{{$invoice->note}}</span>
                     </div>
                 </div>
             </div>
@@ -239,9 +238,8 @@
                 <button class="btn btn-primary w-100 mb-75" data-bs-toggle="modal" data-bs-target="#send-invoice-sidebar">
                     Send Invoice
                 </button>
-                <button class="btn btn-outline-secondary w-100 btn-download-invoice mb-75">Download</button>
-                <a class="btn btn-outline-secondary w-100 mb-75" href="{{route('company.print-invoice', $invoice->id)}}" target="_blank"> Print </a>
-                <a class="btn btn-outline-success w-100 mb-75" href="./app-invoice-edit.html"> Edit </a>
+                 <a class="btn btn-outline-secondary w-100 mb-75" href="{{route('company.print-invoice', $invoice->id)}}" target="_blank"> Print </a>
+                <a class="btn btn-outline-success w-100 mb-75" href="{{route('company.edit-invoice', $invoice->id)}}"> Edit </a>
             </div>
         </div>
     </div>

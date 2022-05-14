@@ -49,11 +49,16 @@
                                     </div>
                                 </li>
                             </ul>
+                            <p class="card-text">Available quantity - <span class="text-success">{{$product->quantity}}</span></p>
                         </div>
                         <hr />
                         <div class="d-flex flex-column flex-sm-row pt-1">
+
                             <button type="button" class="btn btn-primary me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#editProductModal">
                                 Update product
+                            </button>
+                            <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#productLinkModal">
+                                Generate link
                             </button>
                             <a href="{{route('company.products')}}" class="btn btn-outline-secondary btn-wishlist me-0 me-sm-1 mb-1 mb-sm-0">
                                 <i data-feather="heart" class="me-50"></i>
@@ -67,7 +72,32 @@
         </div>
 
         @livewire('company-edit-product-form', ['product' => $product])
+
+
+        <div class="modal fade current-modal" wire:ignore.self id="productLinkModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+                <div class="modal-content">
+                    <div class="modal-header bg-transparent">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pb-5 px-sm-5 pt-50">
+                        <div class="text-center mb-2">
+                            <h1 class="mb-1">Product link</h1>
+                            <a target="_blank" href="{{getenv('APP_PUBLIC_URL')}}/markets/{{$product->company->id}}/{{$product->slug}}">{{getenv('APP_PUBLIC_URL')}}/markets/{{$product->company->id}}/{{$product->slug}}</a>
+                        </div>
+                        <div class="col-12 text-center mt-2 pt-50">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                                Share link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
     <!-- app e-commerce details end -->
+
+
 
 </div>

@@ -5,7 +5,6 @@
             @livewire('company-worker-basic-info-card', ['worker'  => $worker])
             <!--/ User Sidebar -->
 
-
             <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
                 <ul class="nav nav-pills mb-2">
                     <li class="nav-item">

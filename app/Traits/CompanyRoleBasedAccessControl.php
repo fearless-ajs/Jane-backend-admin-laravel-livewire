@@ -15,6 +15,9 @@ trait CompanyRoleBasedAccessControl
 {
     public function userHasRole($role_name){
         $role = CompanyRole::where('name', Str::slug($role_name))->where('company_id', Auth::user()->company_id)->first();
+        if (!$role){
+            return false;
+        }
         $roleUser = CompanyRoleUser::where('user_id', Auth::user()->id)->where('company_role_id', $role->id)->where('company_id', Auth::user()->company_id)->first();
         if ($roleUser){
             return true;

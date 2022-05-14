@@ -35,6 +35,15 @@ class AuthViewController extends Controller
         return view('livewire.auth.pages.verify-email-page', ['data' => $data, 'token' => $token]);
     }
 
+    public function verifyChangedEmail ($token){
+        $data = [
+            'title' => 'Verify user email',
+            'keywords' => 'Verify user email',
+            'description' => 'Verify user email'
+        ];
+        return view('livewire.auth.pages.verify-changed-email-page', ['data' => $data, 'token' => $token]);
+    }
+
     public function logout() {
         Auth::logout();
         return redirect()->route('sign-in');

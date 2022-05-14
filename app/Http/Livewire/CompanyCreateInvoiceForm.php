@@ -26,8 +26,10 @@ class CompanyCreateInvoiceForm extends Component
     public $account_name;
     public $payment_methods = [];
     public $note;
+    public $invoice_note;
     public $status;
 
+    public $product_quantity_error;
 
     // Product Item selection params
     public $items;
@@ -54,7 +56,6 @@ class CompanyCreateInvoiceForm extends Component
     public $service_selected_items = [];
 
 
-
     // contacts and workers
     public $contacts;
     public $workers;
@@ -71,7 +72,9 @@ class CompanyCreateInvoiceForm extends Component
             'worker'            => 'required|numeric',
             'date_issued'       => 'required|string|max:255',
             'due_date'          => 'required|string|max:255',
-            'payment_methods'   => 'required|array'
+            'payment_methods'   => 'required|array',
+            'note'              => 'nullable|max:2000',
+            'invoice_note'              => 'nullable|string|max:2000',
         ]);
     }
 
@@ -147,8 +150,17 @@ class CompanyCreateInvoiceForm extends Component
         // Compute item unit price
         if ($this->product_item && $this->product_quantity > 0){
             $this->product_selected_item = Product::find($this->product_item);
-            $this->product_total_price = $this->product_selected_item->price * $this->product_quantity;
+            // Check for quantity && availability
+            if ($this->product_quantity > $this->product_selected_item->quantity){
+                $this->product_quantity_error = true;
+                $this->product_quantity = $this->product_selected_item->quantity;
+                $this->product_total_price = $this->product_selected_item->price * $this->product_quantity;
+                $this->product_unit_price = $this->product_selected_item->price;
+                return $this->emit('alert', ['type' => 'warning', 'message' => 'The quantity selected is more than available product']);
+            }
 
+            $this->product_quantity_error = false;
+            $this->product_total_price = $this->product_selected_item->price * $this->product_quantity;
             $this->product_unit_price = $this->product_selected_item->price;
         }
     }
@@ -247,6 +259,19 @@ class CompanyCreateInvoiceForm extends Component
         $this->invoice_number = Str::random(4).''.sprintf("%06d", mt_rand(1, 999999999));
     }
 
+    public function removeProduct($product_index){
+        unset($this->product_selected_items[$product_index]);
+        $this->product_selected_items = array_values($this->product_selected_items);
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Product removed']);
+    }
+
+    public function removeService($service_index){
+        unset($this->service_selected_items[$service_index]);
+        $this->service_selected_items = array_values($this->service_selected_items);
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Service removed']);
+    }
+
+
     public function generateInvoice(){
         // Either of the product or service must be selected
         if (count($this->product_selected_items) < 1 && count($this->service_selected_items) < 1){
@@ -258,7 +283,9 @@ class CompanyCreateInvoiceForm extends Component
             'worker'            => 'required|numeric',
             'date_issued'       => 'required|max:255',
             'due_date'          => 'required|max:255',
-            'payment_methods'   => 'required|array'
+            'payment_methods'   => 'required|array',
+            'note'              => 'nullable|max:2000',
+            'invoice_note'              => 'nullable|string|max:2000',
         ]);
 
         // Calculate total price for products and services
@@ -290,7 +317,10 @@ class CompanyCreateInvoiceForm extends Component
             'products_total_price'      => $productTotalPrice,
             'services_total_price'      => $serviceTotalPrice,
 
+            'note'                      => $this->invoice_note,
+
             'status'                    => $this->status,
+
             'signature_code'            => Str::random(40)
         ]);
 
@@ -341,6 +371,9 @@ class CompanyCreateInvoiceForm extends Component
         ]);
         return $this->emit('alert', ['type' => 'success', 'message' => 'Invoice generated']);
     }
+
+
+
 
     public function render()
     {

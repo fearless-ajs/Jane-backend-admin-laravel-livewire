@@ -13,15 +13,18 @@ class UserMailChanged extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $token;
 
     /**
      * Create a new message instance.
      *
-     * @param $user
+     * @param User $user
+     * @param $token
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $token)
     {
         $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -31,6 +34,6 @@ class UserMailChanged extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.confirm')->subject('Please confirm your new email');
+        return $this->subject('CRM EMAIL CHANGED')->from(getEnv('SYSTEM_EMAIL'))->markdown('emails.confirm-changed-email');
     }
 }

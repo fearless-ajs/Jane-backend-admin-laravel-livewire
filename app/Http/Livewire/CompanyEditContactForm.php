@@ -120,7 +120,6 @@ class CompanyEditContactForm extends Component
 
         $contact = Contact::where('id', $this->contact->id)->update([
             'user_id'           => Auth::user()->id,
-            'company_id'        => Auth::user()->company_id,
             'title'             => $this->title,
             'lastname'          => $this->lastname,
             'firstname'         => $this->firstname,

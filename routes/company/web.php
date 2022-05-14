@@ -24,7 +24,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->name('company.')->group(function () {
+    Route::get('/invoices/print/{id}',      [CompanyInvoiceViewController::class, 'printInvoice'])->name('print-invoice');
     Route::middleware('role:company')->group(function (){
+        // Current user information
+        Route::get('/auth/user/profile',        [CompanyUsersViewController::class, 'myProfile'])->name('my-profile');
+
         // Roles based access control routes
         Route::get('/roles',                    [CompanyRolesViewController::class, 'roles'])->name('roles');
         Route::get('/teams',                    [CompanyTeamsViewController::class, 'teams'])->name('teams');
@@ -46,8 +50,10 @@ Route::middleware('auth')->name('company.')->group(function () {
 
         Route::get('/invoices',                 [CompanyInvoiceViewController::class, 'invoices'])->name('invoices');
         Route::get('/invoices/{id}',            [CompanyInvoiceViewController::class, 'previewInvoice'])->name('preview-invoice');
-        Route::get('/invoices/print/{id}',      [CompanyInvoiceViewController::class, 'printInvoice'])->name('print-invoice');
+        Route::get('/invoices/edit/{id}',       [CompanyInvoiceViewController::class, 'editInvoice'])->name('edit-invoice');
         Route::get('/create-invoice',           [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
+
+        Route::get('/settings',        [CompanyUsersViewController::class, 'myProfile'])->name('settings');
 
     });
 });

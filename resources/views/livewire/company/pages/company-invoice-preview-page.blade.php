@@ -11,6 +11,5 @@
         @livewire('company-send-invoice-form', ['invoice' => $invoice])
         <!-- /Send Invoice Sidebar -->
 
-
     </div>
 @endsection

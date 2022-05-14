@@ -46,4 +46,14 @@ class CompanyInvoiceViewController extends Controller
         ];
         return view('livewire.company.pages.company-invoice-print-page', ['data' => $data, 'invoice' => $invoice]);
     }
+
+    public function editInvoice($id){
+        $invoice = Invoice::find($id);
+        $data = [
+            'title' => 'Company invoices',
+            'keywords' => 'Company invoices',
+            'description' => 'Company invoices'
+        ];
+        return view('livewire.company.pages.company-edit-invoice-page', ['data' => $data, 'invoice' => $invoice]);
+    }
 }

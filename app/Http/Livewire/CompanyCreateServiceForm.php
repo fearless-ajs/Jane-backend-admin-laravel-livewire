@@ -26,12 +26,12 @@ class CompanyCreateServiceForm extends Component
     public function updated($field){
         $this->validateOnly($field, [
             'name'                   => 'required|max:255',
-            'price'                  => 'nullable|numeric|min:1',
+            'price'                  => 'required|numeric|min:1',
             'vat'                    => 'nullable|numeric|min:1|max:100',
             'category'               => 'nullable|string|max:255',
             'description'            => 'required|string|max:1000',
-            'usage_unit'             => 'nullable|string|max:255',
-            'unit_number'            => 'nullable|numeric|max:255',
+            'usage_unit'             => 'required|string|max:255',
+            'unit_number'            => 'required|numeric|max:255',
             'money_back'             => 'nullable|numeric|min:0',
             'active'                 => 'nullable',
         ]);
@@ -41,12 +41,12 @@ class CompanyCreateServiceForm extends Component
     {
         $this->validate([
             'name'                   => 'required|max:255',
-            'price'                  => 'nullable|numeric|min:1',
+            'price'                  => 'required|numeric|min:1',
             'vat'                    => 'nullable|numeric|min:1|max:100',
             'category'               => 'nullable|string|max:255',
             'description'            => 'required|string|max:1000',
-            'usage_unit'             => 'nullable|string|max:255',
-            'unit_number'            => 'nullable|numeric|max:255',
+            'usage_unit'             => 'required|string|max:255',
+            'unit_number'            => 'required|numeric|max:255',
             'money_back'             => 'nullable|numeric|min:0',
             'active'                 => 'nullable',
         ]);

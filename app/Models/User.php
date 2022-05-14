@@ -55,6 +55,14 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
+    public function getUserImageAttribute(){
+        if (!empty($this->image)){
+            return asset("uploads/img/$this->image");
+        }else{
+            return "https://ui-avatars.com/api/?name=$this->lastname&color=FFFFFF&background=563C5C";
+        }
+    }
+
     public function company (){
         return $this->belongsTo(Company::class);
     }

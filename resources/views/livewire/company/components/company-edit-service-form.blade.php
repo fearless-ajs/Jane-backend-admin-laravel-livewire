@@ -16,13 +16,13 @@
                         @error('name') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">Price</label>
+                        <label class="form-label" for="basic-icon-default-email">Price*</label>
                         <input type="text" wire:model.lazy="price"  class="form-control dt-email  {{$errors->has('price')? 'is-invalid' : '' }}" placeholder="Price">
                         @error('price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">Usage unit</label>
+                        <label class="form-label" for="basic-icon-default-email">Usage unit*</label>
                         <select  wire:model.lazy="usage_unit"  class="select2 form-select {{$errors->has('usage_unit')? 'is-invalid' : '' }}" >
                             <option value="">Select usage unit</option>
                             <option value="hourly">Hourly</option>
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">Number of units</label>
+                        <label class="form-label" for="basic-icon-default-email">Number of units*</label>
                         <input type="number" wire:model.lazy="unit_number"  class="form-control dt-email  {{$errors->has('unit_number')? 'is-invalid' : '' }}" placeholder="Unit number">
                         @error('unit_number') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>

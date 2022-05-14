@@ -29,7 +29,7 @@ class SignInForm extends Component
         {
             // Check user roles before redirecting
             if (Auth::user()->hasRole('super-admin')){
-                return redirect()->intended(route('admin'));
+                return redirect()->intended(route('admin.dashboard'));
             }
 
             if (Auth::user()->hasRole('company')){
