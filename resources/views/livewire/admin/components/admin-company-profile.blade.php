@@ -5,17 +5,17 @@
         <div class="col-12">
             <div class="card profile-header mb-2">
                 <!-- profile cover photo -->
-                <img class="card-img-top" src="{{asset('app-assets/images/profile/user-uploads/timeline.jpg')}}" alt="User Profile Image" />
+                <img class="card-img-top" src="{{$company->companyBanner}}" alt="User Profile Image" />
                 <!--/ profile cover photo -->
 
                 <div class="position-relative">
                     <!-- profile picture -->
                     <div class="profile-img-container d-flex align-items-center">
-                        <div class="profile-img">
-                            <img src="{{$company->companyImage}}" class="rounded img-fluid" alt="Card image" />
-                        </div>
+{{--                        <div class="profile-img">--}}
+{{--                            <img src="{{$company->companyBanner}}" class="rounded img-fluid" alt="Card image" />--}}
+{{--                        </div>--}}
                         <!-- profile title -->
-                        <div class="profile-title ms-3">
+                        <div class="profile-title ms-3 mb-3">
                             <h2 class="text-white">{{$company->name}}</h2>
                             <p class="text-white">{{$company->email}}</p>
                         </div>
@@ -134,7 +134,7 @@
                         <div class="d-flex justify-content-start align-items-center mb-1">
                             <!-- avatar -->
                             <div class="avatar me-1">
-                                <img src="{{$company->companyImage}}" alt="avatar img" height="50" width="50" />
+                                <img src="{{$company->companyBanner}}" alt="avatar img" height="50" width="50" />
                             </div>
                             <!--/ avatar -->
                             <div class="profile-user-info">

@@ -34,7 +34,7 @@ class CompanyViewController extends Controller
             'keywords' => 'Settings',
             'description' => 'Settings'
         ];
-        return view('livewire.Company.pages.companies-users-list-page', ['data' => $data, 'company' => $company]);
+        return view('livewire.company.pages.company-settings-page', ['data' => $data, 'company' => $company]);
     }
 
 

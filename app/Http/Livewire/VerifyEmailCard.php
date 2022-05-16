@@ -6,10 +6,12 @@ use App\Models\Company;
 use App\Models\CompanyRole;
 use App\Models\CompanyRoleUser;
 use App\Models\CompanyTeam;
+use App\Models\CompanyTransactionInfo;
 use App\Models\User;
 use App\Models\Worker;
 use App\Traits\CompanyDefaultPermissions;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class VerifyEmailCard extends LiveNotify
@@ -29,8 +31,8 @@ class VerifyEmailCard extends LiveNotify
 
         // Update the contact registration records
         $user->verification_token = null;
-        $user->email_verified_at = Carbon::now();
-        $user->active            = true;
+        $user->email_verified_at  = Carbon::now();
+        $user->enabled            = true;
 
         // Attach Company role to user
         $user->attachRole('Company');
@@ -39,6 +41,12 @@ class VerifyEmailCard extends LiveNotify
            'user_id'     => $user->id,
            'name'        =>  $user->lastname . ' ' . $user->firstname,
            'email'       =>  $user->email,
+        ]);
+
+        // Create the company banking information
+        CompanyTransactionInfo::create([
+            'company_id'           =>  $company->id,
+            'company_banking_id'   => Str::random(16)
         ]);
 
         // Create a company worker account too

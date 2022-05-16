@@ -115,7 +115,7 @@
                     <div class="dropdown-divider"></div>
 
                     @if(Auth::user()->userHasRole('Super Administrator'))
-                    <a class="dropdown-item" href="page-account-settings-account.html"><i class="me-50" data-feather="settings"></i> Company</a>
+                    <a class="dropdown-item" href="{{route('company.settings')}}"><i class="me-50" data-feather="settings"></i> Company</a>
                     @endif
 
                     <a class="dropdown-item" href="{{route('sign-out')}}"><i class="me-50" data-feather="power"></i> Logout</a>

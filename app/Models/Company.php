@@ -14,11 +14,11 @@ class Company extends Model
         return $this->hasOne(CompanyTransactionInfo::class,  'company_id');
     }
 
-    public function getCompanyImageAttribute(){
-        if (!empty($this->image)){
-            return asset("uploads/img/$this->image");
+    public function getCompanyBannerAttribute(){
+        if (!empty($this->banner)){
+            return asset("uploads/img/$this->banner");
         }else{
-            return "https://ui-avatars.com/api/?name=$this->name&color=FFFFFF&background=563C5C";
+             return asset("uploads/img/company-banner.jpg");
         }
     }
 

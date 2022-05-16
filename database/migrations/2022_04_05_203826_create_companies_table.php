@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('address')->nullable();
+            $table->string('banner')->nullable();
             $table->boolean('available')->default(true);
             $table->timestamps();
         });

@@ -11,6 +11,7 @@
 */
 
 
+use App\Http\Controllers\Api\Product\ProductController;
 use App\Http\Controllers\Api\RAC\PermissionController;
 use App\Http\Controllers\Api\RAC\RoleController;
 use App\Http\Controllers\Api\RAC\RoleOperationController;
@@ -35,7 +36,7 @@ Route::post('/sign-out',                                    [AuthController::cla
 Route::post('/sign-up',                                     [AuthController::class, 'register']);
 
 //Email verification
-Route::post('/verify-contact/{token}',                         [AuthController::class, 'verifyUser']);
+Route::post('/verify-contact/{token}',                      [AuthController::class, 'verifyUser']);
 // Password reset
 Route::post('/reset-password',                              [AuthController::class, 'resetPassword']);
 Route::post('/choose-new-password/{token}',                 [AuthController::class, 'chooseNewPassword']);
@@ -52,6 +53,8 @@ Route::post('/detach-role-from-contact/{role}/{contact}', [RoleOperationControll
 
 // User
 Route::resource('users', userController::class, ['except' => ['create', 'edit']]);
+
+Route::resource('products', ProductController::class, ['only' => ['index', 'show']]);
 
 
 Route::middleware('auth:sanctum')->get('/contact', function (Request $request) {

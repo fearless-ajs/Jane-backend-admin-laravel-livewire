@@ -2,5 +2,5 @@
 
 
 @section('content')
-    @livewire('company-workers-info', ['worker' => $worker])
+    @livewire('company-settings', ['company' => $company])
 @endsection

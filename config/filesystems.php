@@ -50,6 +50,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'documents' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/docs'),
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
