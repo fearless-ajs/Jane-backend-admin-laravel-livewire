@@ -47,6 +47,6 @@ class CreatePermissionForm extends LiveNotify
 
     public function render()
     {
-        return view('livewire.Company.components.create-permission-form');
+        return view('livewire.company.components.create-permission-form');
     }
 }

@@ -27,6 +27,6 @@ class EditCompanyPermissionForm extends Component
 
     public function render()
     {
-        return view('livewire.Company.components.edit-Company-permission-form');
+        return view('livewire.company.components.edit-company-permission-form');
     }
 }

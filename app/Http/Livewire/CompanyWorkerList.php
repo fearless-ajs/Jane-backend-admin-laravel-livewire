@@ -15,7 +15,7 @@ class CompanyWorkerList extends Component
 
     public function render()
     {
-        return view('livewire.Company.components.Company-worker-list', [
+        return view('livewire.company.components.company-worker-list', [
            'workers'   => Worker::where('company_id', Auth::user()->company_id)->paginate(200)
         ]);
     }

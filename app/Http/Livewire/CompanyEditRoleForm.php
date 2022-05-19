@@ -90,6 +90,6 @@ class CompanyEditRoleForm extends Component
 
     public function render()
     {
-        return view('livewire.Company.components.Company-edit-role-form');
+        return view('livewire.company.components.company-edit-role-form');
     }
 }

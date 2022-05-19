@@ -18,6 +18,7 @@
                                             <stop stop-color="#EEEEEE" stop-opacity="0" offset="0%"></stop>
                                             <stop stop-color="#FFFFFF" offset="100%"></stop>
                                         </linearGradient>
+
                                     </defs>
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <g transform="translate(-400.000000, -178.000000)">
@@ -78,7 +79,7 @@
                                     <option>Select contact </option>
                                     @if($contacts)
                                         @foreach($contacts as $contact)
-                                            <option value="{{$contact->id}}">{{$contact->lastname. ' '.$contact->firstname }}</option>
+                                            <option value="{{$contact->id}}">{{$contact->user->lastname. ' '.$contact->user->firstname }}</option>
                                         @endforeach
                                     @endif
                                 </select>

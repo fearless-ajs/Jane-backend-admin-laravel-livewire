@@ -15,7 +15,7 @@ class CompanyServiceViewController extends Controller
             'keywords' => 'Company services',
             'description' => 'Company services',
         ];
-        return view('livewire.Company.pages.Company-services-page', ['data' => $data]);
+        return view('livewire.company.pages.company-services-page', ['data' => $data]);
     }
 
     public function serviceDetails ($id){

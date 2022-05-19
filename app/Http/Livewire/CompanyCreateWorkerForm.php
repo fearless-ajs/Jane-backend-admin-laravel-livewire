@@ -117,6 +117,6 @@ class CompanyCreateWorkerForm extends LiveNotify
 
     public function render()
     {
-        return view('livewire.Company.components.Company-create-worker-form');
+        return view('livewire.company.components.company-create-worker-form');
     }
 }

@@ -78,7 +78,7 @@
                                     <option>Select contact </option>
                                     @if($contacts)
                                         @foreach($contacts as $contact)
-                                            <option value="{{$contact->id}}">{{$contact->lastname. ' '.$contact->firstname }}</option>
+                                            <option value="{{$contact->id}}">{{$contact->user->lastname. ' '.$contact->user->firstname }}</option>
                                         @endforeach
                                     @endif
                                 </select>

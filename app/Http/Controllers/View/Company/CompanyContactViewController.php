@@ -15,7 +15,7 @@ class CompanyContactViewController extends Controller
             'keywords' => 'Company contacts',
             'description' => 'Company contacts'
         ];
-        return view('livewire.Company.pages.Company-contacts-list-page', ['data' => $data]);
+        return view('livewire.company.pages.company-contacts-list-page', ['data' => $data]);
     }
 
     public function contactProfile ($contact){

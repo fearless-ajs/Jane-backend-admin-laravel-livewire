@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -31,6 +32,8 @@ class CompanyEditProductForm extends Component
     public $active;
     public $image;
 
+    public $categories;
+
     public function mount($product){
         $this->product          = $product;
         $this->name             = $product->name;
@@ -47,6 +50,12 @@ class CompanyEditProductForm extends Component
         $this->money_back       = $product->money_back_days;
         $this->warranty         = $product->warranty_period;
         $this->active           = $product->active;
+
+        $this->fetchCategories();
+    }
+
+    public function fetchCategories(){
+        $this->categories = Category::where('company_id', Auth::user()->company_id)->get();
     }
 
     public function updated($field){
@@ -66,8 +75,6 @@ class CompanyEditProductForm extends Component
             'warranty'               => 'nullable',
             'active'                 => 'nullable',
             'image'                  => 'nullable|image:mimes, jpeg, jpg, png',
-
-
         ]);
     }
 

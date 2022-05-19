@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->boolean('checkout')->default(false);
+            $table->bigInteger('total_price');
             $table->timestamps();
         });
     }

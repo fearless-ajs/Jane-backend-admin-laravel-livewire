@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -28,6 +29,15 @@ class CompanyCreateProductForm extends LiveNotify
     public $active;
     public $image;
 
+    public $categories;
+
+    public function mount(){
+        $this->fetchCategories();
+    }
+
+    public function fetchCategories(){
+        $this->categories = Category::where('company_id', Auth::user()->company_id)->get();
+    }
 
     public function updated($field){
         $this->validateOnly($field, [

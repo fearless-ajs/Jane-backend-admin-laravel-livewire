@@ -19,8 +19,8 @@
         @if($contacts)
             @foreach($contacts as $contact)
                 <tr>
-                    <td>{{$contact->lastname. ' ' .$contact->firstname }}</td>
-                    <td>{{$contact->primary_email}}</td>
+                    <td>{{$contact->user->lastname. ' ' .$contact->user->firstname }}</td>
+                    <td>{{$contact->user->email}}</td>
                     <td>{{$contact->mobile_phone}}</td>
                     <td>{{$contact->country}}</td>
                     @if($contact->available)

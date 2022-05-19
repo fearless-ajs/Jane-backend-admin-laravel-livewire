@@ -65,7 +65,7 @@
                     @foreach($products as $product)
                          <div class="card ecommerce-card">
                     <div class="item-img text-center">
-                        <a href="{{route('admin.company-product-details', $product->id)}}">
+                        <a href="{{route('company.product-details', $product->id)}}">
                             <img class="img-fluid card-img-top" src="{{$product->productImage}}" alt="img-placeholder" /></a>
                     </div>
                     <div class="card-body">

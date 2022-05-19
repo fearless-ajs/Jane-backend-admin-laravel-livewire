@@ -19,7 +19,7 @@ class Invoice extends Model
     }
 
     public function contactInfo(){
-       return $this->belongsTo(Contact::class, 'contact_id', 'id');
+       return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
     public function worker(){

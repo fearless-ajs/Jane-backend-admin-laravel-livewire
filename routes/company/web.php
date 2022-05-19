@@ -45,6 +45,8 @@ Route::middleware('auth')->name('company.')->group(function () {
         Route::get('/products',                 [CompanyProductViewController::class, 'products'])->name('products');
         Route::get('/products/{id}',            [CompanyProductViewController::class, 'productDetails'])->name('product-details');
 
+        Route::get('/categories',               [CompanyProductViewController::class, 'categories'])->name('categories');
+
         Route::get('/services',                 [CompanyServiceViewController::class, 'services'])->name('services');
         Route::get('/services/{id}',            [CompanyServiceViewController::class, 'serviceDetails'])->name('service-details');
 

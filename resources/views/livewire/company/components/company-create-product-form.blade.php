@@ -43,11 +43,20 @@
                         <input type="number" wire:model.lazy="previous_price"  class="form-control dt-email  {{$errors->has('previous_price')? 'is-invalid' : '' }}" placeholder="Previous price">
                         @error('previous_price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
-{{--                    <div class="col-12 col-md-6">--}}
-{{--                        <label class="form-label" for="basic-icon-default-email">Currency</label>--}}
-{{--                        <input type="text" wire:model.lazy="currency"  class="form-control  {{$errors->has('currency')? 'is-invalid' : '' }}" placeholder="Currency">--}}
-{{--                        @error('currency') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
-{{--                    </div>--}}
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="basic-icon-default-email">Category*</label>
+                        @if(count($categories) > 0)
+                            <select wire:model.lazy="category" class="form-select {{$errors->has('category')? 'is-invalid' : '' }}">
+                                <option value="">Select category</option>
+                                @foreach($categories as $category)
+                                    <option value="{{$category->name}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <p class="form-label" style="color: red" for="basic-icon-default-email">Please create category, <a href="{{route('company.categories')}}">click here</a></p>
+                        @endif
+                        @error('category') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                    </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-email">Manufacturer</label>
                         <input type="text" wire:model.lazy="manufacturer"  class="form-control  {{$errors->has('manufacturer')? 'is-invalid' : '' }}" placeholder="Product manufacturer">

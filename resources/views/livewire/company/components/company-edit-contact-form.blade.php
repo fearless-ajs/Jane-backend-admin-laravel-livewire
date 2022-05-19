@@ -6,7 +6,7 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">UpdateContact</h1>
+                    <h1 class="mb-1">Update contact</h1>
                     <p>Update contact/customer information.</p>
                 </div>
                 <form class="row gy-1 pt-75" wire:submit.prevent="updateContact">
@@ -23,13 +23,13 @@
                         @error('title') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">lastname*</label>
-                        <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Lastname" />
+                        <label class="form-label" for="basic-icon-default-fullname">lastname</label>
+                        <input type="text" disabled wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Lastname" />
                         @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">firstname*</label>
-                        <input type="text" wire:model.lazy="firstname" class="form-control dt-full-name  {{$errors->has('first')? 'is-invalid' : '' }}"  placeholder="Firstname" />
+                        <label class="form-label" for="basic-icon-default-fullname">firstname</label>
+                        <input type="text" disabled wire:model.lazy="firstname" class="form-control dt-full-name  {{$errors->has('first')? 'is-invalid' : '' }}"  placeholder="Firstname" />
                         @error('firstname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
@@ -54,8 +54,8 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">Primary email*</label>
-                        <input type="email" wire:model.lazy="primary_email"  class="form-control dt-email  {{$errors->has('primary_email')? 'is-invalid' : '' }}" placeholder="Primary email" >
+                        <label class="form-label" for="basic-icon-default-email">Primary email</label>
+                        <input type="email" disabled wire:model.lazy="primary_email"  class="form-control dt-email  {{$errors->has('primary_email')? 'is-invalid' : '' }}" placeholder="Primary email" >
                         @error('primary_email') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 
@@ -85,13 +85,6 @@
                         <input type="text" wire:model.lazy="address"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('address')? 'is-invalid' : '' }}" placeholder="Address"/>
                         @error('address') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-company">Contact image</label>
-                        <input type="file" wire:model.lazy="image"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('image')? 'is-invalid' : '' }}"/>
-                        @error('image') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
-
-
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-fullname">Purchased product</label>
                         <select wire:model.lazy="product" multiple  class="select2 form-select">

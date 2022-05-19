@@ -13,6 +13,6 @@ class CompanyPermissionsViewController extends Controller
             'keywords' => 'Company permissions',
             'description' => 'Company permissions'
         ];
-        return view('livewire.Company.pages.Company-permissions-page', ['data' => $data]);
+        return view('livewire.company.pages.company-permissions-page', ['data' => $data]);
     }
 }

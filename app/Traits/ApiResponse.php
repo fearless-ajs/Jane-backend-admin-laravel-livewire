@@ -20,7 +20,8 @@ trait ApiResponse
     protected function showAll(Collection $collection, $code = 200){
         return $this->successResponse([
             'errorCode' => 'SUCCESS',
-            'data' => $collection
+            'results'   => count($collection),
+            'data'      => $collection
         ], $code);
     }
 

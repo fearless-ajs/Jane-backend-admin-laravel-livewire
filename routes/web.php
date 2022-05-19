@@ -21,6 +21,7 @@ Route::get('/sign-in',                            [AuthViewController::class, 'l
 Route::get('/sign-out',                           [AuthViewController::class, 'logout'])->name('sign-out');
 Route::get('/sign-up',                            [AuthViewController::class, 'register'])->name('sign-up');
 Route::get('/verify-email/{token}',               [AuthViewController::class, 'verify'])->name('verify-email');
+Route::get('/verify-customer-email/{token}',      [AuthViewController::class, 'verifyCustomer'])->name('verify-customer-email');
 Route::get('/verify-changed-email/{token}',       [AuthViewController::class, 'verifyChangedEmail'])->name('verify-changed-email');
 
 

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\User;
+namespace App\Http\Controllers\Api\Contact;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Mail\CustomerWelcomeMail;
 use App\Mail\PasswordUpdateMail;
 use App\Mail\ResetPasswordMail;
 use App\Models\PasswordReset;
@@ -26,23 +27,30 @@ class AuthController extends ApiController
 
         // Store the contact data in the database
         $data = $request->all();
+        $data['user_type']          = 'contact';
         $data['verification_token'] = Str::random(50);
+        $data['enabled']            = false;
+
         if ($request->hasFile('image')){
             $data['image'] = $request->image->store('/', 'images');
         }
 
         $user = User::create($data);
+        // Mail the user concerning converning account creation
+        Mail::to($user->email)->send(new CustomerWelcomeMail($user));
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+//        $token = $user->createToken('myapptoken')->plainTextToken;
+//
+//        $response = [
+//            'user'    => $user,
+//            'message' => 'Account created successfully, please check your email to verify your account'
+//        ];
 
-        $response = [
-            'contact' => $user,
-            'token' => $token
-        ];
         return $this->successResponse(
             [
                 'errorCode' => 'SUCCESS',
-                'data'   => $response
+                'message' => 'Account created successfully, please check your email to verify your account',
+                'data'   => $user
             ],201);
     }
 
@@ -63,16 +71,28 @@ class AuthController extends ApiController
             ], 401);
         }
 
+        if ($user->verification_token){
+            return $this->errorResponse([
+                'errorCode' => 'AUTHENTICATION_ERROR',
+                'message' => 'Unverified account, please verify your email'
+            ], 401);
+        }
+
+        if (!$user->enabled){
+            return $this->errorResponse([
+                'errorCode' => 'AUTHENTICATION_ERROR',
+                'message' => 'Inactive account'
+            ], 401);
+        }
+
+
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-        $response = [
-            'contact' => $user,
-            'token' => $token
-        ];
 
-        return $token-$this->successResponse([
+        return $this->successResponse([
             'errorCode' => 'SUCCESS',
-            'data'      => $response
+            'token' => $token,
+            'data'      => $user
             ], 200);
     }
 

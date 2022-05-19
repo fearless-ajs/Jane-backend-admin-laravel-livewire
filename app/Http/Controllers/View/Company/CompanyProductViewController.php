@@ -9,14 +9,24 @@ use Illuminate\Http\Request;
 
 class CompanyProductViewController extends Controller
 {
+    public function categories (){
+        $data = [
+            'title' => 'Company product Category',
+            'keywords' => 'Company product Category',
+            'description' => 'Company product Category',
+        ];
+        return view('livewire.company.pages.company-categories-list-page', ['data' => $data]);
+    }
+
     public function products (){
         $data = [
             'title' => 'Company products',
             'keywords' => 'Company products',
             'description' => 'Company products',
         ];
-        return view('livewire.Company.pages.Company-products-page', ['data' => $data]);
+        return view('livewire.company.pages.company-products-page', ['data' => $data]);
     }
+
 
     public function productDetails ($id){
         $product = Product::find($id);

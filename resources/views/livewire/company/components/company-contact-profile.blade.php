@@ -12,12 +12,12 @@
                     <!-- profile picture -->
                     <div class="profile-img-container d-flex align-items-center">
                         <div class="profile-img">
-                            <img src="{{$contact->contactImage}}" class="rounded img-fluid" alt="Card image" />
+                            <img src="{{$contact->user->UserImage}}" class="rounded img-fluid" alt="Card image" />
                         </div>
                         <!-- profile title -->
                         <div class="profile-title ms-3">
-                            <h2 class="text-white">{{$contact->title. ' ' .$contact->lastname. ' '. $contact->firstname}}</h2>
-                            <p class="text-white">{{$contact->primary_email}}</p>
+                            <h2 class="text-white">{{$contact->title. ' ' .$contact->user->lastname. ' '. $contact->user->firstname}}</h2>
+                            <p class="text-white">{{$contact->user->email}}</p>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link fw-bold" href="mailto:{{$contact->primary_email}}">
+                                        <a class="nav-link fw-bold" href="mailto:{{$contact->user->email}}">
                                             <span class="d-none d-md-block">Mail</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
@@ -104,11 +104,11 @@
                         <div class="d-flex justify-content-start align-items-center mb-1">
                             <!-- avatar -->
                             <div class="avatar me-1">
-                                <img src="{{$contact->contactImage}}" alt="avatar img" height="50" width="50" />
+                                <img src="{{$contact->user->userImage}}" alt="avatar img" height="50" width="50" />
                             </div>
                             <!--/ avatar -->
                             <div class="profile-user-info">
-                                <h6 class="mb-0">{{$contact->title. ' ' .$contact->lastname. ' '. $contact->firstname}}</h6>
+                                <h6 class="mb-0">{{$contact->title. ' ' .$contact->user->lastname. ' '. $contact->user->firstname}}</h6>
                                 <small class="text-muted">Joined {{$contact->created_at->diffForHumans()}}</small>
                             </div>
                         </div>

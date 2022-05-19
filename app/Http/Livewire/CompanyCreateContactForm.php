@@ -2,15 +2,23 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\ContactUserAccountCreationMail;
+use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CompanyCreateContactForm extends Component
 {
+    use WithFileUploads;
+
     public $title;
     public $lastname;
     public $firstname;
@@ -86,24 +94,46 @@ class CompanyCreateContactForm extends Component
 
 
         // Check if image exists
-        $userImage = false;
         if ($this->image){
-            $userImage = $this->image->store('/', 'images');
+            $this->image = $this->image->store('/', 'images');
+        }
+
+        // Check if the email exist in the users table and ignore creation
+        $user = User::where('email', $this->primary_email)->first();
+        if (!$user){
+            $user = User::create([
+                'lastname'           => $this->lastname,
+                'firstname'          => $this->firstname,
+                'email'              => $this->primary_email,
+                'user_type'          => 'Company-worker',
+                'image'              => ($this->image)?$this->image:null,
+                'password'           => 'crmcode'
+            ]);
+
+            // Attach customer role to the user
+            $user->attachRole('customer');
+
+            // fetch the company details
+            $company = Company::find(Auth::user()->company_id);
+
+            // Mail the user concerning the account creation and "crmcode" as password
+            Mail::to($user->email)->send(new ContactUserAccountCreationMail($user, $company));
+        }
+
+        if (!$user->hasRole('customer')){
+            $user->attachRole('customer');
         }
 
         $contact = Contact::create([
-            'user_id'           => Auth::user()->id,
+            'created_by_id'     => Auth::user()->id,
             'company_id'        => Auth::user()->company_id,
+            'user_id'           => $user->id,
             'title'             => $this->title,
-            'lastname'          => $this->lastname,
-            'firstname'         => $this->firstname,
             'office_phone'      => $this->office_phone,
             'mobile_phone'      => $this->mobile_phone,
             'organization'      => $this->organization,
             'fax'               => $this->fax,
-            'primary_email'     => $this->primary_email,
             'date_of_birth'     => $this->date_of_birth,
-            'image'             => ($userImage)?$userImage:null,
             'city'              => $this->city,
             'state'             => $this->state,
             'country'           => $this->country,

@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Livewire\Component;
@@ -44,13 +45,13 @@ class CompanyEditContactForm extends Component
 
         $this->contact          = $contact;
         $this->title            = $contact->title;
-        $this->lastname         = $contact->lastname;
-        $this->firstname        = $contact->firstname;
+        $this->lastname         = $contact->user->lastname;
+        $this->firstname        = $contact->user->firstname;
         $this->office_phone     = $contact->office_phone;
         $this->mobile_phone     = $contact->mobile_phone;
         $this->organization     = $contact->organization;
         $this->fax              = $contact->fax;
-        $this->primary_email    = $contact->primary_email;
+        $this->primary_email    = $contact->user->email;
         $this->date_of_birth    = $contact->date_of_birth;
         $this->city             = $contact->city;
         $this->state            = $contact->state;
@@ -64,17 +65,13 @@ class CompanyEditContactForm extends Component
     public function updated($field){
         $this->validateOnly($field, [
             'title'             => 'required|string|max:255',
-            'lastname'          => 'required|string|max:255',
-            'firstname'         => 'required|string|max:255',
             'office_phone'      => 'nullable',
             'mobile_phone'      => 'nullable',
             'organization'      => 'nullable',
             'fax'               => 'nullable|numeric',
-            'primary_email'     => 'required|string|email|',
             'date_of_birth'     => 'required|max:255',
             'product'           => 'nullable|array',
             'service'           => 'nullable|array',
-            'image'             => 'nullable|image',
             'city'              => 'required|string|max:255',
             'state'             => 'required|string|max:255',
             'country'           => 'required|string|max:255',
@@ -87,17 +84,13 @@ class CompanyEditContactForm extends Component
     public function updateContact(){
         $this->validate([
             'title'             => 'required|string|max:255',
-            'lastname'          => 'required|string|max:255',
-            'firstname'         => 'required|string|max:255',
             'office_phone'      => 'nullable',
             'mobile_phone'      => 'nullable',
             'organization'      => 'nullable',
             'fax'               => 'nullable|numeric',
-            'primary_email'     => 'required|string|email|',
             'date_of_birth'     => 'required|max:255',
             'product'           => 'nullable|array',
             'service'           => 'nullable|array',
-            'image'             => 'nullable|image',
             'city'              => 'required|string|max:255',
             'state'             => 'required|string|max:255',
             'country'           => 'required|string|max:255',
@@ -106,30 +99,23 @@ class CompanyEditContactForm extends Component
             'available'         => 'nullable'
         ]);
 
-
         // Check if image exists
-        $userImage = false;
         if ($this->image){
-            $userImage = $this->image->store('/', 'images');
+            $this->image = $this->image->store('/', 'images');
             // Delete old image
-            if ($this->contact->image){
+            if ($this->contact->user->image != null && $this->contact->user->image != 'user-avatar.jpg'){
                 // Delete product image
-                File::delete($this->contact->contactImage);
+                File::delete($this->contact->user->userImage);
             }
         }
 
         $contact = Contact::where('id', $this->contact->id)->update([
-            'user_id'           => Auth::user()->id,
             'title'             => $this->title,
-            'lastname'          => $this->lastname,
-            'firstname'         => $this->firstname,
             'office_phone'      => $this->office_phone,
             'mobile_phone'      => $this->mobile_phone,
             'organization'      => $this->organization,
             'fax'               => $this->fax,
-            'primary_email'     => $this->primary_email,
             'date_of_birth'     => $this->date_of_birth,
-            'image'             => ($this->image)?$userImage:$this->contact->image,
             'city'              => $this->city,
             'state'             => $this->state,
             'country'           => $this->country,
@@ -137,6 +123,14 @@ class CompanyEditContactForm extends Component
             'description'       => $this->description,
             'available'         => ($this->available)?true:false
         ]);
+
+        // Update user record too
+//        User::where('id', $this->contact->user->id)->update([
+//            'lastname'           => $this->lastname,
+//            'firstname'          => $this->firstname,
+//            'email'              => $this->primary_email,
+//            'image'              => ($this->image)?$this->image:$this->contact->user->image,
+//        ]);
 
         // Check for product and service and insert as transactions
         if (count($this->product) > 0){

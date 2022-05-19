@@ -23,6 +23,6 @@ class CompanyAppHeader extends Component
      */
     public function render()
     {
-        return view('components.Company.Company-app-header');
+        return view('components.company.company-app-header');
     }
 }

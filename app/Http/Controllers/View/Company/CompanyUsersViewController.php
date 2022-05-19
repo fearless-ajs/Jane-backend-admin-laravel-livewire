@@ -15,7 +15,7 @@ class CompanyUsersViewController extends Controller
             'keywords' => 'Company dashboard',
             'description' => 'Company dashboard'
         ];
-        return view('livewire.Company.pages.Company-workers-list-page', ['data' => $data]);
+        return view('livewire.company.pages.company-workers-list-page', ['data' => $data]);
     }
 
     public function workerProfile ($worker){
@@ -25,7 +25,7 @@ class CompanyUsersViewController extends Controller
             'keywords' => 'Company dashboard',
             'description' => 'Company dashboard'
         ];
-        return view('livewire.Company.pages.Company-workers-info-page', ['data' => $data, 'worker' => $worker]);
+        return view('livewire.company.pages.company-workers-info-page', ['data' => $data, 'worker' => $worker]);
     }
 
     public function myProfile (){

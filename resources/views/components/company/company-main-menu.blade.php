@@ -79,6 +79,12 @@
                     </li>
                 </ul>
             </li>
+                <li class=" nav-item @if(Route::currentRouteName() == 'company.categories') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Categories</span></a>
+                    <ul class="menu-content">
+                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.categories') active @endif" href="{{route('company.categories')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                        </li>
+                    </ul>
+                </li>
             @endif
 
             @if(Auth::user()->userHasPermission('manage products') || Auth::user()->userHasRole('Super Administrator'))

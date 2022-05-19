@@ -13,6 +13,6 @@ class CompanyTeamsViewController extends Controller
             'keywords'    => 'Company teams',
             'description' => 'Company teams'
         ];
-        return view('livewire.Company.pages.Company-teams-page', ['data' => $data]);
+        return view('livewire.company.pages.company-teams-page', ['data' => $data]);
     }
 }

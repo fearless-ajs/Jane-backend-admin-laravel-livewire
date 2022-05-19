@@ -173,7 +173,7 @@ class Handler extends ExceptionHandler
 
         return $this->errorResponse([
             'errorCode' => 'AUTHENTICATION_ERROR',
-            'message'   => 'Unauthenticated contact'
+            'message'   => 'Unauthenticated user'
         ], 401);
     }
 

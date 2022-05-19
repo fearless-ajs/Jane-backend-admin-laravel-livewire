@@ -28,7 +28,7 @@ class CompanyRoleList extends Component
 
     public function render()
     {
-        return view('livewire.Company.components.Company-role-list', [
+        return view('livewire.company.components.company-role-list', [
             'roles' => CompanyRole::where('company_id', Auth::user()->company_id)->paginate(100)
         ]);
     }
