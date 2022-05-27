@@ -4,18 +4,26 @@ namespace App\Http\Controllers\View\Company;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\Setting;
 use App\Models\Worker;
 use Illuminate\Http\Request;
 
 class CompanyContactViewController extends Controller
 {
+    public $settings;
+
+    public function __construct()
+    {
+        $this->settings = Setting::first();
+    }
+
     public function contacts (){
         $data = [
             'title' => 'Company contacts',
             'keywords' => 'Company contacts',
             'description' => 'Company contacts'
         ];
-        return view('livewire.company.pages.company-contacts-list-page', ['data' => $data]);
+        return view('livewire.company.pages.company-contacts-list-page', ['data' => $data, 'settings'   => $this->settings]);
     }
 
     public function contactProfile ($contact){
@@ -25,7 +33,7 @@ class CompanyContactViewController extends Controller
             'keywords' => 'Company contact',
             'description' => 'Company contact'
         ];
-        return view('livewire.company.pages.company-contacts-info-page', ['data' => $data, 'contact' => $contact]);
+        return view('livewire.company.pages.company-contacts-info-page', ['data' => $data, 'contact' => $contact, 'settings'   => $this->settings]);
     }
 
 }

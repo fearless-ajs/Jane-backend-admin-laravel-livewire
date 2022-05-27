@@ -9,6 +9,7 @@ use App\Models\InvoiceProduct;
 use App\Models\InvoiceService;
 use App\Models\Product;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -67,10 +68,12 @@ class CompanyEditInvoice extends Component
     public $products;
     public $services;
 
+    public $settings;
     // Listener for refreshing the component;
     protected $listeners = ['refreshInvoiceEdit' => '$refresh'];
 
     public function mount($invoice){
+        $this->settings = Setting::first();
         $this->invoice = $invoice;
         $this->fetchUsersData();
         $this->generateInvoiceFormData();

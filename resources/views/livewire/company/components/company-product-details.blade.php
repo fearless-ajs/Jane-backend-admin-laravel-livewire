@@ -7,20 +7,16 @@
                 <div class="row my-2">
                     <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
                         <div class="d-flex align-items-center justify-content-center">
-                            <img src="{{$product->productImage}}" class="img-fluid product-img" alt="product image" />
+                            <img src="{{$product->images->first()->productImage}}" class="img-fluid product-img" alt="product image" />
                         </div>
                     </div>
                     <div class="col-12 col-md-7">
                         <h4>{{$product->name}}</h4>
                         <span class="card-text item-company">By <a href="#" class="company-name">{{$product->manufacturer}}</a></span>
                         <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                            <h4 class="item-price me-1">₦{{$product->price}}</h4>
+                            <h4 class="item-price me-1">{{$settings->app_currency_symbol}}{{$product->price}}</h4>
                             <ul class="unstyled-list list-inline ps-1 border-start">
-                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
+                                <span class="badge badge-light-success">Category: {{$product->category}} </span>
                             </ul>
                         </div>
                         @if($product->active)
@@ -98,6 +94,28 @@
     </section>
     <!-- app e-commerce details end -->
 
+    <section class="app-ecommerce-details">
+        <div class="card">
+            <!-- Product Details starts -->
+            <div class="card-body">
+                <div class="row">
+                    <h4 class="justify-content-center" style="text-align: center;">Product images
+                        <span wire:loading wire:target="removeImage"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h4>
+                    @if(count($product->images) > 0)
+                        @foreach($product->images as $image)
+                            <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <img src="{{$image->productImage}}" class="img-fluid product-img" alt="product image" />
+                                    <span wire:loading.remove wire:target="removeImage({{$image->id}})" wire:click="removeImage({{$image->id}})" style="cursor:pointer;" class="fa fa-trash"></span>
 
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            <!-- Product Details ends -->
+        </div>
+    </section>
 
 </div>

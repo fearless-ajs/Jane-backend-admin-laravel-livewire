@@ -22,6 +22,14 @@ class Company extends Model
         }
     }
 
+    public function permissions(){
+        return $this->hasMany(CompanyPermission::class,'company_id');
+    }
+
+    public function roles(){
+        return $this->hasMany(CompanyRole::class,'company_id');
+    }
+
     public function products(){
         return $this->hasMany(Product::class,'company_id');
     }
@@ -36,6 +44,10 @@ class Company extends Model
 
     public function contacts(){
         return $this->hasMany(Contact::class,'company_id');
+    }
+
+    public function categories(){
+        return $this->hasMany(Category::class,'company_id');
     }
 
     public function users(){

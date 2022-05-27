@@ -14,7 +14,7 @@
                         <h4>{{$product->name}}</h4>
                         <span class="card-text item-company">By <a href="#" class="company-name">{{$product->manufacturer}}</a></span>
                         <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                            <h4 class="item-price me-1">₦{{$product->price}}</h4>
+                            <h4 class="item-price me-1">{{$settings->app_currency_symbol}}{{$product->price}}</h4>
                             <ul class="unstyled-list list-inline ps-1 border-start">
                                 <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
                                 <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
@@ -53,10 +53,6 @@
                         </div>
                         <hr />
                         <div class="d-flex flex-column flex-sm-row pt-1">
-
-                            <button type="button" class="btn btn-primary me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#editProductModal">
-                                Update product
-                            </button>
                             <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#productLinkModal">
                                 Generate link
                             </button>

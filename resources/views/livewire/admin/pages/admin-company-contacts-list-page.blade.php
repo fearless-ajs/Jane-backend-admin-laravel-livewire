@@ -4,84 +4,48 @@
 @section('content')
     <div class="content-body">
         <!-- users list start -->
+        <div class="content-header row">
+
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">Company contacts</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="{{route('admin.companies')}}">Companies</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $company->id)}}">{{$company->name}}</a>
+                                </li>
+                                <li class="breadcrumb-item active">Contacts
+                                </li>
+                                {{--                                <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $product->company->id)}}">{{$product->company->name}}</a>--}}
+                                {{--                                </li>--}}
+                                {{--                                <li class="breadcrumb-item"><a href="{{route('admin.company-products', $product->company->id)}}">Products</a>--}}
+                                {{--                                </li>--}}
+                                {{--                                <li class="breadcrumb-item active">{{$product->name}}--}}
+                                {{--                                </li>--}}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                <div class="mb-1 breadcrumb-right">
+                    <div class="dropdown">
+                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <section class="app-user-list">
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body d-flex align-items-center justify-content-between">
-                            <div>
-                                <h3 class="fw-bolder mb-75">21,459</h3>
-                                <span>Total Contacts</span>
-                            </div>
-                            <div class="avatar bg-light-primary p-50">
-                                        <span class="avatar-content">
-                                            <i data-feather="user" class="font-medium-4"></i>
-                                        </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body d-flex align-items-center justify-content-between">
-                            <div>
-                                <h3 class="fw-bolder mb-75">4,567</h3>
-                                <span>Paid Contact</span>
-                            </div>
-                            <div class="avatar bg-light-danger p-50">
-                                        <span class="avatar-content">
-                                            <i data-feather="user-plus" class="font-medium-4"></i>
-                                        </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body d-flex align-items-center justify-content-between">
-                            <div>
-                                <h3 class="fw-bolder mb-75">19,860</h3>
-                                <span>Active Contacts</span>
-                            </div>
-                            <div class="avatar bg-light-success p-50">
-                                        <span class="avatar-content">
-                                            <i data-feather="user-check" class="font-medium-4"></i>
-                                        </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body d-flex align-items-center justify-content-between">
-                            <div>
-                                <h3 class="fw-bolder mb-75">237</h3>
-                                <span>Pending Contacts</span>
-                            </div>
-                            <div class="avatar bg-light-warning p-50">
-                                        <span class="avatar-content">
-                                            <i data-feather="user-x" class="font-medium-4"></i>
-                                        </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- list and filter start -->
-            <div class="card">
-                <div class="card-body border-bottom">
-                    <h4 class="card-title">Search & Filter</h4>
-                    <div class="row">
-                        <div class="col-md-4 user_role"></div>
-                        <div class="col-md-4 user_plan"></div>
-                        <div class="col-md-4 user_status"></div>
-                    </div>
-                </div>
 
-                @livewire('admin-company-contact-list', ['company' => $company])
+            @livewire('admin-company-contact-list', ['company' => $company])
 
-
-            </div>
             <!-- list and filter end -->
         </section>
         <!-- users list ends -->

@@ -8,7 +8,7 @@
     <div class="mb-1">
         <div class="d-flex justify-content-between">
             <label class="form-label" for="login-password">Password</label>
-            <a href="auth-forgot-password-basic.html">
+            <a href="{{route('forgot-password')}}">
                 <small>Forgot Password?</small>
             </a>
         </div>

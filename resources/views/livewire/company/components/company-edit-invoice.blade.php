@@ -22,20 +22,16 @@
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                         <g transform="translate(-400.000000, -178.000000)">
                                             <g transform="translate(400.000000, 178.000000)">
-                                                <path class="text-primary" d="M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z" style="fill: currentColor"></path>
-                                                <path d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z" fill="url(#invoice-linearGradient-1)" opacity="0.2"></path>
-                                                <polygon fill="#000000" opacity="0.049999997" points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325"></polygon>
-                                                <polygon fill="#000000" opacity="0.099999994" points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338"></polygon>
-                                                <polygon fill="url(#invoice-linearGradient-2)" opacity="0.099999994" points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288"></polygon>
+                                                <img src="{{$settings->AppImage}}" style="max-width: 10%" />
                                             </g>
                                         </g>
                                     </g>
                                 </svg>
-                                <h3 class="text-primary invoice-logo">Binutu</h3>
+                                <h3 class="text-primary invoice-logo">{{$invoice->company->name}}</h3>
                             </div>
-                            <p class="card-text mb-25 w-50">{{Auth::user()->company->address}}</p>
-                            <p class="card-text mb-25">{{Auth::user()->company->city}}, {{Auth::user()->company->state}}, {{Auth::user()->company->country}}</p>
-                            <p class="card-text mb-0">{{Auth::user()->company->phone}}, {{Auth::user()->company->email}}</p>
+                            <p class="card-text mb-25 w-50">{{$invoice->company->address}}</p>
+                            <p class="card-text mb-25">{{$invoice->company->city}}, {{$invoice->company->state}}, {{$invoice->company->country}}</p>
+                            <p class="card-text mb-0">{{$invoice->company->phone}}, {{$invoice->company->email}}</p>
                         </div>
 
 
@@ -91,19 +87,19 @@
                                 <tbody>
                                 <tr>
                                     <td class="pe-1">Bank name:</td>
-                                    <td>{{Auth::user()->company->bankingInfo->bank_name}}</td>
+                                    <td>{{$invoice->company->bankingInfo->bank_name}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">Country:</td>
-                                    <td>{{Auth::user()->company->bankingInfo->country}}</td>
+                                    <td>{{$invoice->company->bankingInfo->country}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">IBAN:</td>
-                                    <td>{{Auth::user()->company->bankingInfo->iban}}</td>
+                                    <td>{{$invoice->company->bankingInfo->iban}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">SWIFT code:</td>
-                                    <td>{{Auth::user()->company->bankingInfo->swift_code}}</td>
+                                    <td>{{$invoice->company->bankingInfo->swift_code}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -134,13 +130,13 @@
                                         </p>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">₦{{$p_item['unit_price']}}</span>
+                                        <span class="fw-bold">{{$settings->app_currency_symbol}}{{$p_item['unit_price']}}</span>
                                     </td>
                                     <td class="py-1">
                                         <span class="fw-bold">{{$p_item['quantity']}}</span>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">₦{{$p_item['total_price']}}</span>
+                                        <span class="fw-bold">{{$settings->app_currency_symbol}}{{$p_item['total_price']}}</span>
                                     </td>
                                     <td class="py-1">
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  wire:loading wire:target="removeProduct({{$loop->index}}, {{$p_item['id']}})"></span>
@@ -183,14 +179,14 @@
                                         </div>
 
                                         <div class="col-lg-3 col-12 my-lg-0 my-2">
-                                            <p class="card-text col-title mb-md-2 mb-0">Unit price(Naira)*</p>
+                                            <p class="card-text col-title mb-md-2 mb-0">Unit price({{$settings->app_currency}})*</p>
                                             <input type="number" disabled wire:model.lazy="product_unit_price" class="form-control {{$errors->has('product_unit_price')? 'is-invalid' : '' }}" placeholder="Unit price" />
                                             @error('product_unit_price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                         </div>
 
                                         <div class="col-lg-2 col-12 mt-lg-0 mt-2">
                                             <p class="card-text col-title mb-md-50 mb-0">Total price(Naira)*</p>
-                                            <p class="card-text mb-0">₦{{$product_total_price}}</p>
+                                            <p class="card-text mb-0">{{$settings->app_currency_symbol}}{{$product_total_price}}</p>
                                         </div>
                                     </div>
                                     <div class="
@@ -250,13 +246,13 @@
                                         <span class="fw-bold">{{$s_item['usage']}}</span>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">₦{{$s_item['unit_price']}}</span>
+                                        <span class="fw-bold">{{$settings->app_currency_symbol}}{{$s_item['unit_price']}}</span>
                                     </td>
                                     <td class="py-1">
                                         <span class="fw-bold">{{$s_item['volume']}}</span>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">₦{{$s_item['total_price']}}</span>
+                                        <span class="fw-bold">{{$settings->app_currency_symbol}}{{$s_item['total_price']}}</span>
                                     </td>
                                     <td class="py-1">
                                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  wire:loading wire:target="removeService({{$loop->index}}, {{$s_item['id']}})"></span>
@@ -299,7 +295,7 @@
                                         </div>
 
                                         <div class="col-lg-3 col-12 my-lg-0 my-2">
-                                            <p class="card-text col-title mb-md-2 mb-0">Unit price(Naira)*</p>
+                                            <p class="card-text col-title mb-md-2 mb-0">Unit price({{$settings->app_currency}})*</p>
                                             <input type="number" disabled wire:model.lazy="service_unit_price" class="form-control {{$errors->has('service_unit_price')? 'is-invalid' : '' }}" placeholder="Unit price" />
                                             @error('service_unit_price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                         </div>
@@ -311,7 +307,7 @@
                                         </div>
 
                                         <div class="col-lg-5 col-12 mt-lg-0 mt-4 ">
-                                            <p class="card-text col-title mb-md-50 mb-0">Total price(Naira) ₦{{$service_total_price}}</p>
+                                            <p class="card-text col-title mb-md-50 mb-0">Total price(Naira) {{$settings->app_currency_symbol}}{{$service_total_price}}</p>
                                         </div>
                                     </div>
                                     <div class="

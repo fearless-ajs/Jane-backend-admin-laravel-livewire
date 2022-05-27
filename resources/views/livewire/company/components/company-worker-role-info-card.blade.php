@@ -41,6 +41,7 @@
         </table>
     </div>
 
+    @if(Route::currentRouteName() != 'admin.company-user-profile')
     <hr />
     <div class="table-responsive">
         <div class="modal-body">
@@ -63,5 +64,6 @@
             </form>
         </div>
     </div>
+    @endif
 
 </div>

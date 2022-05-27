@@ -55,16 +55,48 @@
                     </div>
 
 
-                    {{--                    <div class="col-12 col-md-6">--}}
-                    {{--                        <label class="form-label" for="basic-icon-default-email">Currency</label>--}}
-                    {{--                        <input type="text" wire:model.lazy="currency"  class="form-control  {{$errors->has('currency')? 'is-invalid' : '' }}" placeholder="Currency">--}}
-                    {{--                        @error('currency') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
-                    {{--                    </div>--}}
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="basic-icon-default-email">Category*</label>
+                        @if(count($categories) > 0)
+                            <select wire:model.lazy="category" class="form-select {{$errors->has('category')? 'is-invalid' : '' }}">
+                                <option value="">Select category</option>
+                                @foreach($categories as $category)
+                                    <option value="{{$category->name}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <p class="form-label" style="color: red" for="basic-icon-default-email">Please create category, <a href="{{route('company.categories')}}">click here</a></p>
+                        @endif
+                        @error('category') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                    </div>
+
                     <div class="col-12">
                         <label class="form-label" for="basic-icon-default-company">Service description*</label>
                         <textarea class="form-control" placeholder="description" wire:model.lazy="description"></textarea>
                         @error('description') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
+
+                    <div class="col-12">
+                        <div class="form-group" wire:ignore>
+                            <label>Images <sup>max 20MB</sup></label><br>
+                            <input name="images[]"  class="form-control {{$errors->has('images.*')? 'is-invalid' : '' }}" type="file" wire:model="images" multiple data-min-file-count="1" data-theme="fas">
+                            @error('images') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                            <small wire:loading wire:target="images" class="form-text text-muted"><i class="fa fa-spin"><i class="fa fa-spinner"></i></i>&nbsp;&nbsp; Loading preview...</small>
+                            <!-- /.form-group -->
+                        </div>
+                        @if ($images)
+                            Photo Preview:<br>
+                            @foreach($images as $photo)
+                                <a target="_blank" href="{{ $photo->temporaryUrl() }}" >
+                                    <img src="{{ $photo->temporaryUrl() }}" style="margin-bottom: 5px; border: 1px solid white; max-width: 30%">
+                                    <span wire:loading wire:target="removeImg({{$loop->index}})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </a>
+                                <small style="cursor: pointer;" class="fas fa-times text-danger" wire:click.prevent="removeImg({{$loop->index}})" wire:loading.remove wire:target="removeImg({{$loop->index}})"></small>
+                            @endforeach
+                        @endif
+                    </div>
+                    @error('images.*') <span class="error">{{ $message }}</span> @enderror
+                    @error('images') <span class="error">{{ $message }}</span> @enderror
 
                     <div class="col-12 col-md-6">
                         <div class="form-check">

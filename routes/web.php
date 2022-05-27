@@ -2,7 +2,14 @@
 
 use App\Http\Controllers\View\Auth\AuthViewController;
 use App\Http\Controllers\View\Company\CompanyProductViewController;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+/*
+ * Initializing system settings
+ */
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',                                   [AuthViewController::class, 'login'])->name('login');
 Route::get('/login',                              [AuthViewController::class, 'login']);
 Route::get('/sign-in',                            [AuthViewController::class, 'login'])->name('sign-in');
+Route::get('/forgot-password',                    [AuthViewController::class, 'forgotPassword'])->name('forgot-password');
+Route::get('/reset-password/{token}',             [AuthViewController::class, 'resetPassword'])->name('reset-password');
 Route::get('/sign-out',                           [AuthViewController::class, 'logout'])->name('sign-out');
 Route::get('/sign-up',                            [AuthViewController::class, 'register'])->name('sign-up');
 Route::get('/verify-email/{token}',               [AuthViewController::class, 'verify'])->name('verify-email');

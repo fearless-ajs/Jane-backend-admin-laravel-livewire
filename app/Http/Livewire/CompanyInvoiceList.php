@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Invoice;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -10,6 +11,11 @@ use Livewire\WithPagination;
 class CompanyInvoiceList extends Component
 {
     use WithPagination;
+    public $settings;
+
+    public function mount(){
+        $this->settings = Setting::first();
+    }
 
     public function render()
     {

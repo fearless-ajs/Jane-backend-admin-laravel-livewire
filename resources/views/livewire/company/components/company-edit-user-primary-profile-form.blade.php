@@ -6,8 +6,8 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Update primary profile</h1>
-                    <p>Update user information.</p>
+                    <h1 class="mb-1">Update profile</h1>
+                    <p>Modify user information.</p>
                 </div>
                 <form class="row gy-1 pt-75" wire:submit.prevent="updateUser">
                     <div class="col-12 col-md-6">

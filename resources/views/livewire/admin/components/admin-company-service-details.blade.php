@@ -8,13 +8,9 @@
                     <div class="col-12 col-md-7">
                         <h4>{{$service->name}}</h4>
                         <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                            <h4 class="item-price me-1">₦{{$service->price}}</h4>
+                            <h4 class="item-price me-1">{{$settings->app_currency_symbol}}{{$service->price}}</h4>
                             <ul class="unstyled-list list-inline ps-1 border-start">
-                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
+                                <span class="badge badge-light-success">{{$service->usage_unit}} </span>
                             </ul>
                         </div>
                         @if($service->active)
@@ -42,12 +38,9 @@
                         </div>
                         <hr />
                         <div class="d-flex flex-column flex-sm-row pt-1">
-                            <button type="button" class="btn btn-primary me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#editServiceModal">
-                                Update service
-                            </button>
                             <a href="{{route('admin.company-services', $service->company->id)}}" class="btn btn-outline-secondary btn-wishlist me-0 me-sm-1 mb-1 mb-sm-0">
                                 <i data-feather="heart" class="me-50"></i>
-                                <span>Company shop</span>
+                                <span>Company services</span>
                             </a>
                         </div>
                     </div>

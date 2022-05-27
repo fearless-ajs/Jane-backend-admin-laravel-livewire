@@ -17,6 +17,26 @@ class AuthViewController extends Controller
         return view('livewire.auth.pages.sign-in-page', ['data' => $data]);
     }
 
+    public function forgotPassword (){
+        $data = [
+            'title' => 'Forgot password',
+            'keywords' => 'sign in, crm',
+            'description' => 'Crm sign in area'
+        ];
+        return view('livewire.auth.pages.forgot-password-page', ['data' => $data]);
+    }
+
+
+    public function resetPassword ($token){
+        $data = [
+            'title' => 'Reset password',
+            'keywords' => 'sign in, crm',
+            'description' => 'Crm sign in area'
+        ];
+        return view('livewire.auth.pages.reset-password-page', ['data' => $data, 'token'  =>  $token]);
+    }
+
+
     public function register (){
         $data = [
             'title' => 'Sign up',

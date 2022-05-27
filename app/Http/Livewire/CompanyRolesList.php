@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Company;
 use App\Models\CompanyPermissionRole;
 use App\Models\CompanyRole;
 use App\Models\CompanyRoleUser;
@@ -9,10 +10,23 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyRoleList extends Component
+class CompanyRolesList extends Component
 {
     use WithPagination;
+    public $company;
     protected $listeners = ['refreshCompanyRoles' => '$refresh'];
+    public $search;
+    public $searchResult;
+
+    public function updated(){
+        if ($this->search){
+            $this->searchResult = CompanyRole::where('company_id', $this->company->id)->where('display_name', 'LIKE', "%{$this->search}%")->get();
+        }
+    }
+
+    public function mount(){
+        $this->company = Company::where('user_id', Auth::user()->id)->first();
+    }
 
     public function remove($role_id){
         // Remove role permissions
@@ -28,8 +42,15 @@ class CompanyRoleList extends Component
 
     public function render()
     {
-        return view('livewire.company.components.company-role-list', [
-            'roles' => CompanyRole::where('company_id', Auth::user()->company_id)->paginate(100)
-        ]);
+        if ($this->searchResult && !empty($this->search)){
+            return view('livewire.company.components.company-roles-list', [
+                'roles' => $this->searchResult
+            ]);
+        }else {
+            $this->searchResult = false;
+            return view('livewire.company.components.company-roles-list', [
+                'roles' => CompanyRole::where('company_id', Auth::user()->company_id)->paginate(12)
+            ]);
+        }
     }
 }

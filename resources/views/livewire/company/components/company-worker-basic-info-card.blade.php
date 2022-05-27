@@ -88,6 +88,7 @@
                         <span>{{$worker->country}}</span>
                     </li>
                 </ul>
+                @if(Route::currentRouteName() != 'admin.company-user-profile')
                 <div class="d-flex justify-content-center pt-2">
                     <a href="javascript:;" class="btn btn-primary me-1" data-bs-target="#editUser" data-bs-toggle="modal">
                         Edit
@@ -98,6 +99,7 @@
                         <a href="javascript:;" wire:click="activateWorker" class="btn btn-outline-success suspend-user">Activate</a>
                     @endif
                 </div>
+                @endif
             </div>
         </div>
     </div>

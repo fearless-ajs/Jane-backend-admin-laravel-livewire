@@ -69,17 +69,11 @@
                             </defs>
                             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                 <g id="Artboard" transform="translate(-400.000000, -178.000000)">
-                                    <g id="Group" transform="translate(400.000000, 178.000000)">
-                                        <path class="text-primary" id="Path" d="M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z" style="fill: currentColor"></path>
-                                        <path id="Path1" d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z" fill="url(#linearGradient-1)" opacity="0.2"></path>
-                                        <polygon id="Path-2" fill="#000000" opacity="0.049999997" points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325"></polygon>
-                                        <polygon id="Path-21" fill="#000000" opacity="0.099999994" points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338"></polygon>
-                                        <polygon id="Path-3" fill="url(#linearGradient-2)" opacity="0.099999994" points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288"></polygon>
-                                    </g>
+                                    <img src="{{$settings->AppImage}}" style="max-width: 10%" />
                                 </g>
                             </g>
                         </svg>
-                        <h3 class="text-primary fw-bold ms-1">Binutu</h3>
+                        <h3 class="text-primary fw-bold ms-1">{{$invoice->company->name}}</h3>
                     </div>
 
                     <p class="mb-25">{{$invoice->company->address}}</p>
@@ -113,7 +107,7 @@
                         <tbody>
                         <tr>
                             <td class="pe-1">Total Due:</td>
-                            <td><span class="fw-bold">₦{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</span></td>
+                            <td><span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</span></td>
                         </tr>
                         <tr>
                             <td class="pe-1">Bank name:</td>
@@ -161,13 +155,13 @@
                                     <strong>{{$service->usage}}</strong>
                                 </td>
                                 <td class="py-1">
-                                    <strong>₦{{number_format($service->unit_price)}}</strong>
+                                    <strong>{{$settings->app_currency_symbol}}{{number_format($service->unit_price)}}</strong>
                                 </td>
                                 <td class="py-1">
                                     <strong>{{$service->volume}}</strong>
                                 </td>
                                 <td class="py-1">
-                                    <strong>₦{{number_format($service->total_price)}}</strong>
+                                    <strong>{{$settings->app_currency_symbol}}{{number_format($service->total_price)}}</strong>
                                 </td>
                             </tr>
                         @endforeach
@@ -198,13 +192,13 @@
                                 </td>
 
                                 <td class="py-1">
-                                    <strong>₦{{number_format($product->unit_price)}}</strong>
+                                    <strong>{{$settings->app_currency_symbol}}{{number_format($product->unit_price)}}</strong>
                                 </td>
                                 <td class="py-1">
                                     <strong>{{$product->quantity}}</strong>
                                 </td>
                                 <td class="py-1">
-                                    <strong>₦{{number_format($product->total_price)}}</strong>
+                                    <strong>{{$settings->app_currency_symbol}}{{number_format($product->total_price)}}</strong>
                                 </td>
                             </tr>
                         @endforeach
@@ -223,16 +217,16 @@
                     <div class="invoice-total-wrapper">
                         <div class="invoice-total-item">
                             <p class="invoice-total-title">Service total:</p>
-                            <p class="invoice-total-amount">₦{{number_format($invoice->services_total_price)}}</p>
+                            <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->services_total_price)}}</p>
                         </div>
                         <div class="invoice-total-item">
                             <p class="invoice-total-title">Product total:</p>
-                            <p class="invoice-total-amount">₦{{number_format($invoice->products_total_price)}}</p>
+                            <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price)}}</p>
                         </div>
                         <hr class="my-50" />
                         <div class="invoice-total-item">
                             <p class="invoice-total-title">Total:</p>
-                            <p class="invoice-total-amount">₦{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</p>
+                            <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</p>
                         </div>
                     </div>
                 </div>
@@ -258,7 +252,7 @@
 
 <!-- BEGIN: Footer-->
 <footer class="footer footer-static footer-light">
-    <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; {{ now()->year }}<a class="ms-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Binutu</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; {{ now()->year }}<a class="ms-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">{{$settings->app_name}}</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
 </footer>
 <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 

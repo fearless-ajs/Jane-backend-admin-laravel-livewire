@@ -18,4 +18,8 @@ class Service extends Model
         return $this->belongsTo(Company::class, 'company_id');
     }
 
+    public function images(){
+        return $this->hasMany(ServiceImage::class, 'service_id');
+    }
+
 }

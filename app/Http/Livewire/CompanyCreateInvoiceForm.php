@@ -9,6 +9,7 @@ use App\Models\InvoiceProduct;
 use App\Models\InvoiceService;
 use App\Models\Product;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -78,8 +79,10 @@ class CompanyCreateInvoiceForm extends Component
         ]);
     }
 
+    public $settings;
     public function mount(){
         $this->fetchUsersData();
+        $this->settings = Setting::first();
     }
 
     public function addProductItem(){

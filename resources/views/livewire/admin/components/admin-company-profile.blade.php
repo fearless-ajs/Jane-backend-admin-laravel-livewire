@@ -3,14 +3,14 @@
     <!-- profile header -->
     <div class="row">
         <div class="col-12">
-            <div class="card profile-header mb-2">
+            <div class="card profile-header mb-2" style="border: 2px solid green;">
                 <!-- profile cover photo -->
                 <img class="card-img-top" src="{{$company->companyBanner}}" alt="User Profile Image" />
                 <!--/ profile cover photo -->
 
-                <div class="position-relative">
+                <div class="position-relative" >
                     <!-- profile picture -->
-                    <div class="profile-img-container d-flex align-items-center">
+                    <div class="profile-img-container d-flex align-items-center" >
 {{--                        <div class="profile-img">--}}
 {{--                            <img src="{{$company->companyBanner}}" class="rounded img-fluid" alt="Card image" />--}}
 {{--                        </div>--}}
@@ -36,7 +36,7 @@
                                 <ul class="nav nav-pills mb-0">
                                     <li class="nav-item">
                                         <a class="nav-link fw-bold active" href="#" >
-                                            <span class="d-none d-md-block">About contact</span>
+                                            <span class="d-none d-md-block">About company</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>
@@ -146,45 +146,38 @@
                             {{$company->address}}
                         </p>
 
-                        <!-- like share -->
-                        <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
-
-                            <!-- share and like count and icons -->
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-{{--                                <a href="#" class="text-nowrap">--}}
-{{--                                    <i  class="text-body font-medium-3 fa fa-phone"></i>--}}
-{{--                                    <span class="text-muted me-1">Office: {{$contact->office_phone}}</span>--}}
-{{--                                </a>--}}
-
-                                <a href="#" class="text-nowrap">
-                                    <i class="text-body font-medium-3 mx-50 fa fa-mobile"></i>
-                                    <span class="text-muted">Mobile: {{$company->phone}}</span>
-                                </a>
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <small>{{$company->email}}</small>
                             </div>
-
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                                <a href="#" class="d-flex align-items-center text-muted text-nowrap">
-                                    <i>Fax: {{$company->fax}}</i>
-                                </a>
-                            </div>
-
-                            <!-- share and like count and icons -->
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                                <a href="#" class="text-nowrap">
-                                    <i  class="text-body font-medium-3 fa fa-envelope"></i>
-                                    <span class="text-muted me-1">Email: {{$company->email}}</span>
-                                </a>
-
-                                <a href="#" class="text-nowrap">
-                                    <i class="text-body font-medium-3 mx-50 fa fa-calendar"></i>
-                                    <span class="text-muted">last update: {{$company->updated_at}}</span>
-                                </a>
-                            </div>
-
-                            <!-- share and like count and icons -->
                         </div>
-                        <!-- like share -->
-
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Phone</h6>
+                                </div>
+                                <small>{{$company->phone}}</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Fax:</h6>
+                                </div>
+                                <small>{{$company->fax}}</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Address</h6>
+                                </div>
+                                <small>{{$company->address}}</small>
+                            </div>
+                        </div>
                         <div class="d-flex align-items-start mb-1">
                             <div class="profile-user-info w-100">
                                 <div class="d-flex align-items-center justify-content-between">
@@ -225,9 +218,9 @@
 
 
                         @if($company->available)
-                            <button type="button" class="btn btn-sm btn-success">Active contact</button>
+                            <p  class="text-success">Active contact</p>
                         @else
-                            <button type="button" class="btn btn-sm btn-success">Inactive contact</button>
+                            <p  class="text-danger">Inactive contact</p>
                         @endif
                     </div>
                 </div>

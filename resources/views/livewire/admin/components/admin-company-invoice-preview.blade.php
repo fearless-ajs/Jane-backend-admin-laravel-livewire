@@ -21,11 +21,7 @@
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <g transform="translate(-400.000000, -178.000000)">
                                         <g transform="translate(400.000000, 178.000000)">
-                                            <path class="text-primary" d="M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z" style="fill: currentColor"></path>
-                                            <path d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z" fill="url(#invoice-linearGradient-1)" opacity="0.2"></path>
-                                            <polygon fill="#000000" opacity="0.049999997" points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325"></polygon>
-                                            <polygon fill="#000000" opacity="0.099999994" points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338"></polygon>
-                                            <polygon fill="url(#invoice-linearGradient-2)" opacity="0.099999994" points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288"></polygon>
+                                            <img src="{{$settings->AppImage}}" style="max-width: 10%" />
                                         </g>
                                     </g>
                                 </g>
@@ -73,7 +69,7 @@
                             <tbody>
                             <tr>
                                 <td class="pe-1">Total Due:</td>
-                                <td><span class="fw-bold">₦{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</span></td>
+                                <td><span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</span></td>
                             </tr>
                             <tr>
                                 <td class="pe-1">Bank name:</td>
@@ -125,13 +121,13 @@
                                     <span class="fw-bold">{{$service->usage}}</span>
                                 </td>
                                 <td class="py-1">
-                                    <span class="fw-bold">₦{{number_format($service->unit_price)}}</span>
+                                    <span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($service->unit_price)}}</span>
                                 </td>
                                 <td class="py-1">
                                     <span class="fw-bold">{{$service->volume}}</span>
                                 </td>
                                 <td class="py-1">
-                                    <span class="fw-bold">₦{{number_format($service->total_price)}}</span>
+                                    <span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($service->total_price)}}</span>
                                 </td>
                             </tr>
                         @endforeach
@@ -161,13 +157,13 @@
                                     <p class="card-text text-nowrap">{{Str::limit($product->description, 60, $end='...')}}</p>
                                 </td>
                                 <td class="py-1">
-                                    <span class="fw-bold">₦{{number_format($product->unit_price)}}</span>
+                                    <span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($product->unit_price)}}</span>
                                 </td>
                                 <td class="py-1">
                                     <span class="fw-bold">{{$product->quantity}}</span>
                                 </td>
                                 <td class="py-1">
-                                    <span class="fw-bold">₦{{number_format($product->total_price)}}</span>
+                                    <span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($product->total_price)}}</span>
                                 </td>
                             </tr>
                         @endforeach
@@ -190,11 +186,11 @@
                         <div class="invoice-total-wrapper">
                             <div class="invoice-total-item">
                                 <p class="invoice-total-title">Service total:</p>
-                                <p class="invoice-total-amount">₦{{number_format($invoice->services_total_price)}}</p>
+                                <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->services_total_price)}}</p>
                             </div>
                             <div class="invoice-total-item">
                                 <p class="invoice-total-title">Product total:</p>
-                                <p class="invoice-total-amount">₦{{number_format($invoice->products_total_price)}}</p>
+                                <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price)}}</p>
                             </div>
                             {{--                            <div class="invoice-total-item">--}}
                             {{--                                <p class="invoice-total-title">Discount:</p>--}}
@@ -207,7 +203,7 @@
                             <hr class="my-50" />
                             <div class="invoice-total-item">
                                 <p class="invoice-total-title">Total:</p>
-                                <p class="invoice-total-amount">₦{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</p>
+                                <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</p>
                             </div>
                         </div>
                     </div>
@@ -235,9 +231,6 @@
     <div class="col-xl-3 col-md-4 col-12 invoice-actions mt-md-0 mt-2">
         <div class="card">
             <div class="card-body">
-                <button class="btn btn-primary w-100 mb-75" data-bs-toggle="modal" data-bs-target="#send-invoice-sidebar">
-                    Send Invoice
-                </button>
                 <a class="btn btn-outline-secondary w-100 mb-75" href="{{route('company.print-invoice', $invoice->id)}}" target="_blank"> Print </a>
 {{--                <a class="btn btn-outline-success w-100 mb-75" href="{{route('company.edit-invoice', $invoice->id)}}"> Edit </a>--}}
             </div>

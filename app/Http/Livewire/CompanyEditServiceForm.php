@@ -2,13 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Category;
 use App\Models\Service;
+use App\Models\ServiceImage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CompanyEditServiceForm extends Component
 {
+    use WithFileUploads;
+
     public $service;
 
     public $name;
@@ -22,6 +28,13 @@ class CompanyEditServiceForm extends Component
     public $status;
     public $money_back;
     public $active;
+    public $images = [];
+
+    public $categories;
+
+    public function fetchCategories(){
+        $this->categories = Category::where('company_id', Auth::user()->company_id)->get();
+    }
 
     public function updated($field){
         $this->validateOnly($field, [
@@ -34,6 +47,8 @@ class CompanyEditServiceForm extends Component
             'unit_number'            => 'required|numeric|max:255',
             'money_back'             => 'nullable|numeric|min:0',
             'active'                 => 'nullable',
+            'images'                 => 'nullable|array|max:5',
+            'images.*'               => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
     }
 
@@ -50,6 +65,8 @@ class CompanyEditServiceForm extends Component
         $this->status           = $service->status;
         $this->money_back       = $service->money_back_days;
         $this->active           = $service->active;
+
+        $this->fetchCategories();
     }
 
     public function updateService(){
@@ -63,7 +80,29 @@ class CompanyEditServiceForm extends Component
             'unit_number'            => 'required|numeric|max:255',
             'money_back'             => 'nullable|numeric|min:0',
             'active'                 => 'nullable',
+            'images'                 => 'nullable|array|max:5',
+            'images.*'               => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
+
+        // Check if the service exist for the company
+        if (Service::where('company_id', Auth::user()->company_id)->where('name', $this->name)->where('id', '!=', $this->service->id)->first()){
+            return $this->emit('alert', ['type' => 'error', 'message' => 'Service exist already']);
+        }
+
+        if ($this->images){
+            foreach ($this->images as $image){
+                // Replace the old image
+                $serviceImage = $image->store('/', 'images');
+                // Delete product image
+                File::delete($this->service->serviceImage);
+
+                ServiceImage::create([
+                    'service_id'    =>  $this->service->id,
+                    'image'         => $serviceImage
+                ]);
+            }
+        }
+
 
         Service::where('id', $this->service->id)->update([
             'name'                  => $this->name,
@@ -82,6 +121,11 @@ class CompanyEditServiceForm extends Component
         $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Service updated']);
 
+    }
+
+    public function removeImg($index)
+    {
+        array_splice($this->images, $index, 1);
     }
 
     public function render()

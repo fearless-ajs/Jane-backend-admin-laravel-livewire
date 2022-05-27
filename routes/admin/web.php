@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\View\Admin\AdminCompanyViewController;
 use App\Http\Controllers\View\Admin\AdminViewController;
+use App\Models\Setting;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 Route::middleware('auth')->name('admin.')->group(function () {
     Route::middleware('role:super-admin')->group(function (){
-        Route::get('/',                         [AdminViewController::class, 'dashboard'])->name('dashboard');
-        Route::get('/users',                    [AdminViewController::class, 'usersList'])->name('users');
+
+        Route::get('/',                                                         [AdminViewController::class, 'dashboard'])->name('dashboard');
+        Route::get('/settings',                                                 [AdminViewController::class, 'settings'])->name('settings');
+        Route::get('/users',                                                    [AdminViewController::class, 'usersList'])->name('users');
 
         Route::get('/companies',                                                [AdminCompanyViewController::class, 'companies'])->name('companies');
         Route::get('/companies/{id}',                                           [AdminCompanyViewController::class, 'companyProfile'])->name('company-profile');

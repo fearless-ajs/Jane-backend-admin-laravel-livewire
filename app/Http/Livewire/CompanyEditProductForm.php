@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -30,7 +31,7 @@ class CompanyEditProductForm extends Component
     public $money_back;
     public $warranty;
     public $active;
-    public $image;
+    public $images = [];
 
     public $categories;
 
@@ -74,7 +75,8 @@ class CompanyEditProductForm extends Component
             'money_back'             => 'nullable|numeric|min:0',
             'warranty'               => 'nullable',
             'active'                 => 'nullable',
-            'image'                  => 'nullable|image:mimes, jpeg, jpg, png',
+            'images'                 => 'nullable|array|max:10',
+            'images.*'               => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
     }
 
@@ -93,15 +95,27 @@ class CompanyEditProductForm extends Component
             'money_back'             => 'nullable|numeric|min:0',
             'warranty'               => 'nullable',
             'active'                 => 'nullable',
-            'image'                  => 'nullable|image:mimes, jpeg, jpg, png',
+            'images'                 => 'nullable|array|max:10',
+            'images.*'               => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
 
-        $productImage = false;
-        if ($this->image){
-            // Replace the old image
-            $productImage = $this->image->store('/', 'images');
-            // Delete product image
-            File::delete($this->product->productImage);
+        // Check if the product exist for the company
+        if (Product::where('company_id', Auth::user()->company_id)->where('name', $this->name)->where('id', '!=', $this->product->id)->first()){
+            return $this->emit('alert', ['type' => 'error', 'message' => 'Product exist already']);
+        }
+
+        if ($this->images){
+            foreach ($this->images as $image){
+                // Replace the old image
+                $productImage = $image->store('/', 'images');
+                // Delete product image
+                File::delete($this->product->productImage);
+
+                ProductImage::create([
+                    'product_id'    =>  $this->product->id,
+                    'image'         => $productImage
+                ]);
+            }
         }
 
         Product::where('id', $this->product->id)->update([
@@ -119,11 +133,17 @@ class CompanyEditProductForm extends Component
             'money_back_days'       => $this->money_back,
             'warranty_period'       => $this->warranty,
             'active'                => ($this->active)? true: false,
-            'image'                 => ($productImage)?$productImage:$this->product->image
         ]);
+
+
         $this->emit('refreshProductDetails');
         $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Product updated']);
+    }
+
+    public function removeImg($index)
+    {
+        array_splice($this->images, $index, 1);
     }
 
 

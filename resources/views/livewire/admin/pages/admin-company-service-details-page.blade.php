@@ -11,13 +11,15 @@
                         <h2 class="content-header-title float-start mb-0">Service Details</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">eCommerce</a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.companies')}}">Companies</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="app-ecommerce-shop.html">Shop</a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $service->company->id)}}">{{$service->company->name}}</a>
                                 </li>
-                                <li class="breadcrumb-item active">Details
+                                <li class="breadcrumb-item"><a href="{{route('admin.company-services', $service->company->id)}}">Services</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{$service->name}}
                                 </li>
                             </ol>
                         </div>

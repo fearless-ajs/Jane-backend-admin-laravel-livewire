@@ -29,7 +29,6 @@ return new class extends Migration
             $table->string('manufacturer');
             $table->boolean('available')->default(0);
             $table->text('description');
-            $table->string('image');
             $table->boolean('free_shipping')->default(0);
             $table->bigInteger('money_back_days')->nullable();
             $table->bigInteger('warranty_period')->nullable(); // Supplied in months

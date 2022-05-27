@@ -80,11 +80,28 @@
                         @error('warranty') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-company">Product image*</label>
-                        <input type="file" wire:model.lazy="image"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('image')? 'is-invalid' : '' }}"/>
-                        @error('image') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+
+                    <div class="col-12">
+                        <div class="form-group" wire:ignore>
+                                <label>Images <sup>max 20MB</sup></label><br>
+                                <input name="images[]"  class="form-control {{$errors->has('images.*')? 'is-invalid' : '' }}" type="file" wire:model="images" multiple data-min-file-count="1" data-theme="fas">
+                                @error('images') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                <small wire:loading wire:target="images" class="form-text text-muted"><i class="fa fa-spin"><i class="fa fa-spinner"></i></i>&nbsp;&nbsp; Loading preview...</small>
+                            <!-- /.form-group -->
+                        </div>
+                        @if ($images)
+                            Photo Preview:<br>
+                            @foreach($images as $photo)
+                                <a target="_blank" href="{{ $photo->temporaryUrl() }}" >
+                                    <img src="{{ $photo->temporaryUrl() }}" style="margin-bottom: 5px; border: 1px solid white; max-width: 30%">
+                                    <span wire:loading wire:target="removeImg({{$loop->index}})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </a>
+                                <small style="cursor: pointer;" class="fas fa-times text-danger" wire:click.prevent="removeImg({{$loop->index}})" wire:loading.remove wire:target="removeImg({{$loop->index}})"></small>
+                            @endforeach
+                        @endif
                     </div>
+                    @error('images.*') <span class="error">{{ $message }}</span> @enderror
+                    @error('images') <span class="error">{{ $message }}</span> @enderror
 
                     <div class="col-12 col-md-6">
                         <div class="form-check">

@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title mb-50">Attached Permissions</h4>
-        <p class="mb-0">Change the permissions, the user will get the update</p>
+        <p class="mb-0">Change the permissions, the user will get the updae</p>
     </div>
     <div class="table-responsive">
         <table class="table text-nowrap text-center border-bottom">
@@ -42,6 +42,7 @@
     </div>
 
 
+    @if($currentUrl != 'admin.company-user-profile')
     <hr />
     <div class="table-responsive">
         <div class="modal-body">
@@ -64,5 +65,6 @@
             </form>
         </div>
     </div>
+    @endif
 
 </div>

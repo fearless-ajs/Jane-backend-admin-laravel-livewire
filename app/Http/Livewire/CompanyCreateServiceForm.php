@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Product;
+use App\Models\Category;
 use App\Models\Service;
+use App\Models\ServiceImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CompanyCreateServiceForm extends Component
 {
+    use WithFileUploads;
+
     public $name;
     public $price;
     public $previous_price;
@@ -22,6 +26,18 @@ class CompanyCreateServiceForm extends Component
     public $status;
     public $money_back;
     public $active;
+    public $images = [];
+
+    public $categories;
+
+    public function mount(){
+        $this->fetchCategories();
+    }
+
+    public function fetchCategories(){
+        $this->categories = Category::where('company_id', Auth::user()->company_id)->get();
+    }
+
 
     public function updated($field){
         $this->validateOnly($field, [
@@ -34,6 +50,8 @@ class CompanyCreateServiceForm extends Component
             'unit_number'            => 'required|numeric|max:255',
             'money_back'             => 'nullable|numeric|min:0',
             'active'                 => 'nullable',
+            'images'                 => 'required|array|min:1|max:5',
+            'images.*'               => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
     }
 
@@ -49,10 +67,18 @@ class CompanyCreateServiceForm extends Component
             'unit_number'            => 'required|numeric|max:255',
             'money_back'             => 'nullable|numeric|min:0',
             'active'                 => 'nullable',
+            'images'                 => 'required|array|min:1|max:5',
+            'images.*'               => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:20480',
         ]);
 
+        // Check if the service exist for the company
+        if (Service::where('company_id', Auth::user()->company_id)->where('name', $this->name)->first()){
+            return $this->emit('alert', ['type' => 'error', 'message' => 'Product exist already']);
+        }
+
+
         // Save the product information
-        Service::create([
+       $service = Service::create([
             'company_id'            => Auth::user()->company_id,
             'user_id'               => Auth::user()->id,
             'name'                  => $this->name,
@@ -67,10 +93,24 @@ class CompanyCreateServiceForm extends Component
             'active'                => ($this->active)? true: false,
         ]);
 
+        // Upload the image
+        foreach ($this->images as $image){
+            $serviceImage = $image->store('/', 'images');
+            ServiceImage::create([
+                'service_id'    =>  $service->id,
+                'image'         => $serviceImage
+            ]);
+        }
+
         $this->emit('refreshServiceList');
         $this->emit('close-current-modal');
-        $this->reset();
+        $this->resetExcept('categories');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Service added']);
+    }
+
+    public function removeImg($index)
+    {
+        array_splice($this->images, $index, 1);
     }
 
     public function render()

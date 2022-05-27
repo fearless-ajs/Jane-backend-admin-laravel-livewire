@@ -2,13 +2,16 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Setting;
 use Livewire\Component;
 
 class AdminCompanyServiceDetails extends Component
 {
     public $service;
+    public $settings;
 
     public function mount($service){
+        $this->settings = Setting::first();
         $this->service = $service;
     }
 

@@ -1,4 +1,16 @@
 <div class="card-datatable table-responsive pt-0">
+    <div class="card-body border-bottom">
+        <h4 wire:loading.remove wire:target="search" class="card-title">@if($searchResult)  {{count($searchResult)}}  @else {{count($company->contacts)}} @endif Contacts</h4>
+        <h4 wire:loading wire:target="search" class="card-title">Searching... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h4>
+
+        <input type="text" class="form-control" wire:model="search" placeholder="Search for contact by phone"/>
+        <div class="row">
+            <div class="col-md-4 user_role"></div>
+            <div class="col-md-4 user_plan"></div>
+            <div class="col-md-4 user_status"></div>
+        </div>
+    </div>
+
     <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#addContactModal">
         Add contact
     </button>
@@ -43,5 +55,8 @@
         @endif
         </tbody>
     </table>
+    @if(!$searchResult)
+        {{ $contacts->links('components.general.pagination-links') /* For pagination links */}}
+    @endif
 </div>
 

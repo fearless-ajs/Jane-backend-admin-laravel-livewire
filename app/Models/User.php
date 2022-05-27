@@ -86,4 +86,8 @@ class User extends Authenticatable
         return $this->hasOne(Worker::class, 'user_id', 'id');
     }
 
+    public function contact(){
+        return $this->hasOne(Contact::class, 'user_id', 'id');
+    }
+
 }

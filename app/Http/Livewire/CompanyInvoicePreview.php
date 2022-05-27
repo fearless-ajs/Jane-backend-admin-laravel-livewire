@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Setting;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -9,7 +10,10 @@ class CompanyInvoicePreview extends Component
 {
     public $invoice;
 
+    public $settings;
+
     public function mount($invoice){
+        $this->settings = Setting::first();
         $this->invoice = $invoice;
     }
 

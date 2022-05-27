@@ -4,7 +4,7 @@
 
         <th>#</th>
         <th>Client</th>
-        <th>Total(NAIRA)</th>
+        <th>Total({{$settings->app_currency}})</th>
         <th class="text-truncate">Issued Date</th>
         <th class="text-truncate">Due Date</th>
         <th>Assigned to</th>
@@ -20,7 +20,7 @@
             <tr>
                 <td>{{$loop->index + 1}}</td>
                 <td>{{$invoice->contactInfo->user->lastname. '  '.$invoice->contactInfo->user->firstname}}</td>
-                <td>{{$invoice->products_total_price + $invoice->services_total_price}}</td>
+                <td>{{$settings->app_currency_symbol}}{{$invoice->products_total_price + $invoice->services_total_price}}</td>
                 <td>{{ \Carbon\Carbon::parse($invoice->date_issued)->translatedFormat(' j F Y')}}</td>
                 <td>{{ \Carbon\Carbon::parse($invoice->due_date)->translatedFormat(' j F Y')}}</td>
                 <td>{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</td>

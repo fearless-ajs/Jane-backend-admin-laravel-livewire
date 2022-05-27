@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Mail\UserMailChanged;
 use App\Mail\WelcomeMail;
+use App\Models\Service;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
@@ -35,5 +37,7 @@ class AppServiceProvider extends ServiceProvider
                 });
             }
         });
+
+        view()->share('settings', Setting::first());
     }
 }

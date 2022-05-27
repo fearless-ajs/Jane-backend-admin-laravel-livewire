@@ -27,4 +27,8 @@ class Product extends Model
     public function ratings(){
         return $this->hasMany(ProductRating::class, 'product_id');
     }
+
+    public function images(){
+        return $this->hasMany(ProductImage::class, 'product_id');
+    }
 }

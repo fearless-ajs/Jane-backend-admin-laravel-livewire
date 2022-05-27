@@ -12,21 +12,24 @@
                                 <button class="navbar-toggler shop-sidebar-toggler" type="button" data-bs-toggle="collapse">
                                     <span class="navbar-toggler-icon d-block d-lg-none"><i data-feather="menu"></i></span>
                                 </button>
-                                <div class="search-results">16285 results found</div>
+                                <div class="search-results">
+                                    <h6 wire:loading.remove wire:target="search" class="filter-heading">@if($searchResult)  {{count($searchResult)}}  @else {{count($company->products)}} @endif results found</h6>
+                                    <h6 wire:loading wire:target="search" class="filter-heading">Searching... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h6>
+                                </div>
+
                             </div>
                             <div class="view-options d-flex">
                                 <div class="btn-group dropdown-sort">
 {{--                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">--}}
 {{--                                        Add product--}}
 {{--                                    </button>--}}
-                                    <button type="button" class="btn btn-outline-primary dropdown-toggle me-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="active-sorting">Featured</span>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Featured</a>
-                                        <a class="dropdown-item" href="#">Lowest</a>
-                                        <a class="dropdown-item" href="#">Highest</a>
-                                    </div>
+{{--                                    <button type="button" class="btn btn-outline-primary dropdown-toggle me-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                                        <span class="active-sorting">Order by price</span>--}}
+{{--                                    </button>--}}
+{{--                                    <div class="dropdown-menu">--}}
+{{--                                        <a class="dropdown-item" href="#" wire:click="setOrder('ASC')">From lowest</a>--}}
+{{--                                        <a class="dropdown-item" href="#" wire:click="setOrder('DESC')">From highest</a>--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="btn-group" role="group">
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option1" autocomplete="off" checked />
@@ -50,7 +53,7 @@
                 <div class="row mt-1">
                     <div class="col-sm-12">
                         <div class="input-group input-group-merge">
-                            <input type="text" class="form-control search-product" id="shop-search" placeholder="Search Product" aria-label="Search..." aria-describedby="shop-search" />
+                            <input type="text" wire:model="search" class="form-control search-product" id="shop-search" placeholder="Search Product" aria-label="Search..." aria-describedby="shop-search" />
                             <span class="input-group-text"><i data-feather="search" class="text-muted"></i></span>
                         </div>
                     </div>
@@ -72,15 +75,11 @@
                                 <div class="item-wrapper">
                                     <div class="item-rating">
                                         <ul class="unstyled-list list-inline">
-                                            <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                            <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                            <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                            <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
-                                            <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
+                                            <span class="badge badge-light-success">In stock: {{$product->quantity}} </span>
                                         </ul>
                                     </div>
                                     <div>
-                                        <h6 class="item-price">₦{{$product->price}}</h6>
+                                        <h6 class="item-price">{{$settings->app_currency_symbol}}{{$product->price}}</h6>
                                     </div>
                                 </div>
                                 <h6 class="item-name">
@@ -97,14 +96,12 @@
                                         <h4 class="item-price">₦ {{$product->price}}</h4>
                                     </div>
                                 </div>
-                                <a href="#" wire:click="remove({{$product->id}})" class="btn btn-light btn-wishlist">
-                                    <span wire:loading wire:target="remove({{$product->id}})"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    <i wire:loading.remove wire:target="remove({{$product->id}})"  class="fa fa-trash"></i>
-                                    <span>Remove</span>
-                                </a>
-                                <a href="{{route('admin.company-product-details', $product->id)}}" class="btn btn-primary">
+                                <a href="{{route('admin.company-product-details', $product->id)}}"  class="btn btn-light btn-wishlist">
                                     <span>See details</span>
                                 </a>
+{{--                                <a href="{{route('admin.company-product-details', $product->id)}}" class="btn btn-primary">--}}
+{{--                                    <span>See details</span>--}}
+{{--                                </a>--}}
                             </div>
                         </div>
                     @endforeach
@@ -118,19 +115,9 @@
             <section id="ecommerce-pagination">
                 <div class="row">
                     <div class="col-sm-12">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center mt-2">
-                                <li class="page-item prev-item"><a class="page-link" href="#"></a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item" aria-current="page"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                <li class="page-item"><a class="page-link" href="#">7</a></li>
-                                <li class="page-item next-item"><a class="page-link" href="#"></a></li>
-                            </ul>
-                        </nav>
+                        @if(!$searchResult)
+                            {{ $products->links('components.general.pagination-links') /* For pagination links */}}
+                        @endif
                     </div>
                 </div>
             </section>
@@ -158,73 +145,25 @@
                         <div id="product-categories">
                             <h6 class="filter-title">Categories</h6>
                             <ul class="list-unstyled categories-list">
+
+                                @if($categories)
+                                    @foreach($categories as $category)
                                 <li>
                                     <div class="form-check">
-                                        <input type="radio" id="category1" name="category-filter" class="form-check-input" checked />
-                                        <label class="form-check-label" for="category1">Appliances</label>
+                                        <input type="radio" id="{{$category->name}}" name="category-filter" class="form-check-input" value="{{$category->name}}" wire:model="category" />
+                                        <label class="form-check-label" for="{{$category->name}}">{{$category->name}}</label>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category2" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category2">Audio</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category3" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category3">Cameras & Camcorders</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category4" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category4">Car Electronics & GPS</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category5" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category5">Cell Phones</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category6" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category6">Computers & Tablets</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category7" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category7">Health, Fitness & Beauty</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category8" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category8">Office & School Supplies</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category9" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category9">TV & Home Theater</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="radio" id="category10" name="category-filter" class="form-check-input" />
-                                        <label class="form-check-label" for="category10">Video Games</label>
-                                    </div>
-                                </li>
+                                    @endforeach
+                                @endif
+
                             </ul>
                         </div>
                         <!-- Categories Ends -->
 
                         <!-- Clear Filters Starts -->
                         <div id="clear-filters">
-                            <button type="button" class="btn w-100 btn-primary">Clear All Filters</button>
+                            <button type="button" wire:click="clearFilter" class="btn w-100 btn-primary">Clear all filters</button>
                         </div>
                         <!-- Clear Filters Ends -->
                     </div>

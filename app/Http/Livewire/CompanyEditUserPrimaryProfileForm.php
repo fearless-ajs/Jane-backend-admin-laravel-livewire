@@ -73,28 +73,27 @@ class CompanyEditUserPrimaryProfileForm extends LiveNotify
 
         // Check if the email changed and change the status to unverified
         if ($this->email !== $this->user->email){
-            $token  = Str::random(50);
-           User::where('id', $this->user->id)->update([
-                'email_verified_at'     => NULL,
-                'verification_token'    => $token,
-                'enabled'               => false
-            ]);
-           $user = User::find($this->user->id);
-            Mail::to($this->email)->send(new UserMailChanged($user, $token));
-
-            try {
-              retry(5, function () use ($user) {
-
-                });
-             } catch (\Exception $e) {
-
-             }
+            if (!$this->user->hasRole('super-admin')){
+                $token  = Str::random(50);
+                User::where('id', $this->user->id)->update([
+                    'email_verified_at'     => NULL,
+                    'verification_token'    => $token,
+                    'enabled'               => false
+                ]);
+                $user = User::find($this->user->id);
+                Mail::to($this->email)->send(new UserMailChanged($user, $token));
+                $this->emit('refreshCompanyMyUserUserProfile');
+                $this->emit('close-current-modal');
+                return $this->alert('success', 'Profile updated', 'please check your email to verify your email');
+            }
         }
 
 
         $this->emit('refreshCompanyMyUserUserProfile');
         $this->emit('close-current-modal');
-        $this->alert('success', 'Profile updated', 'please check your email to verify your email');
+        $this->emit('refreshAdminAppHeader');
+        $this->emit('refreshCompanyAppHeader');
+        return $this->alert('success', 'Profile updated');
     }
 
     public function render()

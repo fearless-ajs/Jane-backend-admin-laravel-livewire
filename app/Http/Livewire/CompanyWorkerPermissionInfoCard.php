@@ -9,6 +9,7 @@ use App\Models\CompanyRoleUser;
 use App\Models\CompanyTeam;
 use App\Models\CompanyTeamUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
 class CompanyWorkerPermissionInfoCard extends Component
@@ -23,6 +24,7 @@ class CompanyWorkerPermissionInfoCard extends Component
     // database roles
     public $roles;
     public $permissions;
+    public $currentUrl;
 
     protected $listeners = ['refreshWorkerPermission' => '$refresh'];
 
@@ -30,6 +32,7 @@ class CompanyWorkerPermissionInfoCard extends Component
     {
         $this->worker = $worker;
         $this->fetchData();
+        $this->currentUrl = Route::currentRouteName();
     }
 
 

@@ -3,6 +3,21 @@
 
 @section('content')
     <div class="content-body">
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-start mb-0">Roles</h2>
+                    <div class="breadcrumb-wrapper">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{route('company.dashboard')}}">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">Roles
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
         <h3>Roles List</h3>
         <p class="mb-2">
             A role provided access to predefined menus and features so that depending <br />
@@ -10,31 +25,8 @@
         </p>
 
         <!-- Role cards -->
-        @livewire('company-role-list')
+        @livewire('company-roles-list')
         <!--/ Role cards -->
-
-        <h3 class="mt-50">Total workers with their roles</h3>
-        <p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p>
-        <!-- table -->
-        <div class="card">
-            <div class="table-responsive">
-                <table class="user-list-table table">
-                    <thead class="table-light">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Plan</th>
-                        <th>Billing</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-        <!-- table -->
 
         <!-- Add Role Modal -->
         @livewire('company-create-role-form')
