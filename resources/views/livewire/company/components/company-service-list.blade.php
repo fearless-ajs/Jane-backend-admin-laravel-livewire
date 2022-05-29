@@ -20,9 +20,11 @@
                             </div>
                             <div class="view-options d-flex">
                                 <div class="btn-group dropdown-sort">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
-                                        Add service
-                                    </button>
+                                    @if(Auth::user()->hasModuleAccess('service', 'create'))
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                                            Add service
+                                        </button>
+                                    @endif
                                 </div>
                                 <div class="btn-group" role="group">
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option1" autocomplete="off" checked />
@@ -90,11 +92,13 @@
                                         <h4 class="item-price">₦ {{$service->price}}</h4>
                                     </div>
                                 </div>
+                                @if(Auth::user()->hasModuleAccess('service', 'delete'))
                                 <a href="#" wire:click="remove({{$service->id}})" class="btn btn-light btn-wishlist">
                                     <span wire:loading wire:target="remove({{$service->id}})"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     <i wire:loading.remove wire:target="remove({{$service->id}})"  class="fa fa-trash"></i>
                                     <span>Remove</span>
                                 </a>
+                                @endif
                                 <a href="{{route('company.service-details', $service->id)}}" class="btn btn-primary">
                                     <span>See details</span>
                                 </a>

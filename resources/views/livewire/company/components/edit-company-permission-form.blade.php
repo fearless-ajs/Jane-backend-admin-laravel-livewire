@@ -55,10 +55,12 @@
             </div>
             <!-- Permission table -->
         </div>
+        @if(Auth::user()->hasModuleAccess('role', 'edit'))
         <div class="col-12 text-center mt-2">
             <button type="submit" class="btn btn-primary" wire:loading.remove wire:target="updateData">Update permission</button>
             <button type="button" disabled class="btn btn-primary" wire:loading wire:target="updateData"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
         </div>
+        @endif
     </form>
     <!--/ Add role form -->
 </div>

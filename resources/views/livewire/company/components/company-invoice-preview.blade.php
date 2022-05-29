@@ -235,7 +235,10 @@
                     Send Invoice
                 </button>
                  <a class="btn btn-outline-secondary w-100 mb-75" href="{{route('company.print-invoice', $invoice->id)}}" target="_blank"> Print </a>
+
+                @if(Auth::user()->hasModuleAccess('invoice', 'edit'))
                 <a class="btn btn-outline-success w-100 mb-75" href="{{route('company.edit-invoice', $invoice->id)}}"> Edit </a>
+                @endif
             </div>
         </div>
     </div>

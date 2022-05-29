@@ -36,10 +36,12 @@
                                     Details
                                 </a>
                             </td>
+                            @if(Auth::user()->hasModuleAccess('role', 'delete'))
                             <td>
                                 <button type="button" wire:click="remove({{$permission->id}})" class="btn btn-danger me-1" wire:loading.remove wire:target="remove({{$permission->id}})">Remove</button>
                                 <button type="button" disabled class="btn btn-danger me-1" wire:loading wire:target="remove({{$permission->id}})"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                             </td>
+                            @endif
                         @endif
                     </tr>
                 @endforeach

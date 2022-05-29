@@ -39,14 +39,18 @@
                         <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                             <div class="role-heading">
                                 <h4 class="fw-bolder">{{$role->display_name}}</h4>
+                                @if(Auth::user()->hasModuleAccess('role', 'edit'))
                                 <a href="{{route('company.role-details', $role->id)}}" class="role-edit-modal">
                                     <small class="fw-bolder">Edit role</small>
                                 </a>
+                                @endif
                             </div>
+                            @if(Auth::user()->hasModuleAccess('role', 'delete'))
                             <a href="javascript:void(0);" wire:click="remove({{$role->id}})" class="text-body"><i data-feather="copy" class="font-medium-5"></i>
                                 <span wire:loading wire:target="remove({{$role->id}})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <span wire:loading.remove wire:target="remove({{$role->id}})">Remove</span>
                             </a>
+                            @endif
                         </div>
                     </div>
                 </div>

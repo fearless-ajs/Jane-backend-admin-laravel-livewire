@@ -34,9 +34,11 @@
 
                 @livewire('company-contact-list')
 
+                @if(Auth::user()->hasModuleAccess('contact', 'create'))
                 <!-- Modal to add new user starts-->
                 @livewire('company-create-contact-form')
                 <!-- Modal to add new user Ends-->
+                @endif
 
             </div>
             <!-- list and filter end -->

@@ -42,9 +42,11 @@
 
                 @livewire('company-category-list')
 
+                @if(Auth::user()->hasModuleAccess('category', 'create'))
                 <!-- Modal to add new user starts-->
                 @livewire('company-create-category-form')
                 <!-- Modal to add new user Ends-->
+                @endif
             </div>
             <!-- list and filter end -->
         </section>

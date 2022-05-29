@@ -20,9 +20,12 @@
                             </div>
                             <div class="view-options d-flex">
                                 <div class="btn-group dropdown-sort">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                                        Add product
-                                    </button>
+                                    @if(Auth::user()->hasModuleAccess('product', 'create'))
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                                            Add product
+                                        </button>
+                                    @endif
+
                                 </div>
                                 <div class="btn-group" role="group">
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option1" autocomplete="off" checked />
@@ -89,11 +92,13 @@
                                 <h4 class="item-price">₦ {{$product->price}}</h4>
                             </div>
                         </div>
+                        @if(Auth::user()->hasModuleAccess('product', 'delete'))
                         <a href="#" wire:click="remove({{$product->id}})" class="btn btn-light btn-wishlist">
                             <span wire:loading wire:target="remove({{$product->id}})"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             <i wire:loading.remove wire:target="remove({{$product->id}})"  class="fa fa-trash"></i>
                             <span>Remove</span>
                         </a>
+                        @endif
                         <a href="{{route('company.product-details', $product->id)}}" class="btn btn-primary">
                             <span>See details</span>
                         </a>
@@ -169,6 +174,8 @@
         </div>
     </div>
 
-    @livewire('company-create-product-form')
+    @if(Auth::user()->hasModuleAccess('product', 'create'))
+        @livewire('company-create-product-form')
+    @endif
 
 </div>

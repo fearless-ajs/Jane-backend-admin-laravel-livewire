@@ -42,6 +42,7 @@
     </div>
 
     @if(Route::currentRouteName() != 'admin.company-user-profile')
+        @if(Auth::user()->hasModuleAccess('user', 'edit'))
     <hr />
     <div class="table-responsive">
         <div class="modal-body">
@@ -64,6 +65,7 @@
             </form>
         </div>
     </div>
+        @endif
     @endif
 
 </div>

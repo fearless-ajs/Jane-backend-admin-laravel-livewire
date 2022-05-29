@@ -11,9 +11,12 @@
         </div>
     </div>
 
+    @if(Auth::user()->hasModuleAccess('contact', 'create'))
     <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#addContactModal">
         Add contact
     </button>
+    @endif
+
     <table class="user-list-table table">
         <thead class="table-light">
         <tr>
@@ -43,12 +46,14 @@
 
                     <td>{{$contact->created_at->diffForHumans()}}</td>
                     <td><a href="{{route('company.contacts.profile', $contact->id)}}">Details</a> </td>
+                    @if(Auth::user()->hasModuleAccess('contact', 'delete'))
                     <td wire:loading wire:target="remove({{$contact->id}})" >
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </td>
                     <td wire:loading.remove wire:target="remove({{$contact->id}})" >
                         <i class="fa fa-trash" wire:click="remove({{$contact->id}})" style="cursor: pointer"></i>
                     </td>
+                    @endif
 {{--                    <td>Delete</td>--}}
                 </tr>
             @endforeach

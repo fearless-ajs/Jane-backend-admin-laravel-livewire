@@ -43,9 +43,11 @@
                         </div>
                         <hr />
                         <div class="d-flex flex-column flex-sm-row pt-1">
+                            @if(Auth::user()->hasModuleAccess('service', 'edit'))
                             <button type="button" class="btn btn-primary me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#editServiceModal">
                                 Update service
                             </button>
+                            @endif
                             <a href="{{route('company.services')}}" class="btn btn-outline-secondary btn-wishlist me-0 me-sm-1 mb-1 mb-sm-0">
                                 <i data-feather="heart" class="me-50"></i>
                                 <span>Shop</span>
@@ -57,7 +59,10 @@
             <!-- service Details ends -->
         </div>
 
+        @if(Auth::user()->hasModuleAccess('service', 'edit'))
         @livewire('company-edit-service-form', ['service' => $service])
+        @endif
+
     </section>
     <!-- app e-commerce details end -->
     <section class="app-ecommerce-details">

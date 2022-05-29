@@ -90,6 +90,7 @@
                 </ul>
                 @if(Route::currentRouteName() != 'admin.company-user-profile')
                 <div class="d-flex justify-content-center pt-2">
+                    @if(Auth::user()->hasModuleAccess('user', 'edit'))
                     <a href="javascript:;" class="btn btn-primary me-1" data-bs-target="#editUser" data-bs-toggle="modal">
                         Edit
                     </a>
@@ -97,6 +98,7 @@
                     <a href="javascript:;" wire:click="suspendWorker" class="btn btn-outline-danger suspend-user">Suspend</a>
                     @else
                         <a href="javascript:;" wire:click="activateWorker" class="btn btn-outline-success suspend-user">Activate</a>
+                    @endif
                     @endif
                 </div>
                 @endif

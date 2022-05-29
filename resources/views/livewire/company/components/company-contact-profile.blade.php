@@ -47,11 +47,13 @@
                                         </a>
                                     </li>
                                 </ul>
+                               @if(Auth::user()->hasModuleAccess('contact', 'edit'))
                                 <!-- edit button -->
                                 <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editContactModal">
                                     <i data-feather="edit" class="d-block d-md-none"></i>
                                     <span class="fw-bold d-none d-md-block">Update</span>
                                 </button>
+                                @endif
                             </div>
                         </div>
                         <!--/ collapse  -->
@@ -214,7 +216,9 @@
         </div>
         <!--/ polls card -->
 
+        @if(Auth::user()->hasModuleAccess('contact', 'edit'))
         @livewire('company-edit-contact-form', ['contact' => $contact])
+        @endif
 
 
 </div>

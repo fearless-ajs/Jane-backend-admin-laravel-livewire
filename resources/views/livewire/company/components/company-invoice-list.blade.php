@@ -29,8 +29,10 @@
                 @else
                     <td>Unsigned</td>
                 @endif
-                <td><a href="{{route('company.preview-invoice', $invoice->id)}}">Preview</a></td>
+                <td><a href="{{route('company.preview-invoice', $invoice->id)}}">Preview</a>
+                @if(Auth::user()->hasModuleAccess('invoice', 'delete'))
                 <td><li class="fa fa-trash"></li></td>
+                @endif
 
             </tr>
         @endforeach

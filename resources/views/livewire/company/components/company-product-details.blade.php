@@ -50,9 +50,11 @@
                         <hr />
                         <div class="d-flex flex-column flex-sm-row pt-1">
 
+                            @if(Auth::user()->hasModuleAccess('product', 'edit'))
                             <button type="button" class="btn btn-primary me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#editProductModal">
                                 Update product
                             </button>
+                            @endif
                             <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#productLinkModal">
                                 Generate link
                             </button>
@@ -67,7 +69,10 @@
             <!-- Product Details ends -->
         </div>
 
-        @livewire('company-edit-product-form', ['product' => $product])
+
+        @if(Auth::user()->hasModuleAccess('product', 'edit'))
+            @livewire('company-edit-product-form', ['product' => $product])
+        @endif
 
 
         <div class="modal fade current-modal" wire:ignore.self id="productLinkModal" tabindex="-1" aria-hidden="true">

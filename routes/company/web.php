@@ -64,7 +64,7 @@ Route::middleware('auth')->name('company.')->group(function () {
             Route::middleware('company-guard:invoice,read')->get('/invoices/{id}',            [CompanyInvoiceViewController::class, 'previewInvoice'])->name('preview-invoice');
             Route::middleware('company-guard:invoice,edit')->get('/invoices/edit/{id}',       [CompanyInvoiceViewController::class, 'editInvoice'])->name('edit-invoice');Route::get('/create-invoice',           [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
 
-           Route::get('/settings',                 [CompanyViewController::class, 'settings'])->name('settings');
+           Route::middleware('company-guard:system,edit')->get('/settings',                 [CompanyViewController::class, 'settings'])->name('settings');
 
     });
 });

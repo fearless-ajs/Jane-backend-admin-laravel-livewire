@@ -39,7 +39,9 @@
 
                 <!-- Security card -->
                 @if($securityCard)
+                    @if(Auth::user()->hasModuleAccess('user', 'edit'))
                     @livewire('company-worker-security-card', ['worker' => $worker])
+                    @endif
                 @endif
                 <!--/ Security card -->
             </div>

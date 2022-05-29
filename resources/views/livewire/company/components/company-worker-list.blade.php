@@ -24,9 +24,11 @@
                 <div class="col-md-4 user_status"></div>
             </div>
         </div>
+        @if(Auth::user()->hasModuleAccess('user', 'create'))
         <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#modals-slide-in">
             Add user
         </button>
+        @endif
         <table class="user-list-table table">
             <thead class="table-light">
             <tr>
@@ -51,7 +53,9 @@
                         <td>{{$worker->available}}</td>
                         <td>{{$worker->created_at->diffForHumans()}}</td>
                         <td><a href="{{route('company.workers.profile', $worker->id)}}">Profile</a> </td>
+                        @if(Auth::user()->hasModuleAccess('user', 'delete'))
                         <td>Delete</td>
+                        @endif
 
                     </tr>
                 @endforeach
