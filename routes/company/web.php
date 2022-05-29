@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppModuleController;
 use App\Http\Controllers\View\Admin\AdminViewController;
 use App\Http\Controllers\View\Company\CompanyContactViewController;
 use App\Http\Controllers\View\Company\CompanyInvoiceViewController;
@@ -24,38 +25,46 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->name('company.')->group(function () {
+    Route::get('/create-modules',                                   [AppModuleController::class, 'createCompanyModules'])->name('create-module');
     Route::get('/invoices/print/{id}',      [CompanyInvoiceViewController::class, 'printInvoice'])->name('print-invoice');
     Route::middleware('role:company')->group(function (){
-        // Current user information
-        Route::get('/auth/user/profile',        [CompanyUsersViewController::class, 'myProfile'])->name('my-profile');
 
-        // Roles based access control routes
-        Route::get('/roles',                    [CompanyRolesViewController::class, 'roles'])->name('roles');
-        Route::get('/teams',                    [CompanyTeamsViewController::class, 'teams'])->name('teams');
-        Route::get('/permissions',              [CompanyPermissionsViewController::class, 'permissions'])->name('permissions');
+            // Current user information
+            Route::get('/auth/user/profile',        [CompanyUsersViewController::class, 'myProfile'])->name('my-profile');
 
-        Route::get('/',                         [CompanyViewController::class, 'dashboard'])->name('dashboard');
-        Route::get('/users',                    [CompanyViewController::class, 'usersList'])->name('users');
-        Route::get('/workers',                  [CompanyusersViewController::class, 'workers'])->name('workers');
-        Route::get('/workers/{id}',             [CompanyusersViewController::class, 'workerProfile'])->name('workers.profile');
+            // Roles based access control routes
+            Route::middleware('company-guard:role,read')->get('/roles',                    [CompanyRolesViewController::class, 'roles'])->name('roles');
+            Route::middleware('company-guard:role,edit')->get('/roles/{id}',               [CompanyPermissionsViewController::class, 'roleDetails'])->name('role-details');
+            Route::middleware('company-guard:role,read')->get('/permissions',              [CompanyPermissionsViewController::class, 'permissions'])->name('permissions');
+            Route::middleware('company-guard:role,edit')->get('/permissions/{id}',         [CompanyPermissionsViewController::class, 'permissionDetails'])->name('permission-details');
 
-        Route::get('/contacts',                 [CompanyContactViewController::class, 'contacts'])->name('contacts');
-        Route::get('/contacts/{id}',            [CompanyContactViewController::class, 'contactProfile'])->name('contacts.profile');
+            Route::get('/',                     [CompanyViewController::class, 'dashboard'])->name('dashboard');
+            Route::middleware('company-guard:user,read')->get('/users',                    [CompanyViewController::class, 'usersList'])->name('users');
+            Route::middleware('company-guard:user,read')->get('/workers',                  [CompanyusersViewController::class, 'workers'])->name('workers');
+            Route::middleware('company-guard:user,read')->get('/workers/{id}',             [CompanyusersViewController::class, 'workerProfile'])->name('workers.profile');
 
-        Route::get('/products',                 [CompanyProductViewController::class, 'products'])->name('products');
-        Route::get('/products/{id}',            [CompanyProductViewController::class, 'productDetails'])->name('product-details');
 
-        Route::get('/categories',               [CompanyProductViewController::class, 'categories'])->name('categories');
 
-        Route::get('/services',                 [CompanyServiceViewController::class, 'services'])->name('services');
-        Route::get('/services/{id}',            [CompanyServiceViewController::class, 'serviceDetails'])->name('service-details');
+            Route::middleware('company-guard:contact,read')->get('/contacts',                 [CompanyContactViewController::class, 'contacts'])->name('contacts');
+            Route::middleware('company-guard:contact,read')->get('/contacts/{id}',            [CompanyContactViewController::class, 'contactProfile'])->name('contacts.profile');
 
-        Route::get('/invoices',                 [CompanyInvoiceViewController::class, 'invoices'])->name('invoices');
-        Route::get('/invoices/{id}',            [CompanyInvoiceViewController::class, 'previewInvoice'])->name('preview-invoice');
-        Route::get('/invoices/edit/{id}',       [CompanyInvoiceViewController::class, 'editInvoice'])->name('edit-invoice');
-        Route::get('/create-invoice',           [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
 
-        Route::get('/settings',                 [CompanyViewController::class, 'settings'])->name('settings');
+
+            Route::middleware('company-guard:product,read')->get('/products',                 [CompanyProductViewController::class, 'products'])->name('products');
+            Route::middleware('company-guard:product,read')->get('/products/{id}',            [CompanyProductViewController::class, 'productDetails'])->name('product-details');
+
+            Route::middleware('company-guard:service,read')->get('/services',                 [CompanyServiceViewController::class, 'services'])->name('services');
+            Route::middleware('company-guard:service,read')->get('/services/{id}',            [CompanyServiceViewController::class, 'serviceDetails'])->name('service-details');
+
+
+            Route::middleware('company-guard:category,read')->get('/categories',               [CompanyProductViewController::class, 'categories'])->name('categories');
+
+
+            Route::middleware('company-guard:invoice,read')->get('/invoices',                 [CompanyInvoiceViewController::class, 'invoices'])->name('invoices');
+            Route::middleware('company-guard:invoice,read')->get('/invoices/{id}',            [CompanyInvoiceViewController::class, 'previewInvoice'])->name('preview-invoice');
+            Route::middleware('company-guard:invoice,edit')->get('/invoices/edit/{id}',       [CompanyInvoiceViewController::class, 'editInvoice'])->name('edit-invoice');Route::get('/create-invoice',           [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
+
+           Route::get('/settings',                 [CompanyViewController::class, 'settings'])->name('settings');
 
     });
 });

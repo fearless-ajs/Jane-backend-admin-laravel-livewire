@@ -6,30 +6,26 @@
         <div class="content-header-left col-md-9 col-12 mb-2">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h2 class="content-header-title float-start mb-0">Permissions</h2>
+                    <h2 class="content-header-title float-start mb-0">Roles</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('company.dashboard')}}">Home</a>
                             </li>
-                            <li class="breadcrumb-item active">Permissions
+                            <li class="breadcrumb-item"><a href="{{route('company.roles')}}">Roles</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{$role->name}}
                             </li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
-        <h3>Permissions List</h3>
-        <p>Each category (Basic, Professional, and Business) includes the four predefined roles shown below.</p>
+        <h3>Role Details</h3>
+        <p>Details of the roles and modifications can be made to the role and permission granted .</p>
 
-        <!-- Permission Table -->
-        <button type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#addPermissionModal">
-            Create permission
-        </button>
-        @livewire('company-permissions-list')
+
         <!--/ Permission Table -->
-        <!-- Add Permission Modal -->
-        < @livewire('create-permission-form')
-        <!--/ Add Permission Modal -->
+        @livewire('company-edit-role-form', ['role' => $role])
 
     </div>
 @endsection

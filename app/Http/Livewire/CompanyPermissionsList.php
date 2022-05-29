@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Company;
 use App\Models\CompanyPermission;
+use App\Models\CompanyPermissionModule;
 use App\Models\CompanyPermissionRole;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -37,6 +38,10 @@ class CompanyPermissionsList extends Component
     public function remove($company_permission_id){
         CompanyPermissionRole::where('company_permission_id', $company_permission_id)->where('company_id', $this->company->id)->delete();
         CompanyPermissionRole::where('company_permission_id', $company_permission_id)->where('company_id', $this->company->id)->delete();
+
+
+        // Delete permission modules
+        CompanyPermissionModule::where('company_permission_id', $company_permission_id)->delete();
 
         CompanyPermission::find($company_permission_id)->delete();
         $this->emit('refreshCompanyPermissions');

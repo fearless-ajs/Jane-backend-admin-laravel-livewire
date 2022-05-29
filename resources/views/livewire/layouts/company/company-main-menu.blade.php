@@ -35,35 +35,42 @@
             </li>
 
 
-            @if(Auth::user()->userHasPermission('manage invoice') || Auth::user()->userHasRole('Super Administrator'))
+            @if(Auth::user()->hasModuleAccess('invoice', 'read') || Auth::user()->hasModuleAccess('invoice', 'create'))
                 <li class="nav-item @if(Route::currentRouteName() == 'company.invoices' || Route::currentRouteName() == 'company.create-invoice') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">Invoice</span></a>
                     <ul class="menu-content">
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.invoices') active @endif" href="{{route('company.invoices')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.create-invoice') active @endif" href="{{route('company.create-invoice')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Add">Add</span></a>
-                        </li>
+                        @if(Auth::user()->hasModuleAccess('invoice', 'read'))
+                            <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.invoices') active @endif" href="{{route('company.invoices')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+                            </li>
+                        @endif
+                        @if(Auth::user()->hasModuleAccess('invoice', 'create'))
+                            <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.create-invoice') active @endif" href="{{route('company.create-invoice')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Add">Add</span></a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif
 
-            @if(Auth::user()->userHasPermission('manage contacts') || Auth::user()->userHasRole('Super Administrator'))
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">Contact</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('company.contacts')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
-                        </li>
-                    </ul>
-                </li>
-            @endif
+                @if(Auth::user()->hasModuleAccess('contact', 'read') || Auth::user()->hasModuleAccess('contact', 'edit'))
+                    <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">Contact</span></a>
+                        <ul class="menu-content">
+                            <li><a class="d-flex align-items-center" href="{{route('company.contacts')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
-            @if(Auth::user()->userHasPermission('manage products') || Auth::user()->userHasRole('Super Administrator'))
-                <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Market area</span><i data-feather="more-horizontal"></i>
-                </li>
+            <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Market area</span><i data-feather="more-horizontal"></i>
+            </li>
+            @if(Auth::user()->hasModuleAccess('product', 'read'))
                 <li class=" nav-item @if(Route::currentRouteName() == 'company.products') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Product</span></a>
                     <ul class="menu-content">
                         <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.products') active @endif" href="{{route('company.products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
                         </li>
                     </ul>
                 </li>
+            @endif
+
+            @if(Auth::user()->hasModuleAccess('category', 'read'))
                 <li class=" nav-item @if(Route::currentRouteName() == 'company.categories') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Categories</span></a>
                     <ul class="menu-content">
                         <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.categories') active @endif" href="{{route('company.categories')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
@@ -72,7 +79,8 @@
                 </li>
             @endif
 
-            @if(Auth::user()->userHasPermission('manage products') || Auth::user()->userHasRole('Super Administrator'))
+
+            @if(Auth::user()->hasModuleAccess('service', 'read'))
                 <li class=" nav-item @if(Route::currentRouteName() == 'company.services') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Services</span></a>
                     <ul class="menu-content">
                         <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.services') active @endif" href="{{route('company.services')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
@@ -82,7 +90,8 @@
             @endif
 
 
-            @if(Auth::user()->userHasPermission('manage roles') || Auth::user()->userHasRole('Super Administrator'))
+
+            @if(Auth::user()->hasModuleAccess('role', 'read'))
                 <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Roles and access control</span><i data-feather="more-horizontal"></i>
                 </li>
                 <li class=" nav-item @if(Route::currentRouteName() == 'company.workers') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">Users</span></a>

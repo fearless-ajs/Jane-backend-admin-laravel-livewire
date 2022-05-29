@@ -32,9 +32,9 @@
                         <td>{{$permission->created_at->diffForHumans()}}</td>
                         @if($permission->type != 'default')
                             <td>
-                                <button type="button" class="btn btn-primary" wire:click="setEditPermission({{$permission->id}})" data-bs-toggle="modal" data-bs-target="#editPermissionModal">
-                                    Edit
-                                </button>
+                                <a class="btn btn-primary" href="{{route('company.permission-details', $permission->id)}}" >
+                                    Details
+                                </a>
                             </td>
                             <td>
                                 <button type="button" wire:click="remove({{$permission->id}})" class="btn btn-danger me-1" wire:loading.remove wire:target="remove({{$permission->id}})">Remove</button>

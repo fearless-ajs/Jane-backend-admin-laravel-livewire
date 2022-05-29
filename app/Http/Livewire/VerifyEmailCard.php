@@ -73,7 +73,7 @@ class VerifyEmailCard extends LiveNotify
         $user->company_id = $company->id;
         $user->save();
 
-        $this->createDefaultPermissions($company->id);
+        $this->createDefaultPermissions($company->id, $company_role, $user);
         // Create default roles
 
         $this->success = true;

@@ -9,4 +9,8 @@ class CompanyPermission extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function permissionModules(){
+        return $this->hasMany(CompanyPermissionModule::class, 'company_permission_id');
+    }
 }

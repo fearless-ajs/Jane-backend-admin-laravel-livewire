@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AppModuleController;
 use App\Http\Controllers\View\Auth\AuthViewController;
 use App\Http\Controllers\View\Company\CompanyProductViewController;
+use App\Http\Controllers\View\Error\AppErrorViewController;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/',                                   [AuthViewController::class, 'login'])->name('login');
 Route::get('/login',                              [AuthViewController::class, 'login']);
 Route::get('/sign-in',                            [AuthViewController::class, 'login'])->name('sign-in');
@@ -35,3 +38,6 @@ Route::get('/verify-changed-email/{token}',       [AuthViewController::class, 'v
 
 
 Route::get('/markets/{company_id}/{product_slug}',                      [CompanyProductViewController::class, 'productPublicShowCase']);
+
+// Error routes
+Route::get('/unauthorized-access',                                     [AppErrorViewController::class, 'unAuthorizedAccess'])->name('unauthorized-access');

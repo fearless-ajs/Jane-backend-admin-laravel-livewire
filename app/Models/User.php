@@ -90,4 +90,6 @@ class User extends Authenticatable
         return $this->hasOne(Contact::class, 'user_id', 'id');
     }
 
+
+
 }

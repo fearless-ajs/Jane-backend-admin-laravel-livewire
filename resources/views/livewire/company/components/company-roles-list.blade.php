@@ -39,8 +39,8 @@
                         <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                             <div class="role-heading">
                                 <h4 class="fw-bolder">{{$role->display_name}}</h4>
-                                <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal" data-bs-target="#editRoleModal">
-                                    <small class="fw-bolder">{{$role->description}}</small>
+                                <a href="{{route('company.role-details', $role->id)}}" class="role-edit-modal">
+                                    <small class="fw-bolder">Edit role</small>
                                 </a>
                             </div>
                             <a href="javascript:void(0);" wire:click="remove({{$role->id}})" class="text-body"><i data-feather="copy" class="font-medium-5"></i>
@@ -58,7 +58,4 @@
     @endif
 
 
-    <!-- Edit Role Modal -->
-    @livewire('company-edit-role-form')
-    <!--/ Edit Role Modal -->
 </div>

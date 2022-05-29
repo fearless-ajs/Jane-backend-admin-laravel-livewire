@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Mail\UserMailChanged;
 use App\Mail\WelcomeMail;
+use App\Models\CompanyModule;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\User;
@@ -38,6 +39,12 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
+//        $this->createCompanyModules();
         view()->share('settings', Setting::first());
+    }
+
+    public function createCompanyModules(){
+
+
     }
 }
