@@ -3,12 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class AdminSettingsForm extends Component
+class AdminSettingsForm extends LiveNotify
 {
     use WithFileUploads;
     public $app_name;
@@ -19,13 +20,19 @@ class AdminSettingsForm extends Component
     public $app_country;
 
     public $settings;
+    public $user;
 
-
-    protected $listeners = ['refreshAdminSettings' =>   '$refresh'];
+    protected $listeners = [
+        'refreshAdminSettings' =>   '$refresh',
+        'acceptTwoFactor'   => 'acceptTwoFactorAuthentication'
+    ];
 
     public function mount(){
         $this->fetchFormData();
+        $this->user = User::find(Auth::user()->id);
     }
+
+
 
     public function fetchFormData(){
         $this->settings = Setting::first();
@@ -83,6 +90,29 @@ class AdminSettingsForm extends Component
         $this->emit('refreshAdminSettings');
         $this->emit('refreshAdminMainMenu');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Settings updated']);
+    }
+
+    public function requestTwoFactorAuthentication(){
+        if ($this->user->enable_two_factor){
+            $this->confirmRequest('warning', 'Do you want to disable two factor Auth', 'Press ok to continue');
+        }else{
+            $this->confirmRequest('warning', 'Do you want to activate two factor Auth', 'Press ok to continue');
+        }
+    }
+
+
+    public function acceptTwoFactorAuthentication(){
+        if ($this->user->enable_two_factor){
+            $this->user->enable_two_factor = false;
+            $this->user->save();
+            $this->emit('refreshAdminSettings');
+            return $this->alert('success', 'Two factor authentication disabled');
+        }
+
+        $this->user->enable_two_factor = true;
+        $this->user->save();
+        $this->emit('refreshAdminSettings');
+        return $this->alert('success', 'Two factor authentication enabled');
     }
 
     public function render()

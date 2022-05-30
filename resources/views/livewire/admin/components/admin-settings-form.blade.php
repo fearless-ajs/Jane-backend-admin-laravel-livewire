@@ -333,7 +333,21 @@
                 </form>
                 <!--/ form -->
             </div>
+            <div class="card-body">
+                @if(!$user->enable_two_factor)
+                    <button type="button" wire:loading.remove wire:target="requestTwoFactorAuthentication" wire:click="requestTwoFactorAuthentication" class="btn btn-sm btn-outline-success">Enable two factor authentication</button>
+                @else
+                    <button type="button" wire:loading.remove wire:target="requestTwoFactorAuthentication" wire:click="requestTwoFactorAuthentication" class="btn btn-sm btn-outline-primary">Disable two factor authentication</button>
+                @endif
+                <button class="btn btn-sm btn-outline-success" type="button" disabled wire:loading wire:target="requestTwoFactorAuthentication" tabindex="4"> <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
 
+                <br>
+                <small>
+                    Two-Factor Authentication (2FA) works by adding an additional layer of security to you account.
+                    It requires an additional login credential  which is a 6digit code that will be sent to your registered
+                    email to verify your identity.
+                </small>
+            </div>
             @livewire('company-edit-user-primary-profile-form', ['user' => Auth::user()])
         </div>
     </div>

@@ -166,7 +166,7 @@
         }).then((willDelete) => {
 
             if(willDelete){
-                window.livewire.emit('delete', event.detail.id);
+                window.livewire.emit('acceptTwoFactor', event.detail.id);
             }
         });
     });
