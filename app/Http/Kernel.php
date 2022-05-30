@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckTwoFactor;
 use App\Http\Middleware\CompanyModuleAccessGuard;
 use App\Http\Middleware\CompanyPermissionGuard;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'company-permission'   => CompanyPermissionGuard::class,
         'company-guard'  => CompanyModuleAccessGuard::class,
+        'check-two-factor'  => CheckTwoFactor::class,
     ];
 }

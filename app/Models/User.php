@@ -28,6 +28,9 @@ class User extends Authenticatable
         'company_id',
         'password',
         'verification_token',
+        'enable_two_factor',
+        'two_factor_code',
+        'two_factor_expires_at',
         'enabled',
     ];
 
@@ -40,6 +43,13 @@ class User extends Authenticatable
         'password',
         'verification_token',
         'remember_token',
+    ];
+
+    protected $dates = [
+        'updated_at',
+        'created_at',
+        'email_verified_at',
+        'two_factor_expires_at'
     ];
 
     /**
@@ -90,6 +100,17 @@ class User extends Authenticatable
         return $this->hasOne(Contact::class, 'user_id', 'id');
     }
 
+    public function generateTwoFactorCode (){
+        $this->timestamps = false;
+        $this->two_factor_code = rand(100000, 999999);
+        $this->two_factor_expires_at = now()->addMinutes(10);
+        $this->save();
+    }
 
-
+    public function deleteTwoFactorCode(){
+        // Delete the old code
+        $this->two_factor_code = null;
+        $this->two_factor_expires_at = null;
+        $this->save();
+    }
 }

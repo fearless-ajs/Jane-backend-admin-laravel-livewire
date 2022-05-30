@@ -17,6 +17,16 @@ class AuthViewController extends Controller
         return view('livewire.auth.pages.sign-in-page', ['data' => $data]);
     }
 
+    public function twoFactor (){
+        $data = [
+            'title' => 'two-factor',
+            'keywords' => 'two-factor',
+            'description' => 'two-factor'
+        ];
+        return view('livewire.auth.pages.two-factor-page', ['data' => $data]);
+    }
+
+
     public function forgotPassword (){
         $data = [
             'title' => 'Forgot password',
@@ -74,6 +84,8 @@ class AuthViewController extends Controller
     }
 
     public function logout() {
+        // Delete the old code
+        Auth::user()->deleteTwoFactorCode();
         Auth::logout();
         return redirect()->route('sign-in');
     }

@@ -46,12 +46,6 @@
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>
-                                    <li class="nav-item" style="margin-left: 10px">
-                                        <a class="nav-link fw-bold active" href="#" data-bs-toggle="modal" data-bs-target="#editUserPrimaryProfileForm">
-                                            <span class="d-none d-md-block">Security</span>
-                                            <i data-feather="rss" class="d-block d-md-none"></i>
-                                        </a>
-                                    </li>
                                 </ul>
                                 <!-- edit button -->
                                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserWorkerInfoForm">
@@ -201,12 +195,19 @@
 
 
 
-
-                        @if($user->worker->available)
-                            <button type="button" class="btn btn-sm btn-success">Active contact</button>
+                        @if(!$user->enable_two_factor)
+                            <button type="button" wire:loading.remove wire:target="requestTwoFactorAuthentication" wire:click="requestTwoFactorAuthentication" class="btn btn-sm btn-outline-success">Enable two factor authentication</button>
                         @else
-                            <button type="button" class="btn btn-sm btn-success">Inactive contact</button>
+                            <button type="button" wire:loading.remove wire:target="requestTwoFactorAuthentication" wire:click="requestTwoFactorAuthentication" class="btn btn-sm btn-outline-primary">Disable two factor authentication</button>
                         @endif
+                        <button class="btn btn-sm btn-outline-success" type="button" disabled wire:loading wire:target="requestTwoFactorAuthentication" tabindex="4"> <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+
+                        <br>
+                        <small>
+                            Two-Factor Authentication (2FA) works by adding an additional layer of security to you account.
+                            It requires an additional login credential  which is a 6digit code that will be sent to your registered
+                            email to verify your identity.
+                        </small>
                     </div>
                 </div>
                 <!--/ post 1 -->

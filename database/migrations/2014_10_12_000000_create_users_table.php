@@ -26,6 +26,11 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('enabled')->default(true);
             $table->dateTime('last_login')->nullable();
+
+            $table->boolean('enable_two_factor')->default(false);
+            $table->string('two_factor_code')->nullable();
+            $table->dateTime('two_factor_expires_at')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

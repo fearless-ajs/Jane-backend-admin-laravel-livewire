@@ -15,4 +15,13 @@ class LiveNotify extends Component
         ]);
     }
 
+    public function confirmRequest($type, $title, $text="Press Ok to Continue", $id=''){
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type' => $type,
+            'title' => $title,
+            'text' => $text,
+            'id'   => $id
+        ]);
+    }
+
 }

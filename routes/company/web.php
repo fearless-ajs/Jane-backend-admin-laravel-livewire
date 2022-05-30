@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->name('company.')->group(function () {
+Route::middleware('auth')->middleware('check-two-factor')->name('company.')->group(function () {
     Route::get('/create-modules',                                   [AppModuleController::class, 'createCompanyModules'])->name('create-module');
     Route::get('/invoices/print/{id}',      [CompanyInvoiceViewController::class, 'printInvoice'])->name('print-invoice');
     Route::middleware('role:company')->group(function (){

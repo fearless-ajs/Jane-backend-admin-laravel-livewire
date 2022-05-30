@@ -36,6 +36,9 @@ Route::get('/verify-email/{token}',               [AuthViewController::class, 'v
 Route::get('/verify-customer-email/{token}',      [AuthViewController::class, 'verifyCustomer'])->name('verify-customer-email');
 Route::get('/verify-changed-email/{token}',       [AuthViewController::class, 'verifyChangedEmail'])->name('verify-changed-email');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/two-factor',                         [AuthViewController::class, 'twoFactor'])->name('verify-two-factor');
+});
 
 Route::get('/markets/{company_id}/{product_slug}',                      [CompanyProductViewController::class, 'productPublicShowCase']);
 

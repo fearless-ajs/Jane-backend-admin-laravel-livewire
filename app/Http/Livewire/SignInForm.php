@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\TwoFactorCodeMail;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class SignInForm extends Component
@@ -27,6 +30,22 @@ class SignInForm extends Component
 
         if(Auth::attempt(['email' => $this->email, 'password' => $this->password]))
         {
+            // Check if two factor is enabled, then generate a code
+            if (Auth::user()->enable_two_factor){
+                Auth::user()->generateTwoFactorCode();
+                // Mail the user of the update
+                $user = User::find(Auth::user()->id);
+                try {
+                    retry(5, function () use ($user) {
+                        Mail::to($user->email)->send(new TwoFactorCodeMail($user));
+                    });
+                } catch (\Exception $e) {
+
+                }
+
+                // Redirect to the two factor page
+                return redirect(route('verify-two-factor'));
+            }
             // Check user roles before redirecting
             if (Auth::user()->hasRole('super-admin')){
                 return redirect()->intended(route('admin.dashboard'));
