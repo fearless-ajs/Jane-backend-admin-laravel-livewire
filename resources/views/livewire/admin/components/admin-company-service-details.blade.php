@@ -5,6 +5,11 @@
             <!-- Product Details starts -->
             <div class="card-body">
                 <div class="row my-2">
+                    <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <img src="{{$service->images->first()->serviceImage}}" class="img-fluid product-img" alt="product image" />
+                        </div>
+                    </div>
                     <div class="col-12 col-md-7">
                         <h4>{{$service->name}}</h4>
                         <div class="ecommerce-details-price d-flex flex-wrap mt-1">
@@ -53,4 +58,25 @@
     </section>
     <!-- app e-commerce details end -->
 
+    <section class="app-ecommerce-details">
+        <div class="card">
+            <!-- Product Details starts -->
+            <div class="card-body">
+                <div class="row">
+                    <h4 class="justify-content-center" style="text-align: center;">Service images
+                        <span wire:loading wire:target="removeImage"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h4>
+                    @if(count($service->images) > 0)
+                        @foreach($service->images as $image)
+                            <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <img src="{{$image->serviceImage}}" class="img-fluid product-img" alt="product image" />
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            <!-- Product Details ends -->
+        </div>
+    </section>
 </div>

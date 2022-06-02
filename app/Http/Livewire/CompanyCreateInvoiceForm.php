@@ -63,6 +63,10 @@ class CompanyCreateInvoiceForm extends Component
     public $products;
     public $services;
 
+
+    public $company;
+
+
     public function updated($field){
        $this->computeProductData();
        $this->computeServiceData();
@@ -79,10 +83,9 @@ class CompanyCreateInvoiceForm extends Component
         ]);
     }
 
-    public $settings;
     public function mount(){
         $this->fetchUsersData();
-        $this->settings = Setting::first();
+        $this->company = Auth::user()->company;
     }
 
     public function addProductItem(){
@@ -370,7 +373,8 @@ class CompanyCreateInvoiceForm extends Component
             'workers',
             'products',
             'services',
-            'contacts'
+            'contacts',
+            'company',
         ]);
         return $this->emit('alert', ['type' => 'success', 'message' => 'Invoice generated']);
     }

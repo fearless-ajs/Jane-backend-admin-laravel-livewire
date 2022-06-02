@@ -19,20 +19,13 @@
                     </div>
                 </div>
             </div>
-            <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
-                <div class="mb-1 breadcrumb-right">
-                    <div class="dropdown">
-                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
-                    </div>
-                </div>
-            </div>
         </div>
         <!-- users list start -->
         <section class="app-user-list">
             <!-- list and filter start -->
             <div class="card">
                 <div class="card-body border-bottom">
-                    <h4 class="card-title">Product category section</h4>
+                    <h4 class="card-title">Category section</h4>
                     <div class="row">
                         <div class="col-md-4 user_role"></div>
                         <div class="col-md-4 user_plan"></div>

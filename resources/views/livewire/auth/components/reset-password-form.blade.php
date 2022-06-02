@@ -1,6 +1,7 @@
 <div>
     @if($showSuccessModal)
         <div class="card-body">
+            <h2 class="mb-1 text-center text-primary font-large-1 mb-2">{{$settings->app_name}}</h2>
             <a href="{{route('login')}}" class="brand-logo">
                 <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28">
                     <defs>

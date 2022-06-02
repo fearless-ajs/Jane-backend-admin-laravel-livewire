@@ -20,9 +20,9 @@
                             <div class="view-options d-flex">
                                 <div class="btn-group" role="group">
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option1" autocomplete="off" checked />
-                                    <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn" for="radio_option1"><i data-feather="grid" class="font-medium-3"></i></label>
+                                    <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn" for="radio_option1"><i  class="font-medium-3 fa fa-solid fa-th"></i></label>
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option2" autocomplete="off" />
-                                    <label class="btn btn-icon btn-outline-primary view-btn list-view-btn" for="radio_option2"><i data-feather="list" class="font-medium-3"></i></label>
+                                    <label class="btn btn-icon btn-outline-primary view-btn list-view-btn" for="radio_option2"><i class="font-medium-3 fa fa-solid fa-bars"></i></label>
                                 </div>
                             </div>
                         </div>
@@ -54,10 +54,10 @@
                 @if($services)
                     @foreach($services as $service)
                         <div class="card ecommerce-card mb-2">
-                            {{--                            <div class="item-img text-center">--}}
-                            {{--                                <a href="app-ecommerce-details.html">--}}
-                            {{--                                    <img class="img-fluid card-img-top" src="{{$service->serviceImage}}" alt="img-placeholder" /></a>--}}
-                            {{--                            </div>--}}
+                            <div class="item-img text-center">
+                                <a href="{{route('admin.company-service-details', $service->id)}}">
+                                    <img class="img-fluid card-img-top" src="{{$service->images->first()->serviceImage}}" alt="img-placeholder" /></a>
+                            </div>
                             <div class="card-body">
                                 <div class="item-wrapper">
                                     <div class="item-rating">
@@ -111,5 +111,51 @@
         </div>
     </div>
 
+    <div class="sidebar-detached sidebar-left">
+        <div class="sidebar">
+            <!-- Ecommerce Sidebar Starts -->
+            <div class="sidebar-shop">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h6 class="filter-heading d-none d-lg-block">Filters</h6>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+
+                        <!-- Price Range ends -->
+
+                        <!-- Categories Starts -->
+                        <div id="product-categories">
+                            <h6 class="filter-title">Categories</h6>
+                            <ul class="list-unstyled categories-list">
+
+                                @if($categories)
+                                    @foreach($categories as $category)
+                                        <li>
+                                            <div class="form-check">
+                                                <input type="radio" id="{{$category->name}}" name="category-filter" class="form-check-input" value="{{$category->name}}" wire:model="category" />
+                                                <label class="form-check-label" for="{{$category->name}}">{{$category->name}}</label>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endif
+
+                            </ul>
+                        </div>
+                        <!-- Categories Ends -->
+
+                        <!-- Clear Filters Starts -->
+                        <div id="clear-filters">
+                            <button type="button" wire:click="clearFilter" class="btn w-100 btn-primary">Clear all filters</button>
+                        </div>
+                        <!-- Clear Filters Ends -->
+                    </div>
+                </div>
+            </div>
+            <!-- Ecommerce Sidebar Ends -->
+
+        </div>
+    </div>
 
 </div>

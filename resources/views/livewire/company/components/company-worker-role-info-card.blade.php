@@ -28,12 +28,15 @@
                                 <p>{{$role->created_at->diffForHumans()}}</p>
                             </div>
                         </td>
+
+                        @if($worker->user->id !== $worker->company->user_id)
                         <td wire:loading wire:target="detachRole({{$role->id}})" >
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </td>
                         <td wire:loading.remove wire:target="detachRole({{$role->id}})" >
                            <i class="fa fa-trash" wire:click="detachRole({{$role->id}})" style="cursor: pointer"></i>
                         </td>
+                        @endif
                     </tr>
                 @endforeach
             @endif

@@ -29,19 +29,17 @@ class VerifyEmailCard extends LiveNotify
             return false;
         }
 
+        // Create a Company profile
+        $company =  Company::where('user_id', $user->id)->first();
+
         // Update the contact registration records
         $user->verification_token = null;
         $user->email_verified_at  = Carbon::now();
         $user->enabled            = true;
+        $user->company_id         = $company->id;
 
         // Attach Company role to user
         $user->attachRole('Company');
-        // Create a Company profile
-        $company =  Company::create([
-           'user_id'     => $user->id,
-           'name'        =>  $user->lastname . ' ' . $user->firstname,
-           'email'       =>  $user->email,
-        ]);
 
         // Create the company banking information
         CompanyTransactionInfo::create([

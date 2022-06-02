@@ -122,6 +122,7 @@ class CompanyCreateProductForm extends LiveNotify
 
         $this->emit('refreshProductList');
         $this->emit('close-current-modal');
+        $this->resetExcept(['categories']);
         return $this->emit('alert', ['type' => 'success', 'message' => 'Service update']);
     }
 

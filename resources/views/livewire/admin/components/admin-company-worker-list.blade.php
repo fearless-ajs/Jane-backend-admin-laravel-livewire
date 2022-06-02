@@ -44,7 +44,6 @@
                         @endif
                         <td>{{$worker->created_at->diffForHumans()}}</td>
                         <td><a href="{{route('admin.company-user-profile', $worker->id)}}">Profile</a> </td>
-                        <td>Delete</td>
                     </tr>
                 @endforeach
             @endif

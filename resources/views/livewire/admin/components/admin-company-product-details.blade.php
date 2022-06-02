@@ -7,7 +7,7 @@
                 <div class="row my-2">
                     <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
                         <div class="d-flex align-items-center justify-content-center">
-                            <img src="{{$product->productImage}}" class="img-fluid product-img" alt="product image" />
+                            <img src="{{$product->images->first()->productImage}}" class="img-fluid product-img" alt="product image" />
                         </div>
                     </div>
                     <div class="col-12 col-md-7">
@@ -67,8 +67,6 @@
             <!-- Product Details ends -->
         </div>
 
-        @livewire('company-edit-product-form', ['product' => $product])
-
 
         <div class="modal fade current-modal" wire:ignore.self id="productLinkModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
@@ -95,5 +93,25 @@
     <!-- app e-commerce details end -->
 
 
-
+    <section class="app-ecommerce-details">
+        <div class="card">
+            <!-- Product Details starts -->
+            <div class="card-body">
+                <div class="row">
+                    <h4 class="justify-content-center" style="text-align: center;">Product images
+                        <span wire:loading wire:target="removeImage"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h4>
+                    @if(count($product->images) > 0)
+                        @foreach($product->images as $image)
+                            <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <img src="{{$image->productImage}}" class="img-fluid product-img" alt="product image" />
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            <!-- Product Details ends -->
+        </div>
+    </section>
 </div>

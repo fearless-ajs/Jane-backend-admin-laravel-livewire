@@ -86,6 +86,7 @@ class CompanyCreateRoleForm extends Component
 
         $this->resetExcept('permissions');
         $this->emit('refreshCompanyRoles');
+        $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Role created!']);
     }
 

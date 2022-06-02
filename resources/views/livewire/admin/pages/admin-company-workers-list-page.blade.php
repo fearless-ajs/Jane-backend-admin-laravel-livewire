@@ -20,25 +20,12 @@
                                 </li>
                                 <li class="breadcrumb-item active">Users
                                 </li>
-                                {{--                                <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $product->company->id)}}">{{$product->company->name}}</a>--}}
-                                {{--                                </li>--}}
-                                {{--                                <li class="breadcrumb-item"><a href="{{route('admin.company-products', $product->company->id)}}">Products</a>--}}
-                                {{--                                </li>--}}
-                                {{--                                <li class="breadcrumb-item active">{{$product->name}}--}}
-                                {{--                                </li>--}}
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
-                <div class="mb-1 breadcrumb-right">
-                    <div class="dropdown">
-                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
-                    </div>
-                </div>
-            </div>
         </div>
         <section class="app-user-list">
             <!-- list and filter start -->

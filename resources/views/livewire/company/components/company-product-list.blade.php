@@ -19,19 +19,18 @@
 
                             </div>
                             <div class="view-options d-flex">
-                                <div class="btn-group dropdown-sort">
+                                <div class="btn-group dropdown-sort" wire:ignore>
                                     @if(Auth::user()->hasModuleAccess('product', 'create'))
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
                                             Add product
                                         </button>
                                     @endif
-
                                 </div>
                                 <div class="btn-group" role="group">
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option1" autocomplete="off" checked />
-                                    <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn" for="radio_option1"><i data-feather="grid" class="font-medium-3"></i></label>
+                                    <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn" for="radio_option1"><i  class="font-medium-3 fa fa-solid fa-th"></i></label>
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option2" autocomplete="off" />
-                                    <label class="btn btn-icon btn-outline-primary view-btn list-view-btn" for="radio_option2"><i data-feather="list" class="font-medium-3"></i></label>
+                                    <label class="btn btn-icon btn-outline-primary view-btn list-view-btn" for="radio_option2"><i class="font-medium-3 fa fa-solid fa-bars"></i></label>
                                 </div>
                             </div>
                         </div>

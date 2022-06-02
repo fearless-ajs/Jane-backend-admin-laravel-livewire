@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Mail\WelcomeMail;
+use App\Models\Company;
 use App\Models\User;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Mail;
@@ -18,6 +19,9 @@ class SignUpForm extends LiveNotify
     public $password;
     public $password_confirmation;
 
+    public $company_name;
+    public $company_email;
+
     public function updated($field){
         $this->validateOnly($field, [
             'lastname'              => 'required|string|max:255',
@@ -25,6 +29,8 @@ class SignUpForm extends LiveNotify
             'email'                 => 'required|email|unique:users',
             'password'              => 'required|min:6',
             'password_confirmation' => 'required_with:password|same:password',
+            'company_name'          => 'required|string|max:255',
+            'company_email'         => 'required|email',
             'terms'                 => 'required'
         ]);
     }
@@ -36,6 +42,8 @@ class SignUpForm extends LiveNotify
             'email'                 => 'required|email|unique:users',
             'password'              => 'required|min:6',
             'password_confirmation' => 'required_with:password|same:password',
+            'company_name'          => 'required|string|max:255',
+            'company_email'         => 'required|email',
             'terms'                 => 'required'
         ]);
 
@@ -49,7 +57,11 @@ class SignUpForm extends LiveNotify
         ]);
 
       // Create a company profile
-
+        Company::create([
+            'user_id'   => $user->id,
+            'name'      => $this->company_name,
+            'email'     => $this->company_email
+        ]);
 
         try {
             retry(5, function () use ($user) {

@@ -40,16 +40,22 @@
                             <div class="role-heading">
                                 <h4 class="fw-bolder">{{$role->display_name}}</h4>
                                 @if(Auth::user()->hasModuleAccess('role', 'edit'))
-                                <a href="{{route('company.role-details', $role->id)}}" class="role-edit-modal">
-                                    <small class="fw-bolder">Edit role</small>
-                                </a>
+                                    @if($role->display_name !== 'Super Administrator')
+                                    <a href="{{route('company.role-details', $role->id)}}" class="role-edit-modal">
+                                        <small class="fw-bolder">Edit role</small>
+                                    </a>
+                                    @endif
                                 @endif
                             </div>
                             @if(Auth::user()->hasModuleAccess('role', 'delete'))
-                            <a href="javascript:void(0);" wire:click="remove({{$role->id}})" class="text-body"><i data-feather="copy" class="font-medium-5"></i>
-                                <span wire:loading wire:target="remove({{$role->id}})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <span wire:loading.remove wire:target="remove({{$role->id}})">Remove</span>
-                            </a>
+                                @if($role->display_name !== 'Super Administrator')
+                                    <a href="javascript:void(0);" wire:click="remove({{$role->id}})" class="text-body"><i data-feather="copy" class="font-medium-5"></i>
+                                        <span wire:loading wire:target="remove({{$role->id}})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        <span wire:loading.remove wire:target="remove({{$role->id}})">Remove</span>
+                                    </a>
+                                @else
+                                    <p>System role</p>
+                                @endif
                             @endif
                         </div>
                     </div>

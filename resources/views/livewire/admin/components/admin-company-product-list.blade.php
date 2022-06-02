@@ -9,9 +9,11 @@
                     <div class="col-sm-12">
                         <div class="ecommerce-header-items">
                             <div class="result-toggler">
+
                                 <button class="navbar-toggler shop-sidebar-toggler" type="button" data-bs-toggle="collapse">
                                     <span class="navbar-toggler-icon d-block d-lg-none"><i data-feather="menu"></i></span>
                                 </button>
+
                                 <div class="search-results">
                                     <h6 wire:loading.remove wire:target="search" class="filter-heading">@if($searchResult)  {{count($searchResult)}}  @else {{count($company->products)}} @endif results found</h6>
                                     <h6 wire:loading wire:target="search" class="filter-heading">Searching... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h6>
@@ -20,22 +22,12 @@
                             </div>
                             <div class="view-options d-flex">
                                 <div class="btn-group dropdown-sort">
-{{--                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">--}}
-{{--                                        Add product--}}
-{{--                                    </button>--}}
-{{--                                    <button type="button" class="btn btn-outline-primary dropdown-toggle me-1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--                                        <span class="active-sorting">Order by price</span>--}}
-{{--                                    </button>--}}
-{{--                                    <div class="dropdown-menu">--}}
-{{--                                        <a class="dropdown-item" href="#" wire:click="setOrder('ASC')">From lowest</a>--}}
-{{--                                        <a class="dropdown-item" href="#" wire:click="setOrder('DESC')">From highest</a>--}}
-{{--                                    </div>--}}
                                 </div>
                                 <div class="btn-group" role="group">
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option1" autocomplete="off" checked />
-                                    <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn" for="radio_option1"><i data-feather="grid" class="font-medium-3"></i></label>
+                                    <label class="btn btn-icon btn-outline-primary view-btn grid-view-btn" for="radio_option1"><i  class="font-medium-3 fa fa-solid fa-th"></i></label>
                                     <input type="radio" class="btn-check" name="radio_options" id="radio_option2" autocomplete="off" />
-                                    <label class="btn btn-icon btn-outline-primary view-btn list-view-btn" for="radio_option2"><i data-feather="list" class="font-medium-3"></i></label>
+                                    <label class="btn btn-icon btn-outline-primary view-btn list-view-btn" for="radio_option2"><i class="font-medium-3 fa fa-solid fa-bars"></i></label>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +61,7 @@
                         <div class="card ecommerce-card">
                             <div class="item-img text-center">
                                 <a href="{{route('admin.company-product-details', $product->id)}}">
-                                    <img class="img-fluid card-img-top" src="{{$product->productImage}}" alt="img-placeholder" /></a>
+                                    <img class="img-fluid card-img-top" src="{{$product->images->first()->productImage}}" alt="img-placeholder" /></a>
                             </div>
                             <div class="card-body">
                                 <div class="item-wrapper">

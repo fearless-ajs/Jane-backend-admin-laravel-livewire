@@ -7,25 +7,6 @@
                 <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
                     <div>
                         <div class="logo-wrapper">
-                            <svg viewBox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
-                                <defs>
-                                    <linearGradient id="invoice-linearGradient-1" x1="100%" y1="10.5120544%" x2="50%" y2="89.4879456%">
-                                        <stop stop-color="#000000" offset="0%"></stop>
-                                        <stop stop-color="#FFFFFF" offset="100%"></stop>
-                                    </linearGradient>
-                                    <linearGradient id="invoice-linearGradient-2" x1="64.0437835%" y1="46.3276743%" x2="37.373316%" y2="100%">
-                                        <stop stop-color="#EEEEEE" stop-opacity="0" offset="0%"></stop>
-                                        <stop stop-color="#FFFFFF" offset="100%"></stop>
-                                    </linearGradient>
-                                </defs>
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g transform="translate(-400.000000, -178.000000)">
-                                        <g transform="translate(400.000000, 178.000000)">
-                                            <img src="{{$settings->AppImage}}" style="max-width: 10%" />
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg>
                             <h3 class="text-primary invoice-logo">{{\Illuminate\Support\Facades\Auth::user()->company->name}}</h3>
                         </div>
                         <p class="card-text mb-25 w-50">{{Auth::user()->company->address}}</p>

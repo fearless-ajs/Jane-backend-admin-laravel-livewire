@@ -1,4 +1,4 @@
-<div class="modal fade" id="addRoleModal" wire:ignore.self tabindex="-1" aria-hidden="true">
+<div class="modal fade current-modal" id="addRoleModal" wire:ignore.self tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-role">
         <div class="modal-content">
             <div class="modal-header bg-transparent">

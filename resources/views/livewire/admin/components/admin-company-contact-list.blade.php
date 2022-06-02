@@ -46,13 +46,6 @@
 
                         <td>{{$contact->created_at->diffForHumans()}}</td>
                         <td><a href="{{route('admin.company-contact-profile', $contact->id)}}">Details</a> </td>
-                        <td wire:loading wire:target="remove({{$contact->id}})" >
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        </td>
-                        <td wire:loading.remove wire:target="remove({{$contact->id}})" >
-                            <i class="fa fa-trash" wire:click="remove({{$contact->id}})" style="cursor: pointer"></i>
-                        </td>
-                        {{--                    <td>Delete</td>--}}
                     </tr>
                 @endforeach
             @endif

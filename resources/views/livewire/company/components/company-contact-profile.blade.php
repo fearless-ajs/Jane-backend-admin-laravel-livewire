@@ -118,50 +118,73 @@
                            {{$contact->description}}
                         </p>
 
-                        <!-- like share -->
-                        <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                                <a href="#" class="d-flex align-items-center text-muted text-nowrap">
-                                    <i>Organization: </i>
-                                    <span> {{$contact->organization}}</span>
-                                </a>
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Date of birth</h6>
+                                </div>
+                                <small>{{$contact->date_of_birth}}</small>
                             </div>
-
-                            <!-- share and like count and icons -->
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                                <a href="#" class="text-nowrap">
-                                    <i  class="text-body font-medium-3 fa fa-phone"></i>
-                                    <span class="text-muted me-1">Office: {{$contact->office_phone}}</span>
-                                </a>
-
-                                <a href="#" class="text-nowrap">
-                                    <i class="text-body font-medium-3 mx-50 fa fa-mobile"></i>
-                                    <span class="text-muted">Mobile: {{$contact->mobile_phone}}</span>
-                                </a>
-                            </div>
-
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                                <a href="#" class="d-flex align-items-center text-muted text-nowrap">
-                                    <i>Fax: {{$contact->fax}}</i>
-                                </a>
-                            </div>
-
-                            <!-- share and like count and icons -->
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                                <a href="#" class="text-nowrap">
-                                    <i  class="text-body font-medium-3 fa fa-envelope"></i>
-                                    <span class="text-muted me-1">Email: {{$contact->primary_email}}</span>
-                                </a>
-
-                                <a href="#" class="text-nowrap">
-                                    <i class="text-body font-medium-3 mx-50 fa fa-calendar"></i>
-                                    <span class="text-muted">Date of birth: {{$contact->date_of_birth}}</span>
-                                </a>
-                            </div>
-
-                            <!-- share and like count and icons -->
                         </div>
-                        <!-- like share -->
+
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <small>{{$contact->user->email}}</small>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Office phone</h6>
+                                </div>
+                                <small>{{$contact->office_phone}}</small>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Mobile phone</h6>
+                                </div>
+                                <small>{{$contact->mobile_phone}}</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Fax</h6>
+                                </div>
+                                <small>{{$contact->fax}}</small>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">City</h6>
+                                </div>
+                                <small>{{$contact->city}}</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">State</h6>
+                                </div>
+                                <small>{{$contact->state}}</small>
+                            </div>
+                        </div>
 
                         <div class="d-flex align-items-start mb-1">
                             <div class="profile-user-info w-100">
@@ -203,9 +226,9 @@
 
 
                         @if($contact->available)
-                        <button type="button" class="btn btn-sm btn-success">Active contact</button>
+                        <p  class="text-success">Active contact</p>
                         @else
-                        <button type="button" class="btn btn-sm btn-success">Inactive contact</button>
+                        <p  class="text-danger">Inactive contact</p>
                         @endif
                     </div>
                 </div>
