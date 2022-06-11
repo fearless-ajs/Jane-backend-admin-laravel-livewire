@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $guarded = [];
 
     public function bankingInfo(){
@@ -34,6 +38,11 @@ class Company extends Model
         return $this->hasMany(Product::class,'company_id');
     }
 
+    public function catalogues(){
+        return $this->hasMany(CompanyCatalogue::class,'company_id');
+    }
+
+
     public function services(){
         return $this->hasMany(Service::class,'company_id');
     }
@@ -52,5 +61,9 @@ class Company extends Model
 
     public function users(){
         return $this->hasMany(Worker::class,'company_id');
+    }
+
+    public function billingCycles(){
+        return $this->hasMany(CompanyBillingCycle::class,'company_id');
     }
 }

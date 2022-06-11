@@ -56,14 +56,19 @@
                         </div>
                         <div class="col-12 col-sm-6 mb-1">
                             <label class="form-label" for="accountCurrency">App currency</label>
-                            <input type="text" wire:model.lazy="app_currency"  class="form-control {{$errors->has('app_currency')? 'is-invalid' : '' }}" id="accountCurrency" name="lastName" placeholder="App Currency" />
+                            @if(count($currencies) > 0)
+                            <select wire:model.lazy="app_currency"  class="form-select {{$errors->has('app_currency')? 'is-invalid' : '' }}">
+                                <option value="">Select currency</option>
+                                    @foreach($currencies as $currency)
+                                        <option value="{{$currency->id}}">{{$currency->currency_name}}</option>
+                                    @endforeach
+                            </select>
+                            @else
+                                <p class="form-label" style="color: red" for="basic-icon-default-email">Please add a currency to the system, <a href="{{route('admin.currencies')}}">click here</a></p>
+                            @endif
                             @error('app_currency') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                         </div>
-                        <div class="col-12 col-sm-6 mb-1">
-                            <label class="form-label" for="accountCurrencySymbol">App currency symbol</label>
-                            <input type="text" wire:model.lazy="app_currency_symbol" class="form-control {{$errors->has('app_currency_symbol')? 'is-invalid' : '' }}" id="accountCurrencySymbol" name="lastName" placeholder="Currency symbol"  />
-                            @error('app_currency_symbol') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                        </div>
+
                         <div class="col-12 col-sm-6 mb-1">
                             <label class="form-label" for="account-upload">Logo</label>
                             <input type="file" wire:model="app_logo" class="form-control {{$errors->has('app_logo')? 'is-invalid' : '' }}" id="account-upload" accept="image/*"  />

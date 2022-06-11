@@ -18,11 +18,6 @@
                 </div>
             </div>
         </div>
-        <h3>Roles List</h3>
-        <p class="mb-2">
-            A role provided access to predefined menus and features so that depending <br />
-            on assigned role an administrator can have access to what he need
-        </p>
 
         <!-- Role cards -->
         @livewire('company-roles-list')

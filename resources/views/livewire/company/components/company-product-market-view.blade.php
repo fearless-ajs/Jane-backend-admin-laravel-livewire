@@ -21,61 +21,73 @@
                 <div class="row my-2">
                     <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
                         <div class="d-flex align-items-center justify-content-center">
-                            <img src="{{$product->images->first()->productImage}}" class="img-fluid product-img" alt="product image" />
+                            <img src="{{$catalogue->images->first()->picture}}" class="img-fluid product-img" alt="product image" />
                         </div>
                     </div>
                     <div class="col-12 col-md-7">
-                        <h4>{{$product->name}}</h4>
-                        <span class="card-text item-company">By <a href="#" class="company-name">{{$product->manufacturer}}</a></span>
+                        <h4>{{$catalogue->name}}</h4>
+                        @if($catalogue->type === 'product')
+                            <span class="card-text item-company">By <a href="#" class="company-name">{{$catalogue->manufacturer}}</a></span>
+                        @endif
                         <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                            <h4 class="item-price me-1">₦{{$product->price}}</h4>
-                            <ul class="unstyled-list list-inline ps-1 border-start">
-                                <span class="badge badge-light-success">Category: {{$product->category}} </span>
-                            </ul>
+                            <h4 class="item-price me-1">{{$settings->currency->currency_symbol}}{{$catalogue->price}}</h4>
+                            @if($catalogue->category)
+                                <ul class="unstyled-list list-inline ps-1 border-start">
+                                    <span class="badge badge-light-success">Category: {{$catalogue->category}} </span>
+                                </ul>
+                            @endif
                         </div>
-                        @if($product->active)
-                            <p class="card-text">Available - <span class="text-success">In stock</span></p>
-                        @else
-                            <p class="card-text">Not Available - <span class="text-success">Out of stock</span></p>
+
+                        @if($catalogue->type === 'product')
+                            @if($catalogue->quantity > 0)
+                                <p class="card-text">Available - <span class="text-success">In stock</span></p>
+                            @else
+                                <p class="card-text">Not Available - <span class="text-success">Out of stock</span></p>
+                            @endif
+                        @endif
+                        @if($catalogue->type === 'service')
+                            <p class="card-text">Billing - <span class="text-success">{{$catalogue->cycle->title}}</span></p>
                         @endif
 
+
                         <p class="card-text">
-                            {{$product->description}}
+                            {{$catalogue->description}}
                         </p>
                         <ul class="product-features list-unstyled">
-                            <li>
-                                <i data-feather="dollar-sign"></i>
-                                <span>{{$product->brand}}</span>
-                            </li>
-                            <li><i class="fa fa-user"></i> <span>{{$product->user->lastname}} {{$product->user->firstname}}</span></li>
+                            @if($catalogue->type === 'product')
+                                <li>
+                                    <i>Brand:</i>
+                                    <span>{{$catalogue->brand}}</span>
+                                </li>
+                            @endif
+                            <li><i class="fa fa-user"></i> <span>{{$catalogue->user->lastname}} {{$catalogue->user->firstname}}</span></li>
                         </ul>
                         <hr />
-                        <div class="product-color-options">
-                            <h6>Other product information</h6>
-                            <ul class="list-unstyled mb-0">
-                                <li class="d-inline-block selected">
-                                    <div class="color-option b-primary">
-                                        <div class="filloption bg-primary"></div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <hr />
+                        @if($catalogue->type === 'product')
+                            <div class="product-color-options">
+                                <h6>Other product information</h6>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="d-inline-block selected">
+                                        <div class="color-option b-primary">
+                                            <div class="filloption bg-primary"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <p class="card-text">Available quantity - <span class="text-success">{{$catalogue->quantity}}</span></p>
+                            </div>
+                            <hr />
+                        @endif
                         <div class="d-flex flex-column flex-sm-row pt-1">
+
                             <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#productLinkModal">
-                                Generate link
+                                View link
                             </button>
-                            <a href="{{route('company.products')}}" class="btn btn-outline-secondary btn-wishlist me-0 me-sm-1 mb-1 mb-sm-0">
-                                <i data-feather="heart" class="me-50"></i>
-                                <span>Shop</span>
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Product Details ends -->
         </div>
-
 
 
         <div class="modal fade current-modal" wire:ignore.self id="productLinkModal" tabindex="-1" aria-hidden="true">
@@ -86,8 +98,8 @@
                     </div>
                     <div class="modal-body pb-5 px-sm-5 pt-50">
                         <div class="text-center mb-2">
-                            <h1 class="mb-1">Product link</h1>
-                            <a target="_blank" href="{{getenv('APP_PUBLIC_URL')}}/markets/{{$product->company->id}}/{{$product->slug}}">{{getenv('APP_PUBLIC_URL')}}/markets/{{$product->company->id}}/{{$product->slug}}</a>
+                            <h1 class="mb-1">{{ucwords($catalogue->type)}} link</h1>
+                            <a target="_blank" href="{{getenv('APP_PUBLIC_URL')}}/markets/{{$catalogue->company->id}}/{{$catalogue->slug}}">{{getenv('APP_PUBLIC_URL')}}/markets/{{$catalogue->company->id}}/{{$catalogue->slug}}</a>
                         </div>
                         <div class="col-12 text-center mt-2 pt-50">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
@@ -107,13 +119,13 @@
                 <!-- Product Details starts -->
                 <div class="card-body">
                     <div class="row">
-                        <h4 class="justify-content-center" style="text-align: center;">Product images
+                        <h4 class="justify-content-center" style="text-align: center;">{{ucwords($catalogue->type)}} images
                             <span wire:loading wire:target="removeImage"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h4>
-                        @if(count($product->images) > 0)
-                            @foreach($product->images as $image)
+                        @if(count($catalogue->images) > 0)
+                            @foreach($catalogue->images as $image)
                                 <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <img src="{{$image->productImage}}" class="img-fluid product-img" alt="product image" />
+                                        <img src="{{$image->picture}}" class="img-fluid product-img" alt="product image" />
                                     </div>
                                 </div>
                             @endforeach

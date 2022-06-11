@@ -61,34 +61,32 @@
 
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Market area</span><i data-feather="more-horizontal"></i>
             </li>
+
             @if(Auth::user()->hasModuleAccess('product', 'read'))
-                <li class=" nav-item @if(Route::currentRouteName() == 'company.products') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Products</span></a>
+                <li class=" nav-item @if(Route::currentRouteName() == 'company.catalogues') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Catalogue</span></a>
                     <ul class="menu-content">
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.products') active @endif" href="{{route('company.products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.catalogues') active @endif" href="{{route('company.catalogues')}}"><i class="fa fa-cart-plus"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
                         </li>
                     </ul>
                 </li>
             @endif
 
             @if(Auth::user()->hasModuleAccess('category', 'read'))
-                <li class=" nav-item @if(Route::currentRouteName() == 'company.categories') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Categories</span></a>
+                <li class=" nav-item @if(Route::currentRouteName() == 'company.categories') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-file-archive"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Categories</span></a>
                     <ul class="menu-content">
                         <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.categories') active @endif" href="{{route('company.categories')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
                         </li>
                     </ul>
                 </li>
             @endif
-
-
-            @if(Auth::user()->hasModuleAccess('service', 'read'))
-                <li class=" nav-item @if(Route::currentRouteName() == 'company.services') active @endif"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Services</span></a>
+            @if(Auth::user()->hasModuleAccess('category', 'read'))
+                <li class=" nav-item @if(Route::currentRouteName() == 'company.billing-cycles') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-money-bill-wave"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Billing</span></a>
                     <ul class="menu-content">
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.services') active @endif" href="{{route('company.services')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.billing-cycles') active @endif" href="{{route('company.billing-cycles')}}"><i class="fa fa-money-bill"></i><span class="menu-item text-truncate" data-i18n="Shop">Billing cycles</span></a>
                         </li>
                     </ul>
                 </li>
             @endif
-
 
 
             @if(Auth::user()->hasModuleAccess('role', 'read'))

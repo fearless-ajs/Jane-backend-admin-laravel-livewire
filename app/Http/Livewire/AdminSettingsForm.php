@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Currency;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +16,13 @@ class AdminSettingsForm extends LiveNotify
     public $app_name;
     public $app_email;
     public $app_currency;
-    public $app_currency_symbol;
     public $app_logo;
     public $app_country;
 
     public $settings;
     public $user;
+
+    public $currencies;
 
     protected $listeners = [
         'refreshAdminSettings' =>   '$refresh',
@@ -30,6 +32,7 @@ class AdminSettingsForm extends LiveNotify
     public function mount(){
         $this->fetchFormData();
         $this->user = User::find(Auth::user()->id);
+        $this->currencies = Currency::all();
     }
 
 
@@ -50,8 +53,7 @@ class AdminSettingsForm extends LiveNotify
         $this->validateOnly($field, [
            'app_name'              =>  'required|string|max:30',
            'app_email'             => 'required|email',
-           'app_currency'          => 'required|string|max:50',
-           'app_currency_symbol'   =>  'required|string|max:2',
+           'app_currency'          => 'required|numeric',
            'app_logo'              => 'nullable|image|max:2000',
            'app_country'           => 'required|string|max:255'
         ]);
@@ -61,8 +63,7 @@ class AdminSettingsForm extends LiveNotify
         $this->validate([
             'app_name'              =>  'required|string|max:30',
             'app_email'             => 'required|email',
-            'app_currency'          => 'required|string|max:50',
-            'app_currency_symbol'   =>  'required|string|max:2',
+            'app_currency'          => 'required|numeric',
             'app_logo'              => 'nullable|image|max:2000',
             'app_country'           => 'required|string|max:255'
         ]);
@@ -82,7 +83,6 @@ class AdminSettingsForm extends LiveNotify
             'app_name'              =>  $this->app_name,
             'app_email'             =>  $this->app_email,
             'app_currency'          =>  $this->app_currency,
-            'app_currency_symbol'   =>  $this->app_currency_symbol,
             'app_logo'              =>  ($this->app_logo)?$this->app_logo:$this->settings->app_logo,
             'app_country'           =>  $this->app_country
         ]);

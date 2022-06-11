@@ -67,6 +67,14 @@
                 </li>
             @endif
 
+            @if(Auth::user()->hasRole('super-admin'))
+                <li class=" nav-item @if(Route::currentRouteName() == 'admin.currencies') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-money-bill"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Currencies</span></a>
+                    <ul class="menu-content">
+                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'admin.currencies') active @endif" href="{{route('admin.currencies')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
         </ul>
     </div>
 </div>

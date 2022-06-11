@@ -30,17 +30,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // When a contact mail is changed
-        User::updated(function ($user){
-            if ($user->isDirty('email')){
-                retry(5, function () use ($user) {
-                    Mail::to($user->email)->send(new UserMailChanged($user));
-                });
-            }
-        });
+        if (! app()->runningInConsole()){
+            // When a contact mail is changed
+            User::updated(function ($user){
+                if ($user->isDirty('email')){
+                    retry(5, function () use ($user) {
+                        Mail::to($user->email)->send(new UserMailChanged($user));
+                    });
+                }
+            });
 
-//        $this->createCompanyModules();
-        view()->share('settings', Setting::first());
+            view()->share('settings', Setting::first());
+        }
+
     }
 
     public function createCompanyModules(){

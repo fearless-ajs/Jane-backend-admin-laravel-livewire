@@ -35,6 +35,7 @@ return new class extends Migration
             $table->bigInteger('last_updated_by_id');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

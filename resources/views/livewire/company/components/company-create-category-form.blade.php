@@ -6,8 +6,8 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Add product category</h1>
-                    <p>Add new product category to your company.</p>
+                    <h1 class="mb-1">Add catalogue category</h1>
+                    <p>Add new catalogue category to your company.</p>
                 </div>
                 <form class="row gy-1 pt-75" wire:submit.prevent="addCategory">
 

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('update')->default(false);
             $table->boolean('delete')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('volume')->default(1);
             $table->bigInteger('total_service_price');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

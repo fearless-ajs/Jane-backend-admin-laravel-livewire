@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('invoice_id')->constrained('invoices');
             $table->string('method');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

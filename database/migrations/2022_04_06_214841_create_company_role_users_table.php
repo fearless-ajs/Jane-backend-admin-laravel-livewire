@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('company_role_id');
             $table->bigInteger('company_team_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

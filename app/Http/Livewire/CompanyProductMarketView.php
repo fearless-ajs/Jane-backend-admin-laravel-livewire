@@ -6,11 +6,11 @@ use Livewire\Component;
 
 class CompanyProductMarketView extends Component
 {
-    public $product;
+    public $catalogue;
     public $missing;
 
-    public function mount($product, $missing){
-        $this->product = $product;
+    public function mount($catalogue, $missing){
+        $this->catalogue = $catalogue;
         $this->missing = $missing;
     }
 

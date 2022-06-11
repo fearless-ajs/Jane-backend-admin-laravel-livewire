@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('product_id')->nullable();
             $table->foreignId('service_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

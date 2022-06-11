@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('service_id')->constrained('services');
             $table->string('image');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

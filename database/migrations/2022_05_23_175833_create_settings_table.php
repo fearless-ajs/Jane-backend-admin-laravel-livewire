@@ -18,11 +18,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('app_name');
             $table->string('app_email');
-            $table->string('app_currency');
-            $table->string('app_currency_symbol');
+            $table->bigInteger('app_currency');
             $table->string('app_country');
             $table->string('app_logo')->default('app-avatar.png');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

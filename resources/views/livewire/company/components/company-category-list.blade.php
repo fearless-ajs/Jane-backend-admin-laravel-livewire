@@ -31,7 +31,7 @@
                     <td>{{$category->name }}</td>
 
                     <td>{{$category->created_at->diffForHumans()}}</td>
-                    @if(Auth::user()->hasModuleAccess('invoice', 'delete'))
+                    @if(Auth::user()->hasModuleAccess('category', 'delete'))
                     <td wire:loading wire:target="remove({{$category->id}})" >
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </td>

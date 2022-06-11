@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('type', ['on_delivery', 'before_delivery']);
             $table->boolean('paid')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('money_back_days')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

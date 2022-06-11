@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('company_team_accesses', function (Blueprint $table) {
             $table->id();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

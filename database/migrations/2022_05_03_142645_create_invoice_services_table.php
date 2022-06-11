@@ -23,6 +23,7 @@ return new class extends Migration
             $table->bigInteger('total_price');
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('rating')->default(0)->nullable();
             $table->text('review')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

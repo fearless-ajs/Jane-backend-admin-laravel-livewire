@@ -50,6 +50,18 @@ return [
             'visibility' => 'public',
         ],
 
+        'catalogues' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/img/catalogues'),
+            'visibility' => 'public',
+        ],
+
+        'users' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/img/users'),
+            'visibility' => 'public',
+        ],
+
         'documents' => [
             'driver' => 'local',
             'root' => public_path('uploads/docs'),

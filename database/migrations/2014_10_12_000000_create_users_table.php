@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('email')->unique();
             $table->string('image')->nullable()->default('user-avatar.jpg');
-            $table->enum('user_type', ['Company-worker', 'contact', 'super-admin'])->default('Company');
+            $table->enum('user_type', ['company-worker', 'contact', 'super-admin'])->default('company-worker');
             $table->bigInteger('parent_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('verification_token')->nullable();
@@ -31,8 +31,11 @@ return new class extends Migration
             $table->string('two_factor_code')->nullable();
             $table->dateTime('two_factor_expires_at')->nullable();
 
+            $table->bigInteger('company_id')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

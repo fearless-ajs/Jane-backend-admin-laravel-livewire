@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('description');
             $table->enum('type', ['default', 'custom'])->default('default');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

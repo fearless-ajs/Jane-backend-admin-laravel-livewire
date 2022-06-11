@@ -74,7 +74,7 @@
 @livewire('company-main-menu')
 
 <!-- BEGIN: Content-->
-@if(Route::currentRouteName() == 'company.products' || Route::currentRouteName() == 'company.services')
+@if(Route::currentRouteName() == 'company.products' || Route::currentRouteName() == 'company.services' || Route::currentRouteName() == 'company.catalogues')
 <div class="app-content content ecommerce-application">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
@@ -187,6 +187,10 @@ window.addEventListener('swal:confirm', event => {
 <script>
     window.livewire.on('close-current-modal', param => {
         $('.current-modal').modal('hide');
+    });
+
+    window.livewire.on('editBillingCycle', param => {
+        $('.edit-company-billing-cycle-modal').modal('show');
     });
 </script>
 

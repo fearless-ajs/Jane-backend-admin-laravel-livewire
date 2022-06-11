@@ -38,7 +38,7 @@ class CompanyWorkerList extends Component
         }else {
             $this->searchResult = false;
             return view('livewire.company.components.company-worker-list', [
-                'workers' => Worker::orderBy('id', 'DESC')->where('company_id', $this->company->id)->paginate(12)
+                'workers' => Worker::orderBy('id', 'DESC')->where('company_id', $this->company->id)->paginate(2)
             ]);
         }
     }

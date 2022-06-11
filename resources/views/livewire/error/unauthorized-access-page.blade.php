@@ -17,7 +17,13 @@
                         <h2 class="mb-1">You are not authorized! 🔐</h2>
                         <p class="mb-2">
                             You are currently not authorized to access this page, you privileges might have been revoked by the system administrator .
-                        </p><a class="btn btn-primary mb-1 btn-sm-block" href="{{route('login')}}">Back to login</a><img class="img-fluid" src="../../../app-assets/images/pages/not-authorized-dark.svg" alt="Not authorized page" />
+                        </p>
+                        @if(Auth::user())
+                            <a class="btn btn-primary mb-1 btn-sm-block" href="{{route('sign-out')}}">Back home</a>
+                        @else
+                            <a class="btn btn-primary mb-1 btn-sm-block" href="{{route('sign-in')}}">Back to login</a>
+                        @endif
+                        <img class="img-fluid" src="../../../app-assets/images/pages/not-authorized-dark.svg" alt="Not authorized page" />
                     </div>
                 </div>
             </div>

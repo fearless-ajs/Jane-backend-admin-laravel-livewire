@@ -68,7 +68,8 @@
                                     @error('company_email') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12"><div class="mb-1">
+                            <div class="col-md-6 col-12"
+                            ><div class="mb-1">
                                     <div class="form-check">
                                         <input class="form-check-input {{$errors->has('terms')? 'is-invalid' : '' }}" wire:model.lazy="terms" type="checkbox" id="remember-me" tabindex="3" />
                                         <label class="form-check-label" for="remember-me"> I agree to <a href="#">privacy policy & terms</a> </label>

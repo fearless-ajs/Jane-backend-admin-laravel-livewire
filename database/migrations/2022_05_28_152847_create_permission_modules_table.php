@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('permission_id');
             $table->bigInteger('module_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

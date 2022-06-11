@@ -1,14 +1,11 @@
 <?php
 
-use App\Http\Controllers\AppModuleController;
-use App\Http\Controllers\View\Admin\AdminViewController;
 use App\Http\Controllers\View\Company\CompanyContactViewController;
 use App\Http\Controllers\View\Company\CompanyInvoiceViewController;
 use App\Http\Controllers\View\Company\CompanyPermissionsViewController;
 use App\Http\Controllers\View\Company\CompanyProductViewController;
 use App\Http\Controllers\View\Company\CompanyRolesViewController;
 use App\Http\Controllers\View\Company\CompanyServiceViewController;
-use App\Http\Controllers\View\Company\CompanyTeamsViewController;
 use App\Http\Controllers\View\Company\CompanyUsersViewController;
 use App\Http\Controllers\View\Company\CompanyViewController;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->middleware('check-two-factor')->name('company.')->group(function () {
-    Route::get('/create-modules',                                   [AppModuleController::class, 'createCompanyModules'])->name('create-module');
+
     Route::get('/invoices/print/{id}',      [CompanyInvoiceViewController::class, 'printInvoice'])->name('print-invoice');
     Route::middleware('role:company')->group(function (){
 
@@ -53,11 +50,15 @@ Route::middleware('auth')->middleware('check-two-factor')->name('company.')->gro
             Route::middleware('company-guard:product,read')->get('/products',                 [CompanyProductViewController::class, 'products'])->name('products');
             Route::middleware('company-guard:product,read')->get('/products/{id}',            [CompanyProductViewController::class, 'productDetails'])->name('product-details');
 
+            Route::middleware('company-guard:product,read')->get('/catalogues',               [CompanyProductViewController::class, 'catalogues'])->name('catalogues');
+            Route::middleware('company-guard:product,read')->get('/catalogues/{id}',          [CompanyProductViewController::class, 'catalogueDetails'])->name('catalogue-details');
+
             Route::middleware('company-guard:service,read')->get('/services',                 [CompanyServiceViewController::class, 'services'])->name('services');
             Route::middleware('company-guard:service,read')->get('/services/{id}',            [CompanyServiceViewController::class, 'serviceDetails'])->name('service-details');
 
 
             Route::middleware('company-guard:category,read')->get('/categories',               [CompanyProductViewController::class, 'categories'])->name('categories');
+            Route::middleware('company-guard:category,read')->get('/billing-cycle',            [CompanyProductViewController::class, 'billingCycle'])->name('billing-cycles');
 
 
             Route::middleware('company-guard:invoice,read')->get('/invoices',                 [CompanyInvoiceViewController::class, 'invoices'])->name('invoices');
@@ -65,6 +66,8 @@ Route::middleware('auth')->middleware('check-two-factor')->name('company.')->gro
             Route::middleware('company-guard:invoice,edit')->get('/invoices/edit/{id}',       [CompanyInvoiceViewController::class, 'editInvoice'])->name('edit-invoice');Route::get('/create-invoice',           [CompanyInvoiceViewController::class, 'createInvoice'])->name('create-invoice');
 
            Route::middleware('company-guard:system,edit')->get('/settings',                 [CompanyViewController::class, 'settings'])->name('settings');
+
+
 
     });
 });

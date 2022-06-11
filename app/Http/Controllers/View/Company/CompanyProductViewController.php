@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\View\Company;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Company;
+use App\Models\CompanyCatalogue;
 use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -26,6 +28,15 @@ class CompanyProductViewController extends Controller
         return view('livewire.company.pages.company-categories-list-page', ['data' => $data, 'settings'   => $this->settings]);
     }
 
+    public function billingCycle (){
+        $data = [
+            'title' => 'Company product Category',
+            'keywords' => 'Company product Category',
+            'description' => 'Company product Category',
+        ];
+        return view('livewire.company.pages.company-billing-cycle-list-page', ['data' => $data, 'settings'   => $this->settings]);
+    }
+
     public function products (){
         $data = [
             'title' => 'Company products',
@@ -46,10 +57,30 @@ class CompanyProductViewController extends Controller
         return view('livewire.company.pages.company-product-details-page', ['data' => $data, 'product' => $product, 'settings'   => $this->settings]);
     }
 
-    public function productPublicShowCase ($company_id, $product_slug){
-        $product = Product::where('company_id', $company_id)->where('slug', $product_slug)->first();
+
+    public function catalogues (){
+        $data = [
+            'title' => 'Company products',
+            'keywords' => 'Company products',
+            'description' => 'Company products',
+        ];
+        return view('livewire.company.pages.company-catalogue-list-page', ['data' => $data, 'settings'   => $this->settings]);
+    }
+
+    public function catalogueDetails ($id){
+        $catalogue = CompanyCatalogue::find($id);
+        $data = [
+            'title' => 'Company details',
+            'keywords' => 'Company details',
+            'description' => 'Company details',
+        ];
+        return view('livewire.company.pages.company-catalogue-details-page', ['data' => $data, 'catalogue' => $catalogue]);
+    }
+
+    public function productPublicShowCase ($company_id, $catalogue_slug){
+        $catalogue = CompanyCatalogue::where('company_id', $company_id)->where('slug', $catalogue_slug)->first();
         $missing = false;
-        if (!$product){
+        if (!$catalogue){
             $missing = true;
         }
         $data = [
@@ -57,6 +88,6 @@ class CompanyProductViewController extends Controller
             'keywords' => 'Company details',
             'description' => 'Company details',
         ];
-        return view('livewire.company.pages.company-product-market-view-page', ['data' => $data, 'product' => $product, 'missing' => $missing, 'settings'   => $this->settings]);
+        return view('livewire.company.pages.company-product-market-view-page', ['data' => $data, 'catalogue' => $catalogue, 'missing' => $missing]);
     }
 }

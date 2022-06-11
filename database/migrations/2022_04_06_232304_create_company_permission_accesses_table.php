@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('company_permission_id');
             $table->string('resource'); // What component the Company permission has access to
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

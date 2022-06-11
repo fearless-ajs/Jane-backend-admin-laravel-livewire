@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\View\Admin\AdminCompanyViewController;
+use App\Http\Controllers\View\Admin\AdminCurrencyViewController;
 use App\Http\Controllers\View\Admin\AdminViewController;
 use App\Models\Setting;
 use App\Models\User;
@@ -43,6 +44,12 @@ Route::middleware('auth')->name('admin.')->group(function () {
 
         Route::get('/companies/{company_id}/invoices',                          [AdminCompanyViewController::class, 'companyInvoices'])->name('company-invoices');
         Route::get('/companies/invoices/preview/{invoice_id}',                  [AdminCompanyViewController::class, 'companyInvoicePreview'])->name('company-invoice-preview');
+
+
+
+
+        Route::get('/currencies',                                               [AdminCurrencyViewController::class, 'currencies'])->name('currencies');
+        Route::get('/currencies/{id}',                                          [AdminCurrencyViewController::class, 'currencyDetails'])->name('currency-details');
 
 
 

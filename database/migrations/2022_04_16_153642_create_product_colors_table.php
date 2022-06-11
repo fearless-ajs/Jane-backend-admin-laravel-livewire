@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products');
             $table->string('color');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
