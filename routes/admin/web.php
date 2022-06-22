@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::middleware('auth')->name('admin.')->group(function () {
+Route::middleware(['auth', 'check-two-factor'])->name('admin.')->group(function () {
     Route::middleware('role:super-admin')->group(function (){
 
         Route::get('/',                                                         [AdminViewController::class, 'dashboard'])->name('dashboard');

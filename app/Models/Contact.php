@@ -25,4 +25,12 @@ class Contact extends Model
     public function company(){
         return $this->belongsTo(Company::class, 'company_id');
     }
+
+    public function getContactImageAttribute(){
+        if (!empty($this->image)){
+            return asset("uploads/img/$this->image");
+        }else{
+            return "https://ui-avatars.com/api/?name=$this->lastname&color=FFFFFF&background=563C5C";
+        }
+    }
 }

@@ -13,6 +13,6 @@ class CompanyMainMenu extends Component
     }
     public function render()
     {
-        return view('livewire.layouts.company.company-main-menu');
+        return view('livewire.company.layouts.company-main-menu');
     }
 }

@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('product_colors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('companies');
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('product_id')->constrained('products');
+            $table->bigInteger('company_id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('product_id');
             $table->string('color');
             $table->timestamps();
             $table->softDeletes();

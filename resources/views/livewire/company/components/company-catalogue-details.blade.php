@@ -16,7 +16,12 @@
                             <span class="card-text item-company">By <a href="#" class="company-name">{{$catalogue->manufacturer}}</a></span>
                         @endif
                         <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                            <h4 class="item-price me-1">{{$settings->currency->currency_symbol}}{{$catalogue->price}}</h4>
+                            @if($catalogue->tax)
+                                <h4 class="item-price me-1"><span class="text-warning"> {{$settings->currency->currency_symbol}}{{$catalogue->price}} <small>+ Tax: {{$catalogue->tax->percentage}}%</small> </span>| Total: {{$settings->currency->currency_symbol}}{{ (($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price }}</h4>
+                            @else
+                                <h4 class="item-price me-1">{{$settings->currency->currency_symbol}}{{$catalogue->price}}</h4>
+                            @endif
+
                             @if($catalogue->category)
                             <ul class="unstyled-list list-inline ps-1 border-start">
                                 <span class="badge badge-light-success">Category: {{$catalogue->category}} </span>
@@ -32,7 +37,11 @@
                             @endif
                         @endif
                         @if($catalogue->type === 'service')
-                            <p class="card-text">Billing - <span class="text-success">{{$catalogue->cycle->title}}</span></p>
+                            @if($catalogue->cycle)
+                                <p class="card-text">Billing - <span class="text-success">{{$catalogue->cycle->title}}</span></p>
+                            @else
+                                <p class="card-text">Billing - <span class="text-danger">Not available</span></p>
+                            @endif
                         @endif
 
 

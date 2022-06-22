@@ -66,4 +66,8 @@ class Company extends Model
     public function billingCycles(){
         return $this->hasMany(CompanyBillingCycle::class,'company_id');
     }
+
+    public function taxes(){
+        return $this->hasMany(CompanyTax::class,'company_id');
+    }
 }

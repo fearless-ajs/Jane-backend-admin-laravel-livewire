@@ -75,7 +75,11 @@
                                                 <span class="badge badge-light-success">In stock: {{$catalogue->quantity}} </span>
                                             @endif
                                             @if($catalogue->type === 'service')
+                                                @if($catalogue->cycle)
                                                 <span class="badge badge-light-success">Billing: {{$catalogue->cycle->title}} </span>
+                                                @else
+                                                <span class="badge badge-light-danger">Billing: Not available </span>
+                                                @endif
                                             @endif
 
                                         </ul>

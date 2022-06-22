@@ -17,6 +17,6 @@ class AdminAppHeader extends Component
 
     public function render()
     {
-        return view('livewire.layouts.admin.admin-app-header');
+        return view('livewire.admin.layouts.admin-app-header');
     }
 }

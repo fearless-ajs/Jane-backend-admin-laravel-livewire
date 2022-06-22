@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('order_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained('orders');
-            $table->foreignId('service_id')->constrained('services');
+            $table->bigInteger('order_id');
+            $table->bigInteger('service_id');
             $table->string('rate');
             $table->bigInteger('volume')->default(1);
             $table->bigInteger('total_service_price');

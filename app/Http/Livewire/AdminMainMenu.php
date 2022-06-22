@@ -16,6 +16,6 @@ class AdminMainMenu extends Component
 
     public function render()
     {
-        return view('livewire.layouts.admin.admin-main-menu');
+        return view('livewire.admin.layouts.admin-main-menu');
     }
 }

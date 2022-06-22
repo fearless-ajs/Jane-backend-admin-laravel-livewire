@@ -16,6 +16,10 @@ trait FileManager
         File::delete(public_path('uploads/img/users/'.$filename));
     }
 
+    public function deleteSignature($filename){
+        File::delete(public_path('uploads/img/signatures/'.$filename));
+    }
+
     public function deleteDocuments($filename){
         File::delete(public_path('uploads/docs/'.$filename));
     }

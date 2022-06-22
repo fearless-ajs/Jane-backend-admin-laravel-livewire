@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('invoice_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invoice_id')->constrained('invoices');
-            $table->foreignId('product_id')->constrained('products');
+            $table->bigInteger('invoice_id');
+            $table->bigInteger('product_id');
             $table->bigInteger('quantity')->default(1);
             $table->bigInteger('unit_price');
             $table->bigInteger('total_price');
+            $table->float('total_tax')->default(0);
+            $table->float('total_price_with_tax')->default(0);
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

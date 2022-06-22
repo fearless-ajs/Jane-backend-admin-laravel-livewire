@@ -25,15 +25,23 @@ class Invoice extends Model
        return $this->hasOne(Contact::class, 'id', 'contact_id');
     }
 
+    public function contactSignature(){
+        return $this->hasOne(InvoiceContactSignature::class, 'invoice_id', 'id');
+    }
+
     public function worker(){
         return $this->hasOne(Worker::class, 'id', 'worker_id');
     }
 
     public function services(){
-        return $this->hasMany(InvoiceService::class, 'invoice_id');
+        return $this->hasMany(InvoiceCatalogue::class, 'invoice_id')->where('type', 'service');
     }
 
     public function products(){
-        return $this->hasMany(InvoiceProduct::class, 'invoice_id');
+        return $this->hasMany(InvoiceCatalogue::class, 'invoice_id')->where('type', 'product');
+    }
+
+    public function catalogues(){
+        return $this->hasMany(InvoiceCatalogue::class, 'invoice_id');
     }
 }

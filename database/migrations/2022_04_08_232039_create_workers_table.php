@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('workers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->bigInteger('user_id');
+            $table->bigInteger('company_id');
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();

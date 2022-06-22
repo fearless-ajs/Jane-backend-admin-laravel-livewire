@@ -12,6 +12,6 @@ class CompanyAppHeader extends Component
 
     public function render()
     {
-        return view('livewire.layouts.company.company-app-header');
+        return view('livewire.company.layouts.company-app-header');
     }
 }

@@ -24,17 +24,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('guest')->group(function () {
+    Route::get('/',                                   [AuthViewController::class, 'login'])->name('login');
+    Route::get('/login',                              [AuthViewController::class, 'login']);
+    Route::get('/sign-in',                            [AuthViewController::class, 'login'])->name('sign-in');
+    Route::get('/forgot-password',                    [AuthViewController::class, 'forgotPassword'])->name('forgot-password');
+    Route::get('/reset-password/{token}',             [AuthViewController::class, 'resetPassword'])->name('reset-password');
+    Route::get('/sign-up',                            [AuthViewController::class, 'register'])->name('sign-up');
+    Route::get('/verify-email/{token}',               [AuthViewController::class, 'verify'])->name('verify-email');
+    Route::get('/verify-customer-email/{token}',      [AuthViewController::class, 'verifyCustomer'])->name('verify-customer-email');
+    Route::get('/verify-changed-email/{token}',       [AuthViewController::class, 'verifyChangedEmail'])->name('verify-changed-email');
+});
 
-Route::get('/',                                   [AuthViewController::class, 'login'])->name('login');
-Route::get('/login',                              [AuthViewController::class, 'login']);
-Route::get('/sign-in',                            [AuthViewController::class, 'login'])->name('sign-in');
-Route::get('/forgot-password',                    [AuthViewController::class, 'forgotPassword'])->name('forgot-password');
-Route::get('/reset-password/{token}',             [AuthViewController::class, 'resetPassword'])->name('reset-password');
 Route::get('/sign-out',                           [AuthViewController::class, 'logout'])->name('sign-out');
-Route::get('/sign-up',                            [AuthViewController::class, 'register'])->name('sign-up');
-Route::get('/verify-email/{token}',               [AuthViewController::class, 'verify'])->name('verify-email');
-Route::get('/verify-customer-email/{token}',      [AuthViewController::class, 'verifyCustomer'])->name('verify-customer-email');
-Route::get('/verify-changed-email/{token}',       [AuthViewController::class, 'verifyChangedEmail'])->name('verify-changed-email');
 
 Route::middleware('auth')->group(function () {
     Route::get('/two-factor',                         [AuthViewController::class, 'twoFactor'])->name('verify-two-factor');

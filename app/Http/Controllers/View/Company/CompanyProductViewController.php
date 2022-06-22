@@ -37,6 +37,15 @@ class CompanyProductViewController extends Controller
         return view('livewire.company.pages.company-billing-cycle-list-page', ['data' => $data, 'settings'   => $this->settings]);
     }
 
+    public function taxes (){
+        $data = [
+            'title' => 'Company taxes',
+            'keywords' => 'Company taxes',
+            'description' => 'Company product Category',
+        ];
+        return view('livewire.company.pages.company-tax-list-page', ['data' => $data]);
+    }
+
     public function products (){
         $data = [
             'title' => 'Company products',

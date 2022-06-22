@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('company_permission_role_privileges', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('companies');
+            $table->bigInteger('company_id');
             $table->bigInteger('company_permission_id');
             $table->bigInteger('company_role_id');
             $table->boolean('create')->default(false);

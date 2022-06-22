@@ -15,10 +15,8 @@ return new class extends Migration
     {
         Schema::create('cart_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cart_id')->constrained('carts');
-            $table->foreignId('service_id')->constrained('services');
-            $table->string('rate');
-            $table->bigInteger('volume')->default(1);
+            $table->bigInteger('cart_id');
+            $table->bigInteger('catalogue_id');
             $table->bigInteger('total_service_price');
             $table->timestamps();
             $table->softDeletes();

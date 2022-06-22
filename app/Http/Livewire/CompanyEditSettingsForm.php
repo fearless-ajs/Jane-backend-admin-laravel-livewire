@@ -3,6 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Company;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -51,7 +54,7 @@ class CompanyEditSettingsForm extends Component
             'state'                 => 'required|string|max:255',
             'city'                  => 'required|string|max:255',
             'address'               => 'required|string|max:255',
-            'banner'                => 'nullable|image|max:5000|dimensions:width=1980,height=660'
+            'banner'                => 'nullable|image|max:5000'
         ]);
     }
 
@@ -65,13 +68,16 @@ class CompanyEditSettingsForm extends Component
             'state'                 => 'required|string|max:255',
             'city'                  => 'required|string|max:255',
             'address'               => 'required|string|max:255',
-            'banner'                => 'nullable|image|max:5000|dimensions:width=1980,height=660'
+            'banner'                => 'nullable|image|max:5000'
         ]);
 
         // Let us check if an image is supplied
         if ($this->banner){
             // Save the banner
-            $this->banner = $this->banner->store('/', 'images');
+            $img = Image::make($this->banner)->resize(1980, 660)->encode('jpg');
+            $name = Str::random(50).'_'.$this->banner->getClientOriginalName();
+            Storage::disk('images')->put($name, $img);
+            $this->banner = $name;
         }
 
         Company::where('id', $this->company->id)->update([

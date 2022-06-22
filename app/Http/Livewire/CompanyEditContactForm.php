@@ -45,8 +45,8 @@ class CompanyEditContactForm extends Component
 
         $this->contact          = $contact;
         $this->title            = $contact->title;
-        $this->lastname         = $contact->user->lastname;
-        $this->firstname        = $contact->user->firstname;
+        $this->lastname         = $contact->lastname;
+        $this->firstname        = $contact->firstname;
         $this->office_phone     = $contact->office_phone;
         $this->mobile_phone     = $contact->mobile_phone;
         $this->organization     = $contact->organization;
@@ -65,9 +65,13 @@ class CompanyEditContactForm extends Component
     public function updated($field){
         $this->validateOnly($field, [
             'title'             => 'required|string|max:255',
+            'lastname'          => 'required|string|max:255',
+            'firstname'         => 'required|string|max:255',
+            'primary_email'     => 'required|string|email|',
             'office_phone'      => 'nullable',
             'mobile_phone'      => 'nullable',
             'organization'      => 'nullable',
+            'image'             => 'nullable|image',
             'fax'               => 'nullable|numeric',
             'date_of_birth'     => 'required|max:255',
             'product'           => 'nullable|array',
@@ -84,9 +88,13 @@ class CompanyEditContactForm extends Component
     public function updateContact(){
         $this->validate([
             'title'             => 'required|string|max:255',
+            'lastname'          => 'required|string|max:255',
+            'firstname'         => 'required|string|max:255',
+            'primary_email'     => 'required|string|email',
             'office_phone'      => 'nullable',
             'mobile_phone'      => 'nullable',
             'organization'      => 'nullable',
+            'image'             => 'nullable|image',
             'fax'               => 'nullable|numeric',
             'date_of_birth'     => 'required|max:255',
             'product'           => 'nullable|array',
@@ -111,6 +119,9 @@ class CompanyEditContactForm extends Component
 
         $contact = Contact::where('id', $this->contact->id)->update([
             'title'             => $this->title,
+            'lastname'          => $this->lastname,
+            'firstname'         => $this->firstname,
+            'email'             => $this->primary_email,
             'office_phone'      => $this->office_phone,
             'mobile_phone'      => $this->mobile_phone,
             'organization'      => $this->organization,
@@ -121,7 +132,8 @@ class CompanyEditContactForm extends Component
             'country'           => $this->country,
             'address'           => $this->address,
             'description'       => $this->description,
-            'available'         => ($this->available)?true:false
+            'available'         => ($this->available)?true:false,
+            'image'             => ($this->image)?$this->image:$this->contact->image,
         ]);
 
         // Update user record too
@@ -154,6 +166,7 @@ class CompanyEditContactForm extends Component
         }
         $this->reset(['product', 'service']);
         $this->emit('refreshContactProfile');
+        $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Contact updated']);
     }
 

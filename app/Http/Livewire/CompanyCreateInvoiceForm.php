@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CompanyInvoiceGeneratedMail;
+use App\Models\CompanyCatalogue;
 use App\Models\Contact;
 use App\Models\Invoice;
+use App\Models\InvoiceCatalogue;
 use App\Models\InvoicePaymentMethod;
 use App\Models\InvoiceProduct;
 use App\Models\InvoiceService;
@@ -12,6 +15,7 @@ use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -36,9 +40,11 @@ class CompanyCreateInvoiceForm extends Component
     public $items;
     public $product_item;
     public $product_unit_price;
+    public $product_unit_tax;
     public $product_quantity = 1;
     public $product_item_note;
     public $product_total_price = 0;
+    public $product_total_price_with_tax = 0;
     // Selected Item
     public $product_selected_item;
     public $product_selected_items = [];
@@ -48,10 +54,14 @@ class CompanyCreateInvoiceForm extends Component
     public $service_items;
     public $service_item;
     public $service_unit_price;
+    public $service_unit_tax;
     public $service_unit;
-    public $service_volume = 1;
+    public $billing;
     public $service_item_note;
     public $service_total_price = 0;
+    public $service_total_price_with_tax = 0;
+
+    public $cycle = 0;
     // Selected Item
     public $service_selected_item;
     public $service_selected_items = [];
@@ -96,12 +106,14 @@ class CompanyCreateInvoiceForm extends Component
         }
 
         $item = [
-          'id'                => $this->product_selected_item->id,
-          'name'              => $this->product_selected_item->name,
-          'quantity'          => $this->product_quantity,
-          'unit_price'        => $this->product_unit_price,
-          'total_price'       => $this->product_total_price,
-          'note'              => $this->product_item_note
+          'id'                      => $this->product_selected_item->id,
+          'name'                    => $this->product_selected_item->name,
+          'quantity'                => $this->product_quantity,
+          'unit_price'              => $this->product_unit_price,
+          'unit_tax'                => ($this->product_unit_tax / 100) * ($this->product_unit_price * $this->product_quantity),
+          'total_price'             => $this->product_total_price,
+          'total_price_with_tax'    => $this->product_total_price_with_tax,
+          'note'                    => $this->product_item_note
         ];
 
         $productIsPresent = false;
@@ -124,6 +136,8 @@ class CompanyCreateInvoiceForm extends Component
         $this->product_quantity    = 1;
         $this->product_unit_price  = '';
         $this->product_total_price = 0;
+        $this->product_total_price_with_tax = 0;
+        $this->product_unit_tax    = 0.00;
     }
 
     public function validateProductItemInputs(){
@@ -155,7 +169,7 @@ class CompanyCreateInvoiceForm extends Component
     public function computeProductData(){
         // Compute item unit price
         if ($this->product_item && $this->product_quantity > 0){
-            $this->product_selected_item = Product::find($this->product_item);
+            $this->product_selected_item = CompanyCatalogue::find($this->product_item);
             // Check for quantity && availability
             if ($this->product_quantity > $this->product_selected_item->quantity){
                 $this->product_quantity_error = true;
@@ -167,10 +181,19 @@ class CompanyCreateInvoiceForm extends Component
 
             $this->product_quantity_error = false;
             $this->product_total_price = $this->product_selected_item->price * $this->product_quantity;
+
+            // Compute product tax
+            if ($this->product_selected_item->tax){
+                $this->product_unit_tax             = $this->product_selected_item->tax->percentage;
+                $this->product_total_price_with_tax =  (($this->product_selected_item->tax->percentage / 100) * ($this->product_selected_item->price * $this->product_quantity)) + $this->product_total_price;
+            }else{
+                $this->product_unit_tax = 0.00;
+                $this->product_total_price_with_tax = $this->product_selected_item->price * $this->product_quantity;
+            }
+
             $this->product_unit_price = $this->product_selected_item->price;
         }
     }
-
 
 
     public function addServiceItem(){
@@ -181,13 +204,14 @@ class CompanyCreateInvoiceForm extends Component
         }
 
         $item = [
-            'id'                => $this->service_selected_item->id,
-            'name'              => $this->service_selected_item->name,
-            'usage'             => $this->service_selected_item->usage_unit,
-            'volume'            => $this->service_volume,
-            'unit_price'        => $this->service_unit_price,
-            'total_price'       => $this->service_total_price,
-            'note'              => $this->service_item_note
+            'id'                      => $this->service_selected_item->id,
+            'name'                    => $this->service_selected_item->name,
+            'unit_price'              => $this->service_unit_price,
+            'unit_tax'                => ($this->service_unit_tax / 100) * $this->service_unit_price,
+            'total_price'             => $this->service_total_price,
+            'total_price_with_tax'    => $this->service_total_price_with_tax,
+            'cycle'                   => $this->cycle,
+            'note'                    => $this->service_item_note
         ];
 
         $serviceIsPresent = false;
@@ -207,9 +231,8 @@ class CompanyCreateInvoiceForm extends Component
         // Clear the input
         $this->service_item        = '';
         $this->service_item_note   = '';
-        $this->service_volume      = 1;
-        $this->service_unit        = '';
         $this->service_unit_price  = '';
+        $this->cycle               = '';
         $this->service_total_price = 0;
     }
 
@@ -221,12 +244,6 @@ class CompanyCreateInvoiceForm extends Component
             ];
         }
 
-        // Check f quantity is less that one
-        if (!$this->service_volume || $this->service_volume < 1){
-            return [
-                'errorCode'   => 'Please select a valid service volume'
-            ];
-        }
 
         if (!$this->service_item_note){
             return [
@@ -242,10 +259,24 @@ class CompanyCreateInvoiceForm extends Component
     public function computeServiceData(){
         // Compute item unit price
 
-        if ($this->service_item && $this->service_volume){
-            $this->service_selected_item = Service::find($this->service_item);
-            $this->service_total_price = $this->service_selected_item->price * $this->service_volume;
-            $this->service_unit = $this->service_selected_item->usage_unit;
+        if ($this->service_item){
+            $this->service_selected_item = CompanyCatalogue::find($this->service_item);
+            if ($this->service_selected_item->cycle){
+                $this->cycle = $this->service_selected_item->cycle->title;
+            }else{
+                $this->cycle = "Not available";
+            }
+            $this->service_total_price = $this->service_selected_item->price;
+
+            // Compute product tax
+            if ($this->service_selected_item->tax){
+                $this->service_unit_tax             = $this->service_selected_item->tax->percentage;
+                $this->service_total_price_with_tax =  (($this->service_selected_item->tax->percentage / 100) * ($this->service_selected_item->price)) + $this->service_total_price;
+            }else{
+                $this->service_unit_tax = 0.00;
+                $this->service_total_price_with_tax = $this->service_selected_item->price;
+            }
+
 
             $this->service_unit_price = $this->service_selected_item->price;
         }
@@ -255,8 +286,8 @@ class CompanyCreateInvoiceForm extends Component
     public function fetchUsersData(){
         $this->contacts  = Contact::where('company_id', Auth::user()->company_id)->get();
         $this->workers   = Worker::where('company_id', Auth::user()->company_id)->get();
-        $this->products  = Product::where('company_id', Auth::user()->company_id)->get();
-        $this->services  = Service::where('company_id', Auth::user()->company_id)->get();
+        $this->products  = CompanyCatalogue::where('company_id', Auth::user()->company_id)->where('type', 'product')->get();
+        $this->services  = CompanyCatalogue::where('company_id', Auth::user()->company_id)->where('type', 'service')->get();
 
         $this->fetchFormData();
     }
@@ -291,23 +322,22 @@ class CompanyCreateInvoiceForm extends Component
             'due_date'          => 'required|max:255',
             'payment_methods'   => 'required|array',
             'note'              => 'nullable|max:2000',
-            'invoice_note'              => 'nullable|string|max:2000',
+            'invoice_note'      => 'nullable|string|max:2000',
         ]);
 
         // Calculate total price for products and services
         $productTotalPrice = 0;
         if (count($this->product_selected_items) > 0){
             foreach ($this->product_selected_items as $p_item){
-                $productTotalPrice = $productTotalPrice + $p_item['total_price'];
+                $productTotalPrice        = $productTotalPrice + $p_item['total_price'];
             }
         }
         $serviceTotalPrice = 0;
         if (count($this->service_selected_items) > 0){
             foreach ($this->service_selected_items as $s_item){
-                $serviceTotalPrice = $serviceTotalPrice + $s_item['total_price'];
+                $serviceTotalPrice        = $serviceTotalPrice + $s_item['total_price'];
             }
         }
-
 
         // Create the invoice
         $invoice = Invoice::create([
@@ -343,13 +373,23 @@ class CompanyCreateInvoiceForm extends Component
         // Create invoice products
         if (count($this->product_selected_items) > 0){
             foreach ($this->product_selected_items as $p_item) {
-                InvoiceProduct::create([
-                    'invoice_id'        => $invoice->id,
-                    'product_id'        => $p_item['id'],
-                    'quantity'          => $p_item['quantity'],
-                    'unit_price'        => $p_item['unit_price'],
-                    'total_price'       => $p_item['total_price'],
-                    'description'       => $p_item['note']
+                $productTotalTax = 0;
+                $productTotalTaxWithPrice = 0;
+
+                $productTotalTax          = $productTotalTax + $p_item['unit_tax'];
+                $productTotalTaxWithPrice = $p_item['total_price'] + $productTotalTax;
+
+
+                InvoiceCatalogue::create([
+                    'invoice_id'            => $invoice->id,
+                    'catalogue_id'          => $p_item['id'],
+                    'quantity'              => $p_item['quantity'],
+                    'unit_price'            => $p_item['unit_price'],
+                    'total_price'           => $p_item['total_price'],
+                    'total_price_with_tax'  => $productTotalTaxWithPrice,
+                    'total_tax'             => $productTotalTax,
+                    'description'           => $p_item['note'],
+                    'type'                  => 'product'
                 ]);
             }
         }
@@ -357,16 +397,37 @@ class CompanyCreateInvoiceForm extends Component
         // Create invoice services
         if (count($this->service_selected_items) > 0){
             foreach ($this->service_selected_items as $s_item) {
-                InvoiceService::create([
-                    'invoice_id'        => $invoice->id,
-                    'service_id'        => $s_item['id'],
-                    'usage'             => $s_item['usage'],
-                    'volume'            => $s_item['volume'],
-                    'unit_price'        => $s_item['unit_price'],
-                    'total_price'       => $s_item['total_price'],
-                    'description'       => $s_item['note']
+                $serviceTotalTax = 0;
+                $serviceTotalTaxWithPrice = 0;
+
+                $serviceTotalTax          = $serviceTotalTax + $s_item['unit_tax'];
+                $serviceTotalTaxWithPrice = $s_item['total_price'] + $serviceTotalTax;
+
+                InvoiceCatalogue::create([
+                    'invoice_id'            => $invoice->id,
+                    'catalogue_id'          => $s_item['id'],
+                    'unit_price'            => $s_item['unit_price'],
+                    'total_price'           => $s_item['total_price'],
+                    'total_price_with_tax'  => $serviceTotalTaxWithPrice, // Total price + total tax
+                    'total_tax'             => $serviceTotalTax,
+                    'description'           => $s_item['note'],
+                    'type'                  => 'service'
                 ]);
             }
+        }
+
+        // Mail the contact if send is selected
+        if ($this->status == 'send'){
+            $contact = Contact::find($this->to);
+
+            $data = [
+                'subject'   => 'INVOICE NOTICE',
+                'invoice'   => $invoice,
+                'name'      => $contact->user->firstname,
+                'due_date'  => $invoice->due_data
+            ];
+
+            Mail::to($contact->email)->send(new CompanyInvoiceGeneratedMail($data));
         }
 
         $this->resetExcept([
@@ -374,8 +435,10 @@ class CompanyCreateInvoiceForm extends Component
             'products',
             'services',
             'contacts',
-            'company',
+            'company'
         ]);
+
+        $this->invoice_number = Str::random(4).''.sprintf("%06d", mt_rand(1, 999999999));;
         return $this->emit('alert', ['type' => 'success', 'message' => 'Invoice generated']);
     }
 

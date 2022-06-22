@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\View\Admin\AdminViewController;
+use App\Http\Controllers\View\Contact\ContactCatalogueViewController;
+use App\Http\Controllers\View\Contact\ContactInvoiceViewController;
+use App\Http\Controllers\View\Contact\ContactViewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +20,18 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware('auth')->group(function () {
-    Route::middleware('role:contact')->group(function (){
-        Route::get('/',                         [AdminViewController::class, 'dashboard'])->name('contact');
+Route::middleware(['auth', 'check-two-factor'])->name('contact.')->group(function () {
 
+    Route::middleware('role:customer')->group(function (){
+        Route::get('/',                                     [ContactViewController::class, 'dashboard'])->name('dashboard');
+        Route::get('/invoices/signed',                      [ContactInvoiceViewController::class, 'signedInvoices'])->name('signed-invoices');
+        Route::get('/invoices/unsigned',                    [ContactInvoiceViewController::class, 'unSignedInvoices'])->name('unsigned-invoices');
+        Route::get('/invoices/{invoice_id}',                [ContactInvoiceViewController::class, 'previewInvoice'])->name('invoices-preview');
+
+        Route::get('/catalogues',                           [ContactCatalogueViewController::class, 'catalogues'])->name('catalogues');
+        Route::get('/catalogues/{catalogue_id}',            [ContactCatalogueViewController::class, 'catalogueDetails'])->name('catalogue-details');
 
     });
+
 });
 

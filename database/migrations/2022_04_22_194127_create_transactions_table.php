@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contact_id')->constrained('contacts');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->bigInteger('contact_id');
+            $table->bigInteger('company_id');
             $table->foreignId('product_id')->nullable();
             $table->foreignId('service_id')->nullable();
             $table->timestamps();

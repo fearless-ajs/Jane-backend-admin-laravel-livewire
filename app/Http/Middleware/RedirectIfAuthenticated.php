@@ -23,7 +23,19 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+//                return redirect(RouteServiceProvider::HOME);
+                // Check user roles before redirecting
+                if (Auth::user()->hasRole('super-admin')){
+                    return redirect()->intended(route('admin.dashboard'));
+                }
+
+                if (Auth::user()->hasRole('company')){
+                    return redirect()->intended(route('company.dashboard'));
+                }
+
+                if (Auth::user()->hasRole('customer')){
+                    return redirect()->intended(route('contact.dashboard'));
+                }
             }
         }
 

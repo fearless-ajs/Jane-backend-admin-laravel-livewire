@@ -7,11 +7,11 @@
                 <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
                     <div>
                         <div class="logo-wrapper">
-                            <h3 class="text-primary invoice-logo">{{\Illuminate\Support\Facades\Auth::user()->company->name}}</h3>
+                            <h3 class="text-primary invoice-logo">{{$invoice->company->name}}</h3>
                         </div>
-                        <p class="card-text mb-25 w-50">{{Auth::user()->company->address}}</p>
-                        <p class="card-text mb-25">{{Auth::user()->company->city}}, {{Auth::user()->company->state}}, {{Auth::user()->company->country}}</p>
-                        <p class="card-text mb-0">{{Auth::user()->company->phone}}, {{Auth::user()->company->email}}</p>
+                        <p class="card-text mb-25 w-50">{{$invoice->company->address}}</p>
+                        <p class="card-text mb-25">{{$invoice->company->city}}, {{$invoice->company->state}}, {{$invoice->company->country}}</p>
+                        <p class="card-text mb-0">{{$invoice->company->phone}}, {{$invoice->company->email}}</p>
                     </div>
                     <div class="mt-md-0 mt-2">
                         <h4 class="invoice-title">
@@ -38,11 +38,15 @@
                 <div class="row invoice-spacing">
                     <div class="col-xl-8 p-0">
                         <h6 class="mb-2">Invoice To:</h6>
+                        @if($invoice->contactInfo)
                         <h6 class="mb-25">{{$invoice->contactInfo->user->lastname. '  '.$invoice->contactInfo->user->firstname}}</h6>
                         <p class="card-text mb-25">{{$invoice->contactInfo->address}}</p>
                         <p class="card-text mb-25">{{$invoice->contactInfo->office_phone}}</p>
                         <p class="card-text mb-25">{{$invoice->contactInfo->mobile_phone}}</p>
                         <p class="card-text mb-0">{{$invoice->contactInfo->primary_email}}</p>
+                        @else
+                            <p class="card-text text-danger">Contact deleted, you can attache new contact</p>
+                        @endif
                     </div>
                     <div class="col-xl-4 p-0 mt-xl-0 mt-2">
                         <h6 class="mb-2">Payment Details:</h6>
@@ -54,19 +58,19 @@
                             </tr>
                             <tr>
                                 <td class="pe-1">Bank name:</td>
-                                <td>{{Auth::user()->company->bankingInfo->bank_name}}</td>
+                                <td>{{$invoice->company->bankingInfo->bank_name}}</td>
                             </tr>
                             <tr>
                                 <td class="pe-1">Country:</td>
-                                <td>{{Auth::user()->company->bankingInfo->country}}</td>
+                                <td>{{$invoice->company->bankingInfo->country}}</td>
                             </tr>
                             <tr>
                                 <td class="pe-1">IBAN:</td>
-                                <td>{{Auth::user()->company->bankingInfo->iban}}</td>
+                                <td>{{$invoice->company->bankingInfo->iban}}</td>
                             </tr>
                             <tr>
                                 <td class="pe-1">SWIFT code:</td>
-                                <td>{{Auth::user()->company->bankingInfo->swift_code}}</td>
+                                <td>{{$invoice->company->bankingInfo->swift_code}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -78,39 +82,62 @@
             <!-- Invoice Description starts -->
 
 
-            @if($invoice->services)
+            @if(count($invoice->services) > 0)
                 <div class="table-responsive">
                 <table class="table">
                     <thead>
                     <tr>
                         <th class="py-1">Service description</th>
-                        <th class="py-1">Rate</th>
-                        <th class="py-1">Unit Price</th>
-                        <th class="py-1">Volume</th>
-                        <th class="py-1">Total</th>
+                        <th class="py-1">Price</th>
+                        <th class="py-1">Billing</th>
+                        <th class="py-1">Tax</th>
+                        <th class="py-1">Price</th>
+                        <th class="py-1">Price + Tax</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
 
                     @foreach($invoice->services as $service)
+                        @if($service->catalogue)
                         <tr class="border-bottom">
                             <td class="py-1">
-                                <p class="card-text fw-bold mb-25">{{$service->service->name}}</p>
+                                <p class="card-text fw-bold mb-25">{{$service->catalogue->name}}</p>
                                 <p class="card-text text-nowrap">{{Str::limit($service->description, 60, $end='...')}}</p>
                             </td>
                             <td class="py-1">
-                                <span class="fw-bold">{{$service->usage}}</span>
+                                <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($service->unit_price)}}</span>
                             </td>
                             <td class="py-1">
-                                <span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($service->unit_price)}}</span>
+                                @if($service->catalogue->cycle)
+                                <span class="fw-bold">{{$service->catalogue->cycle->title}}</span>
+                                @else
+                                    <span class="fw-bold text-da">Not available</span>
+                                @endif
+                            </td>
+
+
+
+                            <td class="py-1">
+                                <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$service->total_tax}}</span>
+                            </td>
+
+                            {{--                                        <td class="py-1">--}}
+                            {{--                                            <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$s_item['unit_price']}}</span>--}}
+                            {{--                                        </td>--}}
+
+                            <td class="py-1">
+                                <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($service->total_price)}}</span>
                             </td>
                             <td class="py-1">
-                                <span class="fw-bold">{{$service->volume}}</span>
+                                <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($service->total_price_with_tax)}}</span>
                             </td>
                             <td class="py-1">
-                                <span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($service->total_price)}}</span>
+                                <span class="fa fa-trash" style="cursor:pointer;" wire:click="removeService({{$loop->index}})"></span>
                             </td>
+
                         </tr>
+                        @endif
                     @endforeach
 
                     </tbody>
@@ -118,7 +145,7 @@
             </div>
             @endif
 
-            @if($invoice->products)
+            @if(count($invoice->products) > 0)
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -126,27 +153,39 @@
                             <th class="py-1">Product description</th>
                             <th class="py-1">Unit Price</th>
                             <th class="py-1">Quantity</th>
-                            <th class="py-1">Total</th>
+                            <th class="py-1">Tax</th>
+                            <th class="py-1">Price</th>
+                            <th class="py-1">Price + Tax</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         @foreach($invoice->products as $product)
-                            <tr class="border-bottom">
-                                <td class="py-1">
-                                    <p class="card-text fw-bold mb-25">{{$product->product->name}}</p>
-                                    <p class="card-text text-nowrap">{{Str::limit($product->description, 60, $end='...')}}</p>
-                                </td>
-                                <td class="py-1">
-                                    <span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($product->unit_price)}}</span>
-                                </td>
-                                <td class="py-1">
-                                    <span class="fw-bold">{{$product->quantity}}</span>
-                                </td>
-                                <td class="py-1">
-                                    <span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($product->total_price)}}</span>
-                                </td>
-                            </tr>
+                            @if($product->catalogue)
+                                <tr class="border-bottom">
+                                    <td class="py-1">
+                                        <p class="card-text fw-bold mb-25">{{$product->catalogue->name}}</p>
+                                        <p class="card-text text-nowrap">{{Str::limit($product->description, 60, $end='...')}}</p>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($product->unit_price)}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$product->quantity}}</span>
+                                    </td>
+
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$product->total_tax}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($product->total_price)}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($product->total_price_with_tax)}}</span>
+                                    </td>
+
+                                </tr>
+                            @endif
                         @endforeach
 
                         </tbody>
@@ -154,24 +193,26 @@
                 </div>
             @endif
 
-
-
             <div class="card-body invoice-padding pb-0">
                 <div class="row invoice-sales-total-wrapper">
                     <div class="col-md-6 order-md-1 order-2 mt-md-0 mt-3">
                         <p class="card-text mb-0">
-                            <span class="fw-bold">Salesperson:</span> <span class="ms-75">{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</span>
+                            <span class="fw-bold">Staff in charge:</span> <span class="ms-75">{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</span>
                         </p>
                     </div>
                     <div class="col-md-6 d-flex justify-content-end order-md-2 order-1">
                         <div class="invoice-total-wrapper">
                             <div class="invoice-total-item">
-                                <p class="invoice-total-title">Service total:</p>
-                                <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->services_total_price)}}</p>
+                                <p class="invoice-total-title">Services:</p>
+                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->services_total_price)}} + Tax: {{$settings->currency->currency_symbol}}{{$totalServiceTax}}</p>
+                                <p class="invoice-total-amount">Total: {{$settings->currency->currency_symbol}}{{$invoice->services_total_price + $totalServiceTax}}</p>
+
+
                             </div>
                             <div class="invoice-total-item">
-                                <p class="invoice-total-title">Product total:</p>
-                                <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price)}}</p>
+                                <p class="invoice-total-title">Products:</p>
+                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->products_total_price)}}  + Tax: {{$settings->currency->currency_symbol}}{{$totalProductTax}} </p>
+                                <p class="invoice-total-amount">Total: {{$settings->currency->currency_symbol}}{{$invoice->products_total_price + $totalProductTax}}</p>
                             </div>
 {{--                            <div class="invoice-total-item">--}}
 {{--                                <p class="invoice-total-title">Discount:</p>--}}
@@ -184,7 +225,8 @@
                             <hr class="my-50" />
                             <div class="invoice-total-item">
                                 <p class="invoice-total-title">Total:</p>
-                                <p class="invoice-total-amount">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</p>
+                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}} + Tax: {{$settings->currency->currency_symbol}}{{$totalProductTax + $totalServiceTax }} </p>
+                                <p class="invoice-total-amount">PAYABLE: {{$settings->currency->currency_symbol}}{{($invoice->products_total_price + $totalProductTax) + ($invoice->services_total_price + $totalServiceTax)}}</p>
                             </div>
                         </div>
                     </div>
@@ -217,8 +259,27 @@
                 </button>
                  <a class="btn btn-outline-secondary w-100 mb-75" href="{{route('company.print-invoice', $invoice->id)}}" target="_blank"> Print </a>
 
-                @if(Auth::user()->hasModuleAccess('invoice', 'edit'))
-                <a class="btn btn-outline-success w-100 mb-75" href="{{route('company.edit-invoice', $invoice->id)}}"> Edit </a>
+                @if(!$invoice->contactSignature)
+                    @if(Auth::user()->hasModuleAccess('invoice', 'edit'))
+                    <a class="btn btn-outline-success w-100 mb-75" href="{{route('company.edit-invoice', $invoice->id)}}"> Edit </a>
+                    @endif
+                @endif
+
+                <p class="text-center">STATUS:
+                    @if($invoice->signed)
+                        <span class="text-success">Signed</span>
+                    @else
+                        <span class="text-danger">Unsigned</span>
+                    @endif
+                </p>
+
+                @if($invoice->contactSignature)
+                    <p class="text-xl font-semibold text-gray-700 flex items-center justify-between text-success" style="text-align: center !important;"><span>Signature</span> </p>
+
+                    <div>
+                        <img src="{{$invoice->contactSignature->SignatureImage}}" />
+                    </div>
+                    <p style="text-align: center;" class="mt-2">Signed: {{ \Carbon\Carbon::parse($invoice->contactSignature->created_at)->translatedFormat(' j F Y')}}</p>
                 @endif
             </div>
         </div>

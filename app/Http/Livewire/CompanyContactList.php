@@ -21,7 +21,7 @@ class CompanyContactList extends Component
 
     public function updated(){
         if ($this->search){
-            $this->searchResult = Contact::where('company_id', $this->company->id)->where('mobile_phone', 'LIKE', "%{$this->search}%")->get();
+            $this->searchResult = Contact::where('company_id', $this->company->id)->where('lastname', 'LIKE', "%{$this->search}%")->orWhere('firstname', 'LIKE', "%{$this->search}%")->get();
         }
     }
 
@@ -51,7 +51,7 @@ class CompanyContactList extends Component
         }else {
             $this->searchResult = false;
             return view('livewire.company.components.company-contact-list', [
-                'contacts' => Contact::orderBy('id', 'DESC')->where('company_id', $this->company->id)->paginate(2)
+                'contacts' => Contact::orderBy('id', 'DESC')->where('company_id', $this->company->id)->paginate(12)
             ]);
         }
     }

@@ -56,6 +56,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'signatures' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/img/signatures'),
+            'visibility' => 'public',
+        ],
+
         'users' => [
             'driver' => 'local',
             'root' => public_path('uploads/img/users'),

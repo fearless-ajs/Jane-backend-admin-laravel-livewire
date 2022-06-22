@@ -340,31 +340,31 @@
                     </div>
 
 
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">Purchased product</label>
-                        <select wire:model.lazy="product" multiple  class="select2 form-select">
-                            <option value="">Select product</option>
-                            @if($products)
-                                @foreach($products as $product)
-                                    <option value="{{$product->id}}">{{$product->name}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        @error('product') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
+{{--                    <div class="col-12 col-md-6">--}}
+{{--                        <label class="form-label" for="basic-icon-default-fullname">Purchased product</label>--}}
+{{--                        <select wire:model.lazy="product" multiple  class="select2 form-select">--}}
+{{--                            <option value="">Select product</option>--}}
+{{--                            @if($products)--}}
+{{--                                @foreach($products as $product)--}}
+{{--                                    <option value="{{$product->id}}">{{$product->name}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            @endif--}}
+{{--                        </select>--}}
+{{--                        @error('product') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
+{{--                    </div>--}}
 
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">Purchased service</label>
-                        <select wire:model.lazy="service" multiple class="select2 form-select">
-                            <option value="">Select service</option>
-                            @if($services)
-                                @foreach($services as $service)
-                                    <option value="{{$service->id}}">{{$service->name}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        @error('service') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
+{{--                    <div class="col-12 col-md-6">--}}
+{{--                        <label class="form-label" for="basic-icon-default-fullname">Purchased service</label>--}}
+{{--                        <select wire:model.lazy="service" multiple class="select2 form-select">--}}
+{{--                            <option value="">Select service</option>--}}
+{{--                            @if($services)--}}
+{{--                                @foreach($services as $service)--}}
+{{--                                    <option value="{{$service->id}}">{{$service->name}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            @endif--}}
+{{--                        </select>--}}
+{{--                        @error('service') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
+{{--                    </div>--}}
 
                     <div class="col-12">
                         <label class="form-label" for="basic-icon-default-company">Contact description*</label>

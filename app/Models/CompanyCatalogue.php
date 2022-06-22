@@ -31,5 +31,11 @@ class CompanyCatalogue extends Model
         return $this->hasOne(CompanyBillingCycle::class, 'id', 'billing_cycle');
     }
 
+    public function tax(){
+        return $this->hasOne(CompanyTax::class, 'id', 'vat');
+    }
+
+
+
 
 }

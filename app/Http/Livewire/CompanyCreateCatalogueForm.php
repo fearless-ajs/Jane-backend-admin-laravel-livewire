@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\CompanyBillingCycle;
 use App\Models\CompanyCatalogue;
 use App\Models\CompanyCatalogueImage;
+use App\Models\CompanyTax;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -35,6 +36,7 @@ class CompanyCreateCatalogueForm extends Component
 
     public $categories;
     public $cycles;
+    public $taxes;
 
 
     public function mount(){
@@ -44,6 +46,8 @@ class CompanyCreateCatalogueForm extends Component
     public function fetchCategories(){
         $this->categories = Category::where('company_id', Auth::user()->company_id)->get();
         $this->cycles     = CompanyBillingCycle::where('company_id', Auth::user()->company_id)->get();
+        $this->taxes      = CompanyTax::where('company_id', Auth::user()->company_id)->get();
+
     }
 
 
@@ -53,7 +57,7 @@ class CompanyCreateCatalogueForm extends Component
             $this->validateOnly($field, [
                 'name'                   => 'required|max:255',
                 'price'                  => 'required|numeric|min:1',
-                'vat'                    => 'nullable|numeric|min:1|max:100',
+                'vat'                    => 'nullable|numeric',
                 'previous_price'         => 'nullable|numeric|min:1',
                 'category'               => 'nullable|string|max:255',
                 'description'            => 'required|string|max:1000',
@@ -71,7 +75,7 @@ class CompanyCreateCatalogueForm extends Component
             $this->validateOnly($field, [
                 'name'                   => 'required|max:255',
                 'price'                  => 'required|numeric|min:1',
-                'vat'                    => 'nullable|numeric|min:1|max:100',
+                'vat'                    => 'nullable|numeric',
                 'previous_price'         => 'nullable|numeric|min:1',
                 'category'               => 'nullable|string|max:255',
                 'description'            => 'required|string|max:1000',
@@ -90,7 +94,7 @@ class CompanyCreateCatalogueForm extends Component
             $this->validate([
                 'name'                   => 'required|max:255',
                 'price'                  => 'required|numeric|min:1',
-                'vat'                    => 'nullable|numeric|min:1|max:100',
+                'vat'                    => 'nullable|numeric',
                 'previous_price'         => 'nullable|numeric|min:1',
                 'category'               => 'nullable|string|max:255',
                 'description'            => 'required|string|max:1000',
@@ -108,7 +112,7 @@ class CompanyCreateCatalogueForm extends Component
             $this->validate([
                 'name'                   => 'required|max:255',
                 'price'                  => 'required|numeric|min:1',
-                'vat'                    => 'nullable|numeric|min:1|max:100',
+                'vat'                    => 'nullable|numeric',
                 'previous_price'         => 'nullable|numeric|min:1',
                 'category'               => 'nullable|string|max:255',
                 'description'            => 'required|string|max:1000',
@@ -157,7 +161,7 @@ class CompanyCreateCatalogueForm extends Component
 
         $this->emit('refreshCompanyCatalogueList');
         $this->emit('close-current-modal');
-        $this->resetExcept(['categories', 'cycles']);
+        $this->resetExcept(['categories', 'cycles', 'taxes']);
         return $this->emit('alert', ['type' => 'success', 'message' => 'Catalogue added to store']);
     }
 

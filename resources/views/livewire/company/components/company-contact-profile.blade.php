@@ -12,12 +12,12 @@
                     <!-- profile picture -->
                     <div class="profile-img-container d-flex align-items-center">
                         <div class="profile-img">
-                            <img src="{{$contact->user->UserImage}}" class="rounded img-fluid" alt="Card image" />
+                            <img src="{{$contact->ContactImage}}" class="rounded img-fluid" alt="Card image" />
                         </div>
                         <!-- profile title -->
                         <div class="profile-title ms-3">
-                            <h2 class="text-white">{{$contact->title. ' ' .$contact->user->lastname. ' '. $contact->user->firstname}}</h2>
-                            <p class="text-white">{{$contact->user->email}}</p>
+                            <h2 class="text-white">{{$contact->title. ' ' .$contact->lastname. ' '. $contact->firstname}}</h2>
+                            <p class="text-white">{{$contact->email}}</p>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link fw-bold" href="mailto:{{$contact->user->email}}">
+                                        <a class="nav-link fw-bold" href="mailto:{{$contact->email}}">
                                             <span class="d-none d-md-block">Mail</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>

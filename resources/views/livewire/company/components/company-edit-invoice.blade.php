@@ -8,25 +8,6 @@
                     <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
                         <div>
                             <div class="logo-wrapper">
-                                <svg viewBox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
-                                    <defs>
-                                        <linearGradient id="invoice-linearGradient-1" x1="100%" y1="10.5120544%" x2="50%" y2="89.4879456%">
-                                            <stop stop-color="#000000" offset="0%"></stop>
-                                            <stop stop-color="#FFFFFF" offset="100%"></stop>
-                                        </linearGradient>
-                                        <linearGradient id="invoice-linearGradient-2" x1="64.0437835%" y1="46.3276743%" x2="37.373316%" y2="100%">
-                                            <stop stop-color="#EEEEEE" stop-opacity="0" offset="0%"></stop>
-                                            <stop stop-color="#FFFFFF" offset="100%"></stop>
-                                        </linearGradient>
-                                    </defs>
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <g transform="translate(-400.000000, -178.000000)">
-                                            <g transform="translate(400.000000, 178.000000)">
-                                                <img src="{{$settings->AppImage}}" style="max-width: 10%" />
-                                            </g>
-                                        </g>
-                                    </g>
-                                </svg>
                                 <h3 class="text-primary invoice-logo">{{$invoice->company->name}}</h3>
                             </div>
                             <p class="card-text mb-25 w-50">{{$invoice->company->address}}</p>
@@ -38,13 +19,7 @@
 
                         <div class="invoice-number-date mt-md-0 mt-2">
                             <div class="d-flex align-items-center justify-content-md-end mb-1">
-                                <h4 class="invoice-title">Invoice</h4>
-                                <div class="input-group input-group-merge invoice-edit-input-group">
-                                    <div class="input-group-text">
-                                        <i data-feather="hash"></i>
-                                    </div>
-                                    <input type="text" disabled wire:model.lazy="invoice_number" class="form-control invoice-edit-input" placeholder="53634" />
-                                </div>
+                                <h4 class="invoice-title">Code: {{$invoice_number}}</h4>
                                 @error('invoice_number') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
                             <div class="d-flex align-items-center mb-1">
@@ -74,7 +49,7 @@
                                     <option>Select contact </option>
                                     @if($contacts)
                                         @foreach($contacts as $contact)
-                                            <option value="{{$contact->id}}">{{$contact->user->lastname. ' '.$contact->user->firstname }}</option>
+                                            <option value="{{$contact->id}}">{{$contact->lastname. ' '.$contact->firstname }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -87,19 +62,19 @@
                                 <tbody>
                                 <tr>
                                     <td class="pe-1">Bank name:</td>
-                                    <td>{{$invoice->company->bankingInfo->bank_name}}</td>
+                                    <td>{{Auth::user()->company->bankingInfo->bank_name}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">Country:</td>
-                                    <td>{{$invoice->company->bankingInfo->country}}</td>
+                                    <td>{{Auth::user()->company->bankingInfo->country}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">IBAN:</td>
-                                    <td>{{$invoice->company->bankingInfo->iban}}</td>
+                                    <td>{{Auth::user()->company->bankingInfo->iban}}</td>
                                 </tr>
                                 <tr>
                                     <td class="pe-1">SWIFT code:</td>
-                                    <td>{{$invoice->company->bankingInfo->swift_code}}</td>
+                                    <td>{{Auth::user()->company->bankingInfo->swift_code}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -116,7 +91,9 @@
                                 <th class="py-1">Products description</th>
                                 <th class="py-1">Unit Price</th>
                                 <th class="py-1">Quantity</th>
-                                <th class="py-1">Total Price</th>
+                                <th class="py-1">Tax</th>
+                                <th class="py-1">Price</th>
+                                <th class="py-1">Price + Tax</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -130,17 +107,22 @@
                                         </p>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">{{$settings->app_currency_symbol}}{{$p_item['unit_price']}}</span>
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$p_item['unit_price']}}</span>
                                     </td>
                                     <td class="py-1">
                                         <span class="fw-bold">{{$p_item['quantity']}}</span>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">{{$settings->app_currency_symbol}}{{$p_item['total_price']}}</span>
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$p_item['unit_tax']}}</span>
                                     </td>
                                     <td class="py-1">
-                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  wire:loading wire:target="removeProduct({{$loop->index}}, {{$p_item['id']}})"></span>
-                                        <span class="fa fa-trash" style="cursor:pointer;" wire:loading.remove wire:target="removeProduct({{$loop->index}}, {{$p_item['id']}})" wire:click="removeProduct({{$loop->index}}, {{$p_item['id']}})"></span>
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$p_item['total_price']}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$p_item['total_price_with_tax']}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fa fa-trash" style="cursor:pointer;" wire:click="removeProduct({{$loop->index}}, {{$p_item['id']}})"></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -179,14 +161,15 @@
                                         </div>
 
                                         <div class="col-lg-3 col-12 my-lg-0 my-2">
-                                            <p class="card-text col-title mb-md-2 mb-0">Unit price({{$settings->app_currency}})*</p>
+                                            <p class="card-text col-title mb-md-2 mb-0">Unit price({{$settings->currency->currency_symbol}})*</p>
                                             <input type="number" disabled wire:model.lazy="product_unit_price" class="form-control {{$errors->has('product_unit_price')? 'is-invalid' : '' }}" placeholder="Unit price" />
                                             @error('product_unit_price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                         </div>
 
+
                                         <div class="col-lg-2 col-12 mt-lg-0 mt-2">
-                                            <p class="card-text col-title mb-md-50 mb-0">Total price(Naira)*</p>
-                                            <p class="card-text mb-0">{{$settings->app_currency_symbol}}{{$product_total_price}}</p>
+                                            <p class="card-text col-title mb-md-50 mb-0">Total: {{$settings->currency->currency_symbol}}{{$product_total_price}}</p>
+                                            <p class="card-text mb-0">With tax: {{$settings->currency->currency_symbol}}{{$product_total_price_with_tax}} <small>({{$product_unit_tax}}%)</small> </p>
                                         </div>
                                     </div>
                                     <div class="
@@ -219,17 +202,16 @@
 
                 <hr class="invoice-spacing mt-0" />
 
-
                 @if(count($service_selected_items) > 0)
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr>
                                 <th class="py-1">Service description</th>
-                                <th class="py-1">Rate</th>
+                                <th class="py-1">Billing</th>
+                                <th class="py-1">Tax</th>
                                 <th class="py-1">Price</th>
-                                <th class="py-1">Volume</th>
-                                <th class="py-1">Total</th>
+                                <th class="py-1">Price + Tax</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -243,20 +225,26 @@
                                         </p>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">{{$s_item['usage']}}</span>
+                                        <span class="fw-bold">{{$s_item['cycle']}}</span>
+                                    </td>
+
+
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$s_item['unit_tax']}}</span>
+                                    </td>
+
+                                    {{--                                        <td class="py-1">--}}
+                                    {{--                                            <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$s_item['unit_price']}}</span>--}}
+                                    {{--                                        </td>--}}
+
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$s_item['total_price']}}</span>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">{{$settings->app_currency_symbol}}{{$s_item['unit_price']}}</span>
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$s_item['total_price_with_tax']}}</span>
                                     </td>
                                     <td class="py-1">
-                                        <span class="fw-bold">{{$s_item['volume']}}</span>
-                                    </td>
-                                    <td class="py-1">
-                                        <span class="fw-bold">{{$settings->app_currency_symbol}}{{$s_item['total_price']}}</span>
-                                    </td>
-                                    <td class="py-1">
-                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  wire:loading wire:target="removeService({{$loop->index}}, {{$s_item['id']}})"></span>
-                                        <span class="fa fa-trash" style="cursor:pointer;" wire:loading.remove wire:target="removeService({{$loop->index}}, {{$s_item['id']}})" wire:click="removeService({{$loop->index}}, {{$s_item['id']}})"></span>
+                                        <span class="fa fa-trash" style="cursor:pointer;" wire:click="removeService({{$loop->index}}, {{$s_item['id']}})"></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -288,26 +276,27 @@
                                             @error('service_item_note') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                         </div>
 
-                                        <div class="col-lg-2 col-12 my-lg-0 my-2">
-                                            <p class="card-text col-title mb-md-2 mb-0">Usage*</p>
-                                            <input type="text" disabled wire:model="service_unit" class="form-control {{$errors->has('service_unit')? 'is-invalid' : '' }}" value="1" placeholder="1" />
-                                            @error('service_unit') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                                        </div>
-
                                         <div class="col-lg-3 col-12 my-lg-0 my-2">
-                                            <p class="card-text col-title mb-md-2 mb-0">Unit price({{$settings->app_currency}})*</p>
+                                            <p class="card-text col-title mb-md-2 mb-0">Price({{$settings->currency->currency_symbol}})*</p>
                                             <input type="number" disabled wire:model.lazy="service_unit_price" class="form-control {{$errors->has('service_unit_price')? 'is-invalid' : '' }}" placeholder="Unit price" />
                                             @error('service_unit_price') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                         </div>
 
                                         <div class="col-lg-2 col-12 my-lg-0 my-2">
-                                            <p class="card-text col-title mb-md-2 mb-0">Volume needed*</p>
-                                            <input type="number" wire:model="service_volume" class="form-control {{$errors->has('service_volume')? 'is-invalid' : '' }}" value="1" placeholder="1" />
-                                            @error('service_volume') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                                            <p class="card-text col-title mb-md-2 mb-0">Billing</p>
+                                            <input type="text" wire:model="cycle" disabled class="form-control {{$errors->has('billing')? 'is-invalid' : '' }}"  />
+                                            @error('billing') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                                         </div>
 
+
+                                        {{--                                            <div class="col-lg-2 col-12 mt-lg-0 mt-2">--}}
+                                        {{--                                                <p class="card-text col-title mb-md-50 mb-0">Total: {{$settings->currency->currency_symbol}}{{$product_total_price}}</p>--}}
+                                        {{--                                                <p class="card-text mb-0">With tax: {{$settings->currency->currency_symbol}}{{$product_total_price_with_tax}} <small>({{$product_unit_tax}}%)</small> </p>--}}
+                                        {{--                                            </div>--}}
+
                                         <div class="col-lg-5 col-12 mt-lg-0 mt-4 ">
-                                            <p class="card-text col-title mb-md-50 mb-0">Total price(Naira) {{$settings->app_currency_symbol}}{{$service_total_price}}</p>
+                                            <p class="card-text col-title mb-md-50 mb-0">Total: {{$settings->currency->currency_symbol}}{{$service_total_price}}</p>
+                                            <p class="card-text mb-0">With tax: {{$settings->currency->currency_symbol}}{{$service_total_price_with_tax}} <small>({{$service_unit_tax}}%)</small> </p>
                                         </div>
                                     </div>
                                     <div class="
@@ -344,10 +333,10 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="mt-2 mb-1">
-                                <h6 class="invoice-to-title">Sales person:*</h6>
+                                <h6 class="invoice-to-title">Designated staff:*</h6>
                                 <div class="invoice-customer">
                                     <select wire:model.lazy="worker" class="invoiceto form-select {{$errors->has('worker')? 'is-invalid' : '' }}">
-                                        <option value="">Select user in charge</option>
+                                        <option value="">Select staff in charge</option>
                                         @if($workers)
                                             @foreach($workers as $worker)
                                                 <option value="{{$worker->id}}">{{$worker->user->lastname. ' '.$worker->user->firstname }}</option>

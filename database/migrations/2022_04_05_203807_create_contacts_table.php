@@ -15,10 +15,17 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('created_by_id');
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->string('lastname');
+            $table->string('firstname');
+            $table->string('email');
+            $table->string('image');
+            $table->foreignId('user_id');
+            $table->foreignId('company_id');
             $table->enum('title', ['Mr', 'Miss', 'Mrs', 'Dr', 'Prof']);
+            $table->string('lastname');
+            $table->string('firstname');
+            $table->string('email');
+            $table->string('image')->nullable();
 
             $table->string('office_phone')->nullable();
             $table->string('mobile_phone')->nullable();
@@ -33,7 +40,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('address')->nullable();
             $table->boolean('available')->default(true);
-            $table->text('descriptions');
+            $table->text('description');
 
             $table->timestamps();
             $table->softDeletes();

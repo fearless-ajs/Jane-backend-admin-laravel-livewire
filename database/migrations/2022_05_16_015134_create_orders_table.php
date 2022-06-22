@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->bigInteger('user_id');
             $table->bigInteger('total_price');
             $table->bigInteger('total_paid')->nullable(0);
             $table->enum('status', ['placed', 'in_progress', 'delivered']);

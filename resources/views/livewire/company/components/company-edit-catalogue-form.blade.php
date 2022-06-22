@@ -22,7 +22,16 @@
 
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-email">Tax</label>
-                        <input type="text" wire:model.lazy="vat"  class="form-control dt-email  {{$errors->has('vat')? 'is-invalid' : '' }}" placeholder="Value added tax" >
+                        @if(count($taxes) > 0)
+                            <select wire:model.lazy="vat" class="form-select {{$errors->has('vat')? 'is-invalid' : '' }}">
+                                <option value="">Select tax</option>
+                                @foreach($taxes as $tax)
+                                    <option value="{{$tax->id}}">{{$tax->title}} - {{$tax->percentage}}%</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <p class="form-label" style="color: red" for="basic-icon-default-email">Please create tax, <a href="{{route('company.taxes')}}">click here</a></p>
+                        @endif
                         @error('vat') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 

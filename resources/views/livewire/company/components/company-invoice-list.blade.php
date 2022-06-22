@@ -3,7 +3,7 @@
     <tr>
 
         <th>#</th>
-        <th>Client</th>
+        <th>Contact</th>
         <th>Total({{$settings->app_currency}})</th>
         <th class="text-truncate">Issued Date</th>
         <th class="text-truncate">Due Date</th>
@@ -19,19 +19,28 @@
         @foreach($invoices as $invoice)
             <tr>
                 <td>{{$loop->index + 1}}</td>
-                <td>{{$invoice->contactInfo->user->lastname. '  '.$invoice->contactInfo->user->firstname}}</td>
+                <td>
+                    @if($invoice->ContactInfo)
+                    {{$invoice->contactInfo->lastname. '  '.$invoice->contactInfo->firstname}}
+                    @else
+                    <span class="text-danger">Contact deleted</span>
+                    @endif
+                </td>
                 <td>{{$settings->app_currency_symbol}}{{$invoice->products_total_price + $invoice->services_total_price}}</td>
                 <td>{{ \Carbon\Carbon::parse($invoice->date_issued)->translatedFormat(' j F Y')}}</td>
                 <td>{{ \Carbon\Carbon::parse($invoice->due_date)->translatedFormat(' j F Y')}}</td>
                 <td>{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</td>
                 @if($invoice->signed)
-                    <td>Signed</td>
+                    <td class="text-success">Signed</td>
                 @else
-                    <td>Unsigned</td>
+                    <td class="text-danger">Unsigned</td>
                 @endif
                 <td><a href="{{route('company.preview-invoice', $invoice->id)}}">Preview</a>
                 @if(Auth::user()->hasModuleAccess('invoice', 'delete'))
-                <td><li class="fa fa-trash"></li></td>
+                <td style="cursor:pointer;" wire:click="remove({{$invoice->id}})">
+                    <li wire:target="remove({{$invoice->id}})" wire:loading.remove class="fa fa-trash"></li>
+                    <li wire:target="remove({{$invoice->id}})" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></li>
+                </td>
                 @endif
 
             </tr>

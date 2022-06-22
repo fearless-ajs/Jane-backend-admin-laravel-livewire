@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('invoice_messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->bigInteger('user_id');
             $table->string('to');
             $table->string('from');
             $table->string('subject');

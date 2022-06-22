@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('invoice_payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invoice_id')->constrained('invoices');
+            $table->bigInteger('invoice_id');
             $table->string('method');
             $table->timestamps();
             $table->softDeletes();

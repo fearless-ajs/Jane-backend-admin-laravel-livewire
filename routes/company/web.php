@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->middleware('check-two-factor')->name('company.')->group(function () {
+Route::middleware(['auth', 'check-two-factor'])->name('company.')->group(function () {
 
     Route::get('/invoices/print/{id}',      [CompanyInvoiceViewController::class, 'printInvoice'])->name('print-invoice');
     Route::middleware('role:company')->group(function (){
@@ -46,7 +46,6 @@ Route::middleware('auth')->middleware('check-two-factor')->name('company.')->gro
             Route::middleware('company-guard:contact,read')->get('/contacts/{id}',            [CompanyContactViewController::class, 'contactProfile'])->name('contacts.profile');
 
 
-
             Route::middleware('company-guard:product,read')->get('/products',                 [CompanyProductViewController::class, 'products'])->name('products');
             Route::middleware('company-guard:product,read')->get('/products/{id}',            [CompanyProductViewController::class, 'productDetails'])->name('product-details');
 
@@ -59,6 +58,7 @@ Route::middleware('auth')->middleware('check-two-factor')->name('company.')->gro
 
             Route::middleware('company-guard:category,read')->get('/categories',               [CompanyProductViewController::class, 'categories'])->name('categories');
             Route::middleware('company-guard:category,read')->get('/billing-cycle',            [CompanyProductViewController::class, 'billingCycle'])->name('billing-cycles');
+            Route::middleware('company-guard:category,read')->get('/taxes',                    [CompanyProductViewController::class, 'taxes'])->name('taxes');
 
 
             Route::middleware('company-guard:invoice,read')->get('/invoices',                 [CompanyInvoiceViewController::class, 'invoices'])->name('invoices');

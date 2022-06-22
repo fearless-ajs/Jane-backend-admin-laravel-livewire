@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('company_documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('companies');
+            $table->bigInteger('company_id');
             $table->string('title');
             $table->string('file');
             $table->timestamps();

@@ -105,9 +105,9 @@ class CompanyCreateContactForm extends Component
                 'lastname'           => $this->lastname,
                 'firstname'          => $this->firstname,
                 'email'              => $this->primary_email,
-                'user_type'          => 'Company-worker',
+                'user_type'          => 'contact',
                 'image'              => ($this->image)?$this->image:null,
-                'password'           => 'crmcode'
+                'password'           => $this->lastname
             ]);
 
             // Attach customer role to the user
@@ -125,9 +125,12 @@ class CompanyCreateContactForm extends Component
         }
 
         $contact = Contact::create([
-            'created_by_id'     => Auth::user()->id,
             'company_id'        => Auth::user()->company_id,
             'user_id'           => $user->id,
+            'lastname'          => $this->lastname,
+            'firstname'         => $this->firstname,
+            'email'             => $this->primary_email,
+            'image'             => ($this->image)?$this->image:null,
             'title'             => $this->title,
             'office_phone'      => $this->office_phone,
             'mobile_phone'      => $this->mobile_phone,

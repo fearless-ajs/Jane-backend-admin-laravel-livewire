@@ -3,17 +3,17 @@
         <form class="add-new-user modal-content pt-0" wire:submit.prevent="create">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
             <div class="modal-header mb-1">
-                <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Staff</h5>
             </div>
             <div class="modal-body flex-grow-1">
                 <div class="mb-1">
                     <label class="form-label" for="basic-icon-default-fullname">Last Name*</label>
-                    <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Worker's lastname"/>
+                    <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Staff's lastname"/>
                     @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="basic-icon-default-fullname">First Name*</label>
-                    <input type="text" wire:model.lazy="firstname" class="form-control dt-full-name  {{$errors->has('firstname')? 'is-invalid' : '' }}"  placeholder="Worker's firstname" />
+                    <input type="text" wire:model.lazy="firstname" class="form-control dt-full-name  {{$errors->has('firstname')? 'is-invalid' : '' }}"  placeholder="Staff's firstname" />
                     @error('firstname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
                 <div class="mb-1">
@@ -319,7 +319,7 @@
                     @error('password_confirmation') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
 
-                <button type="submit"  wire:loading.remove wire:target="create"  class="btn btn-primary me-1 data-submit">Create worker</button>
+                <button type="submit"  wire:loading.remove wire:target="create"  class="btn btn-primary me-1 data-submit">Add staff</button>
                 <button type="submit"  wire:loading wire:target="create"  class="btn btn-primary me-1 data-submit"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                 <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
