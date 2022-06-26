@@ -96,6 +96,7 @@ class CompanyEditSettingsForm extends Component
         $this->emit('close-current-modal');
         // Update the basic info card
         $this->emit('refreshCompanyBasicInfoCard');
+        $this->emit('refreshAdminCompanyProfile');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Company information updated']);
     }
 

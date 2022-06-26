@@ -7,7 +7,9 @@ use Livewire\Component;
 class AdminCompanyProfile extends Component
 {
     public $company;
-
+    protected $listeners = [
+      'refreshAdminCompanyProfile'  => '$refresh'
+    ];
 
     public function mount($company){
         $this->company = $company;

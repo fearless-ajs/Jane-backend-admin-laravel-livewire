@@ -39,7 +39,7 @@
 
                 <!-- Security card -->
                 @if($securityCard)
-                    @if(Auth::user()->hasModuleAccess('user', 'edit'))
+                    @if(Auth::user()->hasModuleAccess('user', 'edit') || Auth::user()->hasRole('super-admin'))
                     @livewire('company-worker-security-card', ['worker' => $worker])
                     @endif
                 @endif

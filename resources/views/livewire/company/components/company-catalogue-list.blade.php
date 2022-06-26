@@ -185,7 +185,7 @@
     </div>
 
     @if(Auth::user()->hasModuleAccess('product', 'create'))
-        @livewire('company-create-catalogue-form')
+        @livewire('company-create-catalogue-form', ['company' => $company])
     @endif
 
 </div>

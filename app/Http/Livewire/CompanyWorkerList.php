@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyWorkerList extends Component
+class CompanyWorkerList extends LiveNotify
 {
     use WithPagination;
 
-    protected $listeners = ['refreshWorkersList' => '$refresh'];
+    protected $listeners = [
+        'refreshWorkersList' => '$refresh',
+        'delete'             => 'delete'
+    ];
 
     public $search;
     public $searchResult;
@@ -24,9 +27,24 @@ class CompanyWorkerList extends Component
 
     public function updated(){
         if ($this->search){
-            $this->searchResult = Worker::where('company_id', $this->company->id)->where('phone', 'LIKE', "%{$this->search}%")->get();
+            $this->searchResult = Worker::where('company_id', $this->company->id)->where('lastname', 'LIKE', "%{$this->search}%")->orWhere('firstname', 'LIKE', "%{$this->search}%")->get();
         }
     }
+
+    public function delete($contact_id){
+        $worker = Worker::find($contact_id);
+
+        // Delete contact itself
+        $worker->delete();
+
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Staff deleted']);
+    }
+
+
+    public function remove($contact_id){
+        return $this->confirmDelete('warning', 'Do you really want to delete?', 'Press ok to continue', $contact_id);
+    }
+
 
 
     public function render()
@@ -38,7 +56,7 @@ class CompanyWorkerList extends Component
         }else {
             $this->searchResult = false;
             return view('livewire.company.components.company-worker-list', [
-                'workers' => Worker::orderBy('id', 'DESC')->where('company_id', $this->company->id)->paginate(2)
+                'workers' => Worker::orderBy('id', 'DESC')->where('company_id', $this->company->id)->paginate(12)
             ]);
         }
     }

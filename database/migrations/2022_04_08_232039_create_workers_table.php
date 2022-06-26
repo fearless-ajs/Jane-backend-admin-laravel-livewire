@@ -16,12 +16,16 @@ return new class extends Migration
         Schema::create('workers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
+            $table->string('lastname')->nullable();
+            $table->string('firstname')->nullable();
+            $table->string('email')->nullable();
             $table->bigInteger('company_id');
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('address')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('available')->default(true);
             $table->timestamps();
             $table->softDeletes();

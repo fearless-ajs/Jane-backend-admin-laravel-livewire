@@ -42,31 +42,28 @@
     </div>
 
 
-    @if($currentUrl != 'admin.company-user-profile')
-        @if(Auth::user()->hasModuleAccess('user', 'edit'))
-    <hr />
-    <div class="table-responsive">
-        <div class="modal-body">
-            <form class="row" wire:submit.prevent="updatePermission">
-                <div class="col-12 col-md-12 mb-1">
-                    <p class="mb-1">Assign new permission to user</p>
-                    <select wire:model.lazy="permission" multiple class="select2 form-select">
-                        @if($permissions)
-                            @foreach($permissions as $permission)
-                                <option value="{{$permission->id}}">{{$permission->display_name}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    @error('permission') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                </div>
-                <div class="card-body">
-                    <button type="submit"  wire:loading.remove wire:target="updatePermission"  class="btn btn-primary me-1">Save changes</button>
-                    <button type="submit"  wire:loading wire:target="updatePermission"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
-                </div>
-            </form>
+    @if(Auth::user()->hasModuleAccess('user', 'edit') || Auth::user()->hasRole('super-admin'))
+        <hr />
+        <div class="table-responsive">
+            <div class="modal-body">
+                <form class="row" wire:submit.prevent="updatePermission">
+                    <div class="col-12 col-md-12 mb-1">
+                        <p class="mb-1">Assign new permission to user</p>
+                        <select wire:model.lazy="permission" multiple class="select2 form-select">
+                            @if($permissions)
+                                @foreach($permissions as $permission)
+                                    <option value="{{$permission->id}}">{{$permission->display_name}}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        @error('permission') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="card-body">
+                        <button type="submit"  wire:loading.remove wire:target="updatePermission"  class="btn btn-primary me-1">Save changes</button>
+                        <button type="submit"  wire:loading wire:target="updatePermission"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-        @endif
     @endif
-
 </div>

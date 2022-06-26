@@ -110,7 +110,7 @@
                             </div>
                             <!--/ avatar -->
                             <div class="profile-user-info">
-                                <h6 class="mb-0">{{$contact->title. ' ' .$contact->user->lastname. ' '. $contact->user->firstname}}</h6>
+                                <h6 class="mb-0">{{$contact->title. ' ' .$contact->lastname. ' '. $contact->firstname}}</h6>
                                 <small class="text-muted">Joined {{$contact->created_at->diffForHumans()}}</small>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h6 class="mb-0">Email</h6>
                                 </div>
-                                <small>{{$contact->user->email}}</small>
+                                <small>{{$contact->email}}</small>
                             </div>
                         </div>
 

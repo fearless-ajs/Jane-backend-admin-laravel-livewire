@@ -21,11 +21,11 @@
             @foreach($invoices as $invoice)
                 <tr>
                     <td>{{$loop->index + 1}}</td>
-                    <td>{{$invoice->contactInfo->user->lastname. '  '.$invoice->contactInfo->user->firstname}}</td>
-                    <td>{{$settings->app_currency_symbol}}{{$invoice->products_total_price + $invoice->services_total_price}}</td>
+                    <td>{{$invoice->contactInfo->lastname. '  '.$invoice->contactInfo->firstname}}</td>
+                    <td>{{$settings->currency->currency_symbol}}{{$invoice->products_total_price + $invoice->services_total_price}}</td>
                     <td>{{ \Carbon\Carbon::parse($invoice->date_issued)->translatedFormat(' j F Y')}}</td>
                     <td>{{ \Carbon\Carbon::parse($invoice->due_date)->translatedFormat(' j F Y')}}</td>
-                    <td>{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</td>
+                    <td>{{$invoice->worker->lastname. '  ' .$invoice->worker->firstname }}</td>
                     @if($invoice->signed)
                         <td>Signed</td>
                     @else

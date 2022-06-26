@@ -1,6 +1,6 @@
 <div>
     <!-- Change Password -->
-    @if(Auth::user()->hasModuleAccess('user', 'edit'))
+    @if(Auth::user()->hasModuleAccess('user', 'edit') || Auth::user()->hasRole('super-admin'))
     <div class="card">
         <h4 class="card-header">Change Password</h4>
         <div class="card-body">

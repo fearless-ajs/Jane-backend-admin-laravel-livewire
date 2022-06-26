@@ -29,9 +29,9 @@ class CompanyCatalogueList extends Component
     public $categories;
     public $category;
 
-    public function mount(){
+    public function mount($company){
         $this->settings = Setting::first();
-        $this->company = Company::find(Auth::user()->company_id);
+        $this->company = $company;
         $this->categories   =   Category::where('company_id', $this->company->id)->get();
     }
 

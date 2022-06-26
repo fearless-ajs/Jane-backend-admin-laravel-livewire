@@ -9,6 +9,7 @@ use App\Models\CompanyCatalogue;
 use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyProductViewController extends Controller
 {
@@ -68,12 +69,13 @@ class CompanyProductViewController extends Controller
 
 
     public function catalogues (){
+        $company = Company::find(Auth::user()->company_id);
         $data = [
             'title' => 'Company products',
             'keywords' => 'Company products',
             'description' => 'Company products',
         ];
-        return view('livewire.company.pages.company-catalogue-list-page', ['data' => $data, 'settings'   => $this->settings]);
+        return view('livewire.company.pages.company-catalogue-list-page', ['data' => $data, 'company' => $company]);
     }
 
     public function catalogueDetails ($id){

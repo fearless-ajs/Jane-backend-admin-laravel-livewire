@@ -65,9 +65,9 @@
 
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Billing</span><i data-feather="more-horizontal"></i>
             </li>
-            <li class=" nav-item @if(Route::currentRouteName() == 'company.products') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-cash-register"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Payments</span></a>
+            <li class=" nav-item @if(Route::currentRouteName() == 'contact.payment-info') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-cash-register"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Payments</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.products') active @endif" href="{{route('company.products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'contact.payment-info') active @endif" href="{{route('contact.payment-info')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Payment Info</span></a>
                     </li>
                 </ul>
             </li>

@@ -46,10 +46,10 @@ class CompanyWorkerRoleInfoCard extends Component
             foreach ($this->role as $role){
                 if (!CompanyRoleUser::where('user_id', $this->worker->user_id)
                     ->where('company_role_id', $role)
-                    ->where('company_id', Auth::user()->company_id)->first())
+                    ->where('company_id', $this->worker->company_id)->first())
                 {
                     CompanyRoleUser::create([
-                        'company_id'        => Auth::user()->company_id,
+                        'company_id'        => $this->worker->company_id,
                         'user_id'           => $this->worker->user->id,
                         'company_role_id'   => $role,
                     ]);
@@ -68,8 +68,8 @@ class CompanyWorkerRoleInfoCard extends Component
 
 
     public function fetchData(){
-        $this->roles  = CompanyRole::where('company_id', Auth::user()->company_id)->get();
-        $this->teams  = CompanyTeam::where('company_id', Auth::user()->company_id)->get();
+        $this->roles  = CompanyRole::where('company_id', $this->worker->company_id)->get();
+        $this->teams  = CompanyTeam::where('company_id', $this->worker->company_id)->get();
     }
 
     public function detachRole($role_id){

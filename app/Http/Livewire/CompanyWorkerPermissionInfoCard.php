@@ -48,10 +48,10 @@ class CompanyWorkerPermissionInfoCard extends Component
             foreach ($this->permission as $permission){
                 if (!CompanyPermissionUser::where('user_id', $this->worker->user_id)
                     ->where('company_permission_id', $permission)
-                    ->where('company_id', Auth::user()->company_id)->first())
+                    ->where('company_id', $this->worker->company_id)->first())
                 {
                     CompanyPermissionUser::create([
-                        'company_id'              => Auth::user()->company_id,
+                        'company_id'              => $this->worker->company_id,
                         'user_id'                 => $this->worker->user_id,
                         'company_permission_id'   => $permission,
                     ]);
@@ -68,8 +68,8 @@ class CompanyWorkerPermissionInfoCard extends Component
     }
 
     public function fetchData(){
-        $this->roles        = CompanyRole::where('company_id', Auth::user()->company_id)->get();
-        $this->permissions  = CompanyPermission::where('company_id', Auth::user()->company_id)->get();
+        $this->roles        = CompanyRole::where('company_id', $this->worker->company_id)->get();
+        $this->permissions  = CompanyPermission::where('company_id', $this->worker->company_id)->get();
     }
 
     public function detachPermission($permission_id){

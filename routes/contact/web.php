@@ -3,6 +3,7 @@
 use App\Http\Controllers\View\Admin\AdminViewController;
 use App\Http\Controllers\View\Contact\ContactCatalogueViewController;
 use App\Http\Controllers\View\Contact\ContactInvoiceViewController;
+use App\Http\Controllers\View\Contact\ContactPaymentViewController;
 use App\Http\Controllers\View\Contact\ContactViewController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,8 +29,11 @@ Route::middleware(['auth', 'check-two-factor'])->name('contact.')->group(functio
         Route::get('/invoices/unsigned',                    [ContactInvoiceViewController::class, 'unSignedInvoices'])->name('unsigned-invoices');
         Route::get('/invoices/{invoice_id}',                [ContactInvoiceViewController::class, 'previewInvoice'])->name('invoices-preview');
 
-        Route::get('/catalogues',                           [ContactCatalogueViewController::class, 'catalogues'])->name('catalogues');
-        Route::get('/catalogues/{catalogue_id}',            [ContactCatalogueViewController::class, 'catalogueDetails'])->name('catalogue-details');
+        Route::get('/catalogues',                            [ContactCatalogueViewController::class, 'catalogues'])->name('catalogues');
+        Route::get('/catalogues/{catalogue_id}',             [ContactCatalogueViewController::class, 'catalogueDetails'])->name('catalogue-details');
+
+
+        Route::get('/payment-info',                          [ContactPaymentViewController::class, 'paymentInfo'])->name('payment-info');
 
     });
 

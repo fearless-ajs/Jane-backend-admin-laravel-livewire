@@ -22,15 +22,19 @@
 
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-email">Tax</label>
-                        @if(count($taxes) > 0)
-                            <select wire:model.lazy="vat" class="form-select {{$errors->has('vat')? 'is-invalid' : '' }}">
-                                <option value="">Select tax</option>
-                                @foreach($taxes as $tax)
-                                    <option value="{{$tax->id}}">{{$tax->title}} - {{$tax->percentage}}%</option>
-                                @endforeach
-                            </select>
+                        @if($catalogue->company)
+                            @if(count($catalogue->company->taxes) > 0)
+                                <select wire:model.lazy="vat" class="form-select {{$errors->has('vat')? 'is-invalid' : '' }}">
+                                    <option value="">Select tax</option>
+                                    @foreach($catalogue->company->taxes as $tax)
+                                        <option value="{{$tax->id}}">{{$tax->title}} - {{$tax->percentage}}%</option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <p class="form-label" style="color: red" for="basic-icon-default-email">Please create tax, <a href="{{route('company.taxes')}}">click here</a></p>
+                            @endif
                         @else
-                            <p class="form-label" style="color: red" for="basic-icon-default-email">Please create tax, <a href="{{route('company.taxes')}}">click here</a></p>
+                            <p class="form-label" style="color: red" for="basic-icon-default-email">Catalogue company unvailable</p>
                         @endif
                         @error('vat') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -43,15 +47,20 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-email">Category*</label>
-                        @if(count($categories) > 0)
-                            <select wire:model.lazy="category" class="form-select {{$errors->has('category')? 'is-invalid' : '' }}">
-                                <option value="">Select category</option>
-                                @foreach($categories as $category)
-                                    <option value="{{$category->name}}">{{$category->name}}</option>
-                                @endforeach
-                            </select>
+                        @if($catalogue->company)
+                            @if(count($catalogue->company->categories) > 0)
+                                <select wire:model.lazy="category" class="form-select {{$errors->has('category')? 'is-invalid' : '' }}">
+                                    <option value="">Select category</option>
+                                    @foreach($catalogue->company->categories as $category)
+                                        <option value="{{$category->name}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <p class="form-label" style="color: red" for="basic-icon-default-email">Please create category, <a href="{{route('company.categories')}}">click here</a></p>
+                            @endif
                         @else
-                            <p class="form-label" style="color: red" for="basic-icon-default-email">Please create category, <a href="{{route('company.categories')}}">click here</a></p>
+
+                        <p class="form-label" style="color: red" for="basic-icon-default-email">Catalogue company unvailable</p>
                         @endif
                         @error('category') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -105,15 +114,19 @@
                     @if($billing === 'recurrent')
                         <div class="col-12">
                             <label class="form-label" for="basic-icon-default-email">Billing cycle</label>
-                            @if(count($cycles) > 0)
-                                <select wire:model.lazy="cycle" class="form-select {{$errors->has('cycle')? 'is-invalid' : '' }}">
-                                    <option value="">Select billing cycle</option>
-                                    @foreach($cycles as $cycle)
-                                        <option value="{{$cycle->id}}">{{$cycle->title}}</option>
-                                    @endforeach
-                                </select>
+                            @if($catalogue->company)
+                                @if(count($catalogue->company->cycles) > 0)
+                                    <select wire:model.lazy="cycle" class="form-select {{$errors->has('cycle')? 'is-invalid' : '' }}">
+                                        <option value="">Select billing cycle</option>
+                                        @foreach($catalogue->company->cycles as $cycle)
+                                            <option value="{{$cycle->id}}">{{$cycle->title}}</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    <p class="form-label" style="color: red" for="basic-icon-default-email">Please create category, <a href="{{route('company.billing-cycles')}}">click here</a></p>
+                                @endif
                             @else
-                                <p class="form-label" style="color: red" for="basic-icon-default-email">Please create category, <a href="{{route('company.billing-cycles')}}">click here</a></p>
+                                <p class="form-label" style="color: red" for="basic-icon-default-email">Catalogue company not available</p>
                             @endif
                             @error('cycle') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                         </div>

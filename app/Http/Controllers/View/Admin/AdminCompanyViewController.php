@@ -4,6 +4,7 @@ namespace App\Http\Controllers\View\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\CompanyCatalogue;
 use App\Models\Contact;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -39,6 +40,18 @@ class AdminCompanyViewController extends Controller
         ];
         return view('livewire.admin.pages.admin-company-info-page', ['data' => $data, 'company' => $company,  'settings'  =>  $this->settings]);
     }
+
+
+    public function companySettings($id){
+        $company = Company::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-settings-page', ['data' => $data, 'company' => $company]);
+    }
+
 
     public function companyContacts($id){
         $company = Company::find($id);
@@ -78,7 +91,7 @@ class AdminCompanyViewController extends Controller
             'keywords' => 'Companies',
             'description' => 'Companies'
         ];
-        return view('livewire.admin.pages.admin-company-workers-info-page', ['data' => $data, 'worker' => $worker,  'settings'  =>  $this->settings]);
+        return view('livewire.admin.pages.admin-company-workers-info-page', ['data' => $data, 'worker' => $worker]);
     }
 
     public function companyProducts($id){
@@ -88,7 +101,27 @@ class AdminCompanyViewController extends Controller
             'keywords' => 'Companies',
             'description' => 'Companies'
         ];
-        return view('livewire.admin.pages.admin-company-products-page', ['data' => $data, 'company' => $company,  'settings'  =>  $this->settings]);
+        return view('livewire.admin.pages.admin-company-products-page', ['data' => $data, 'company' => $company]);
+    }
+
+    public function companyCatalogues($id){
+        $company = Company::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-catalogues-page', ['data' => $data, 'company' => $company]);
+    }
+
+    public function companyCatalogueDetails($id){
+        $catalogue = CompanyCatalogue::find($id);
+        $data = [
+            'title' => $catalogue->name,
+            'keywords' => 'Products',
+            'description' => 'Products'
+        ];
+        return view('livewire.admin.pages.admin-company-catalogue-details-page', ['data' => $data, 'catalogue' => $catalogue]);
     }
 
     public function companyProductDetails($id){
@@ -108,7 +141,7 @@ class AdminCompanyViewController extends Controller
             'keywords' => 'Companies',
             'description' => 'Companies'
         ];
-        return view('livewire.admin.pages.admin-company-services-page', ['data' => $data, 'company' => $company,  'settings'  =>  $this->settings]);
+        return view('livewire.admin.pages.admin-company-services-page', ['data' => $data, 'company' => $company]);
     }
 
     public function companyServiceDetails($id){
@@ -118,7 +151,7 @@ class AdminCompanyViewController extends Controller
             'keywords' => 'Companies',
             'description' => 'Companies'
         ];
-        return view('livewire.admin.pages.admin-company-service-details-page', ['data' => $data, 'service' => $service,  'settings'  =>  $this->settings]);
+        return view('livewire.admin.pages.admin-company-service-details-page', ['data' => $data, 'service' => $service]);
     }
 
     public function companyInvoices($id){
@@ -128,7 +161,7 @@ class AdminCompanyViewController extends Controller
             'keywords' => 'Companies',
             'description' => 'Companies'
         ];
-        return view('livewire.admin.pages.admin-company-invoices-list-page', ['data' => $data, 'company' => $company,  'settings'  =>  $this->settings]);
+        return view('livewire.admin.pages.admin-company-invoices-list-page', ['data' => $data, 'company' => $company]);
     }
 
     public function companyInvoicePreview($id){
@@ -138,6 +171,16 @@ class AdminCompanyViewController extends Controller
             'keywords' => 'Companies',
             'description' => 'Companies'
         ];
-        return view('livewire.admin.pages.admin-company-invoice-preview-page', ['data' => $data, 'invoice' => $invoice,  'settings'  =>  $this->settings]);
+        return view('livewire.admin.pages.admin-company-invoice-preview-page', ['data' => $data, 'invoice' => $invoice]);
+    }
+
+    public function companyInvoiceEdit($id){
+        $invoice = Invoice::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-invoice-edit-page', ['data' => $data, 'invoice' => $invoice]);
     }
 }

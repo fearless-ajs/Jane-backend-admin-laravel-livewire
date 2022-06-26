@@ -185,6 +185,23 @@ window.addEventListener('swal:confirm', event => {
 </script>
 
 <script>
+    window.addEventListener('swal:confirmDelete', event => {
+        swal({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type,
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+
+            if(willDelete){
+                window.livewire.emit('delete', event.detail.id);
+            }
+        });
+    });
+</script>
+
+<script>
     window.livewire.on('close-current-modal', param => {
         $('.current-modal').modal('hide');
     });

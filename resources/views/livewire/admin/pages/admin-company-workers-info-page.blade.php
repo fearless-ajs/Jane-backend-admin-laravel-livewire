@@ -15,9 +15,9 @@
                             </li>
                             <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $worker->company->id)}}">{{$worker->company->name}}</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="{{route('admin.company-users', $worker->company->id)}}">Users</a>
+                            <li class="breadcrumb-item"><a href="{{route('admin.company-users', $worker->company->id)}}">Staff</a>
                             </li>
-                            <li class="breadcrumb-item active">{{$worker->user->lastname . '  ' .$worker->user->lastname}}
+                            <li class="breadcrumb-item active">{{$worker->lastname . '  ' .$worker->firstname}}
                             </li>
                         </ol>
                     </div>
@@ -26,5 +26,5 @@
         </div>
 
     </div>
-    @livewire('admin-company-workers-info', ['worker' => $worker])
+    @livewire('company-workers-info', ['worker' => $worker])
 @endsection

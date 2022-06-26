@@ -5,10 +5,13 @@ namespace App\Http\Livewire;
 use App\Mail\ContactUserAccountCreationMail;
 use App\Models\Company;
 use App\Models\Contact;
+use App\Models\ContactBillingAddress;
+use App\Models\ContactPaymentMethod;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Traits\FileManager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -17,7 +20,7 @@ use Livewire\WithFileUploads;
 
 class CompanyCreateContactForm extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, FileManager;
 
     public $title;
     public $lastname;
@@ -95,7 +98,7 @@ class CompanyCreateContactForm extends Component
 
         // Check if image exists
         if ($this->image){
-            $this->image = $this->image->store('/', 'images');
+            $this->image = $this->saveUserAvatar($this->image, 'images');
         }
 
         // Check if the email exist in the users table and ignore creation
@@ -144,6 +147,32 @@ class CompanyCreateContactForm extends Component
             'description'       => $this->description,
             'available'         => ($this->available)?true:false
         ]);
+
+        // Create payment information if it doesn't exist
+        $billingAddress = ContactBillingAddress::where('user_id', $user->id)->first();
+        if (!$billingAddress){
+            ContactBillingAddress::create([
+                'user_id'           => $user->id,
+                'fullname'          => $this->lastname. '  ' .$this->firstname,
+                'email'             => $this->primary_email,
+                'phone'             => $this->mobile_phone,
+                'city'              => $this->city,
+                'state'             => $this->state,
+                'country'           => $this->country,
+                'address'           => $this->address,
+            ]);
+        }
+        $paymentMethod = ContactPaymentMethod::where('user_id', $user->id)->first();
+        if (!$paymentMethod){
+            ContactPaymentMethod::create([
+                'user_id'           => $user->id,
+                'name_on_card'      =>  $user->lastname. ' ' . $user->firstname,
+                'card_number'       =>  0000000000000000,
+                'exp'               =>  '12/23',
+                'cvv'               =>  000
+            ]);
+        }
+
 
         // Check for product and service and insert as transactions
         if (count($this->product) > 0){

@@ -67,7 +67,7 @@
 @livewire('admin-main-menu')
 
 <!-- BEGIN: Content-->
-@if(Route::currentRouteName() == 'admin.company-products' || Route::currentRouteName() == 'admin.company-services')
+@if(Route::currentRouteName() == 'admin.company-catalogues' || Route::currentRouteName() == 'admin.products' || Route::currentRouteName() == 'admin.services')
     <div class="app-content content ecommerce-application">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -167,6 +167,21 @@
 
             if(willDelete){
                 window.livewire.emit('acceptTwoFactor', event.detail.id);
+            }
+        });
+    });
+
+    window.addEventListener('swal:confirmDelete', event => {
+        swal({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type,
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+
+            if(willDelete){
+                window.livewire.emit('delete', event.detail.id);
             }
         });
     });

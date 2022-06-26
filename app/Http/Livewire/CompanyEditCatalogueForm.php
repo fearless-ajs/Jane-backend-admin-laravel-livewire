@@ -7,6 +7,7 @@ use App\Models\CompanyBillingCycle;
 use App\Models\CompanyCatalogue;
 use App\Models\CompanyCatalogueImage;
 use App\Models\CompanyTax;
+use App\Traits\FileManager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -14,7 +15,7 @@ use Livewire\WithFileUploads;
 
 class CompanyEditCatalogueForm extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, FileManager;
 
     public $name;
     public $brand;
@@ -144,7 +145,7 @@ class CompanyEditCatalogueForm extends Component
         }
 
         // Check if the product exist for the company
-        if (CompanyCatalogue::where('company_id', Auth::user()->company_id)->where('name', $this->name)->where('id', '!=', $this->catalogue->id)->first()){
+        if (CompanyCatalogue::where('company_id', $this->catalogue->company_id)->where('name', $this->name)->where('id', '!=', $this->catalogue->id)->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Catalogue exist already']);
         }
 
@@ -180,7 +181,7 @@ class CompanyEditCatalogueForm extends Component
         if (count($this->images) > 0){
             // Upload the image
             foreach ($this->images as $image){
-                $catalogueImage = $image->store('/', 'catalogues');
+                $catalogueImage = $this->saveImage($image, 'catalogues');
                 CompanyCatalogueImage::create([
                     'company_catalogue_id'    =>  $this->catalogue->id,
                     'image'                   => $catalogueImage

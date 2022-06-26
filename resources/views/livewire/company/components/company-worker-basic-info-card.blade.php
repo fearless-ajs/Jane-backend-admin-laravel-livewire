@@ -3,10 +3,10 @@
         <div class="card-body">
             <div class="user-avatar-section">
                 <div class="d-flex align-items-center flex-column">
-                    <img class="img-fluid rounded mt-3 mb-2" src="{{$worker->user->UserImage}}" height="110" width="110" alt="User avatar" />
+                    <img class="img-fluid rounded mt-3 mb-2" src="{{$worker->WorkerImage}}" height="110" width="110" alt="User avatar" />
                     <div class="user-info text-center">
-                        <h4>{{$worker->user->lastname. '  ' .$worker->user->firstname }}</h4>
-                        <span class="badge bg-light-secondary">{{$worker->user->email}}</span>
+                        <h4>{{$worker->lastname. '  ' .$worker->firstname }}</h4>
+                        <span class="badge bg-light-secondary">{{$worker->email}}</span>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     </li>
                     <li class="mb-75">
                         <span class="fw-bolder me-25"> Email:</span>
-                        <span>{{$worker->user->email}}</span>
+                        <span>{{$worker->email}}</span>
                     </li>
                     <li class="mb-75">
                         @if($worker->available == 1)
@@ -88,20 +88,18 @@
                         <span>{{$worker->country}}</span>
                     </li>
                 </ul>
-                @if(Route::currentRouteName() != 'admin.company-user-profile')
                 <div class="d-flex justify-content-center pt-2">
-                    @if(Auth::user()->hasModuleAccess('user', 'edit'))
-                    <a href="javascript:;" class="btn btn-primary me-1" data-bs-target="#editUser" data-bs-toggle="modal">
-                        Edit
-                    </a>
-                    @if($worker->available)
-                    <a href="javascript:;" wire:click="suspendWorker" class="btn btn-outline-danger suspend-user">Suspend</a>
-                    @else
-                        <a href="javascript:;" wire:click="activateWorker" class="btn btn-outline-success suspend-user">Activate</a>
-                    @endif
+                    @if(Auth::user()->hasModuleAccess('user', 'edit') || Auth::user()->hasRole('super-admin'))
+                        <a href="javascript:;" class="btn btn-primary me-1" data-bs-target="#editUser" data-bs-toggle="modal">
+                            Edit
+                        </a>
+                        @if($worker->available)
+                            <a href="javascript:;" wire:click="suspendWorker" class="btn btn-outline-danger suspend-user">Suspend</a>
+                        @else
+                            <a href="javascript:;" wire:click="activateWorker" class="btn btn-outline-success suspend-user">Activate</a>
+                        @endif
                     @endif
                 </div>
-                @endif
             </div>
         </div>
     </div>

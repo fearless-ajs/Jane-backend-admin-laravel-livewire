@@ -48,19 +48,13 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link fw-bold" href="{{route('admin.company-users', $company->id)}}" >
-                                            <span class="d-none d-md-block">Users({{count($company->users)}})</span>
+                                            <span class="d-none d-md-block">Staffs({{count($company->users)}})</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link fw-bold" href="{{route('admin.company-products', $company->id)}}" >
-                                            <span class="d-none d-md-block">Products({{count($company->products)}})</span>
-                                            <i data-feather="rss" class="d-block d-md-none"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link fw-bold" href="{{route('admin.company-services', $company->id)}}" >
-                                            <span class="d-none d-md-block">Services({{count($company->services)}})</span>
+                                        <a class="nav-link fw-bold" href="{{route('admin.company-catalogues', $company->id)}}" >
+                                            <span class="d-none d-md-block">Catalogues({{count($company->catalogues)}})</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>
@@ -78,10 +72,10 @@
                                     </li>
                                 </ul>
                                 <!-- edit button -->
-{{--                                <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editContactModal">--}}
-{{--                                    <i data-feather="edit" class="d-block d-md-none"></i>--}}
-{{--                                    <span class="fw-bold d-none d-md-block">Update</span>--}}
-{{--                                </button>--}}
+                                <a href="{{route('admin.company-settings', $company->id)}}" class="btn btn-primary">
+                                    <i data-feather="edit" class="d-block d-md-none"></i>
+                                    <span class="fw-bold d-none d-md-block">Update</span>
+                                </a>
                             </div>
                         </div>
                         <!--/ collapse  -->
@@ -217,11 +211,11 @@
 
 
 
-                        @if($company->available)
-                            <p  class="text-success">Active contact</p>
-                        @else
-                            <p  class="text-danger">Inactive contact</p>
-                        @endif
+{{--                        @if($company->available)--}}
+{{--                            <p  class="text-success">Active contact</p>--}}
+{{--                        @else--}}
+{{--                            <p  class="text-danger">Inactive contact</p>--}}
+{{--                        @endif--}}
                     </div>
                 </div>
                 <!--/ post 1 -->
@@ -231,7 +225,7 @@
         </div>
         <!--/ polls card -->
 
-{{--        @livewire('company-edit-contact-form', ['contact' => $contact])--}}
+        @livewire('company-edit-settings-form', ['company'  => $company])
 
 
 </div>

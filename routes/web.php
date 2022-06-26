@@ -46,3 +46,14 @@ Route::get('/markets/{company_id}/{product_slug}',                      [Company
 
 // Error routes
 Route::get('/unauthorized-access',                                     [AppErrorViewController::class, 'unAuthorizedAccess'])->name('unauthorized-access');
+
+
+// Payment routes for payStack
+Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
+Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
+
+
+// For stripe
+Route::get('checkout','App\Http\Controllers\CheckoutController@checkout');
+Route::post('checkout','App\Http\Controllers\CheckoutController@afterpayment')->name('checkout.credit-card');
+

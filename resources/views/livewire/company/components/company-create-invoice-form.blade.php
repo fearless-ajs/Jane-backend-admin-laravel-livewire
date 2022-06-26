@@ -359,15 +359,15 @@
                         <!-- Invoice Note starts -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="mt-2 mb-1">
-                                    <p class="mb-50">Accept payments via*</p>
-                                    <select multiple wire:model.lazy="payment_methods" class="form-select {{$errors->has('payment_methods')? 'is-invalid' : '' }}">
-                                        <option value="Bank Account">Bank Account</option>
-                                        <option value="Paypal">Paypal</option>
-                                        <option value="UPI Transfer">Bank Transfer</option>
-                                    </select>
-                                    @error('payment_methods') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                                </div>
+{{--                                <div class="mt-2 mb-1">--}}
+{{--                                    <p class="mb-50">Accept payments via*</p>--}}
+{{--                                    <select multiple wire:model.lazy="payment_methods" class="form-select {{$errors->has('payment_methods')? 'is-invalid' : '' }}">--}}
+{{--                                        <option value="Bank Account">Bank Account</option>--}}
+{{--                                        <option value="Paypal">Paypal</option>--}}
+{{--                                        <option value="UPI Transfer">Bank Transfer</option>--}}
+{{--                                    </select>--}}
+{{--                                    @error('payment_methods') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
+{{--                                </div>--}}
                                 <div class="mb-2">
                                     <label for="note" class="form-label fw-bold">Note:*</label>
                                     <textarea wire:model.lazy="invoice_note" class="form-control {{$errors->has('invoice_note')? 'is-invalid' : '' }}" rows="2" id="note" placeholder="Drop a note on the invoice"></textarea>

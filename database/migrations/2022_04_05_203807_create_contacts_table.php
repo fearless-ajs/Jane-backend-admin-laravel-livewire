@@ -18,18 +18,17 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('firstname');
             $table->string('email');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->foreignId('user_id');
             $table->foreignId('company_id');
             $table->enum('title', ['Mr', 'Miss', 'Mrs', 'Dr', 'Prof']);
             $table->string('lastname');
             $table->string('firstname');
-            $table->string('email');
             $table->string('image')->nullable();
 
             $table->string('office_phone')->nullable();
             $table->string('mobile_phone')->nullable();
-            $table->string('organization');
+            $table->string('organization')->nullable();
 
             $table->string('fax')->nullable();
             $table->string('date_of_birth')->nullable();

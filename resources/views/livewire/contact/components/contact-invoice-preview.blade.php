@@ -90,7 +90,9 @@
                             <th class="py-1">Service description</th>
                             <th class="py-1">Price</th>
                             <th class="py-1">Billing</th>
-                            <th class="py-1">Total</th>
+                            <th class="py-1">Tax</th>
+                            <th class="py-1">Price</th>
+                            <th class="py-1">Price + Tax</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -110,12 +112,30 @@
                                         @if($service->catalogue->cycle)
                                             <span class="fw-bold">{{$service->catalogue->cycle->title}}</span>
                                         @else
-                                            <span class="fw-bold text-danger">Not available</span>
+                                            <span class="fw-bold text-da">Not available</span>
                                         @endif
                                     </td>
+
+
+
                                     <td class="py-1">
-                                        <span class="fw-bold">{{$settings->currency->app_currency_symbol}}{{number_format($service->total_price)}}</span>
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$service->total_tax}}</span>
                                     </td>
+
+                                    {{--                                        <td class="py-1">--}}
+                                    {{--                                            <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$s_item['unit_price']}}</span>--}}
+                                    {{--                                        </td>--}}
+
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($service->total_price)}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($service->total_price_with_tax)}}</span>
+                                    </td>
+                                    <td class="py-1">
+                                        <span class="fa fa-trash" style="cursor:pointer;" wire:click="removeService({{$loop->index}})"></span>
+                                    </td>
+
                                 </tr>
                             @endif
                         @endforeach
@@ -133,7 +153,9 @@
                             <th class="py-1">Product description</th>
                             <th class="py-1">Unit Price</th>
                             <th class="py-1">Quantity</th>
-                            <th class="py-1">Total</th>
+                            <th class="py-1">Tax</th>
+                            <th class="py-1">Price</th>
+                            <th class="py-1">Price + Tax</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -151,9 +173,17 @@
                                     <td class="py-1">
                                         <span class="fw-bold">{{$product->quantity}}</span>
                                     </td>
+
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{$product->total_tax}}</span>
+                                    </td>
                                     <td class="py-1">
                                         <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($product->total_price)}}</span>
                                     </td>
+                                    <td class="py-1">
+                                        <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($product->total_price_with_tax)}}</span>
+                                    </td>
+
                                 </tr>
                             @endif
                         @endforeach
@@ -163,24 +193,26 @@
                 </div>
             @endif
 
-
-
             <div class="card-body invoice-padding pb-0">
                 <div class="row invoice-sales-total-wrapper">
                     <div class="col-md-6 order-md-1 order-2 mt-md-0 mt-3">
                         <p class="card-text mb-0">
-                            <span class="fw-bold">Salesperson:</span> <span class="ms-75">{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</span>
+                            <span class="fw-bold">Staff in charge:</span> <span class="ms-75">{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</span>
                         </p>
                     </div>
                     <div class="col-md-6 d-flex justify-content-end order-md-2 order-1">
                         <div class="invoice-total-wrapper">
                             <div class="invoice-total-item">
-                                <p class="invoice-total-title">Service total:</p>
-                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->services_total_price)}}</p>
+                                <p class="invoice-total-title">Services:</p>
+                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->services_total_price)}} + Tax: {{$settings->currency->currency_symbol}}{{$totalServiceTax}}</p>
+                                <p class="invoice-total-amount">Total: {{$settings->currency->currency_symbol}}{{$invoice->services_total_price + $totalServiceTax}}</p>
+
+
                             </div>
                             <div class="invoice-total-item">
-                                <p class="invoice-total-title">Product total:</p>
-                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->products_total_price)}}</p>
+                                <p class="invoice-total-title">Products:</p>
+                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->products_total_price)}}  + Tax: {{$settings->currency->currency_symbol}}{{$totalProductTax}} </p>
+                                <p class="invoice-total-amount">Total: {{$settings->currency->currency_symbol}}{{$invoice->products_total_price + $totalProductTax}}</p>
                             </div>
                             {{--                            <div class="invoice-total-item">--}}
                             {{--                                <p class="invoice-total-title">Discount:</p>--}}
@@ -193,7 +225,8 @@
                             <hr class="my-50" />
                             <div class="invoice-total-item">
                                 <p class="invoice-total-title">Total:</p>
-                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</p>
+                                <p class="invoice-total-amount">{{$settings->currency->currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}} + Tax: {{$settings->currency->currency_symbol}}{{$totalProductTax + $totalServiceTax }} </p>
+                                <p class="invoice-total-amount">PAYABLE: {{$settings->currency->currency_symbol}}{{($invoice->products_total_price + $totalProductTax) + ($invoice->services_total_price + $totalServiceTax)}}</p>
                             </div>
                         </div>
                     </div>
@@ -234,11 +267,14 @@
                     @endif
                 </p>
 
-
-                @if($signaturePad)
-
-                @endif
                 @livewire('contact-signature-pad', ['invoice' => $invoice])
+
+                @if($invoice->signed)
+                    <button class="btn btn-outline-success w-100 mb-75" wire:click="makePayment">
+                        Proceed to payment
+                    </button>
+                @endif
+
             </div>
         </div>
     </div>

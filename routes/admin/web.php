@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\View\Admin\AdminCatalogueViewController;
 use App\Http\Controllers\View\Admin\AdminCompanyViewController;
 use App\Http\Controllers\View\Admin\AdminCurrencyViewController;
+use App\Http\Controllers\View\Admin\AdminInvoiceViewController;
 use App\Http\Controllers\View\Admin\AdminViewController;
 use App\Models\Setting;
 use App\Models\User;
@@ -29,6 +31,7 @@ Route::middleware(['auth', 'check-two-factor'])->name('admin.')->group(function 
 
         Route::get('/companies',                                                [AdminCompanyViewController::class, 'companies'])->name('companies');
         Route::get('/companies/{id}',                                           [AdminCompanyViewController::class, 'companyProfile'])->name('company-profile');
+        Route::get('/companies/settings/{id}',                                  [AdminCompanyViewController::class, 'companySettings'])->name('company-settings');
 
         Route::get('/companies/{company_id}/contacts',                          [AdminCompanyViewController::class, 'companyContacts'])->name('company-contacts');
         Route::get('/companies/contacts/profile/{contact_id}',                  [AdminCompanyViewController::class, 'companyContactProfile'])->name('company-contact-profile');
@@ -39,13 +42,25 @@ Route::middleware(['auth', 'check-two-factor'])->name('admin.')->group(function 
         Route::get('/companies/{company_id}/products',                          [AdminCompanyViewController::class, 'companyProducts'])->name('company-products');
         Route::get('/companies/products/details/{product_id}',                  [AdminCompanyViewController::class, 'companyProductDetails'])->name('company-product-details');
 
+        Route::get('/companies/{company_id}/catalogues',                        [AdminCompanyViewController::class, 'companyCatalogues'])->name('company-catalogues');
+        Route::get('/companies/catalogues/details/{catalogue_id}',              [AdminCompanyViewController::class, 'companyCatalogueDetails'])->name('company-catalogue-details');
+
         Route::get('/companies/{company_id}/services',                          [AdminCompanyViewController::class, 'companyServices'])->name('company-services');
         Route::get('/companies/services/details/{service_id}',                  [AdminCompanyViewController::class, 'companyServiceDetails'])->name('company-service-details');
 
         Route::get('/companies/{company_id}/invoices',                          [AdminCompanyViewController::class, 'companyInvoices'])->name('company-invoices');
         Route::get('/companies/invoices/preview/{invoice_id}',                  [AdminCompanyViewController::class, 'companyInvoicePreview'])->name('company-invoice-preview');
+        Route::get('/companies/invoices/edit/{invoice_id}',                     [AdminCompanyViewController::class, 'companyInvoiceEdit'])->name('company-invoice-edit');
 
 
+        Route::get('/products',                                                  [AdminCatalogueViewController::class, 'products'])->name('products');
+        Route::get('/services',                                                  [AdminCatalogueViewController::class, 'services'])->name('services');
+        Route::get('/catalogues/{catalogue_id}',                                 [AdminCatalogueViewController::class, 'catalogueDetails'])->name('catalogue-details');
+
+
+        Route::get('/invoices',                                                  [AdminInvoiceViewController::class, 'invoices'])->name('invoices');
+        Route::get('/invoices/preview/{invoice_id}',                             [AdminInvoiceViewController::class, 'invoicePreview'])->name('invoice-preview');
+        Route::get('/invoices/edit/{invoice_id}',                                [AdminInvoiceViewController::class, 'invoiceEdit'])->name('edit-invoice');
 
 
         Route::get('/currencies',                                               [AdminCurrencyViewController::class, 'currencies'])->name('currencies');

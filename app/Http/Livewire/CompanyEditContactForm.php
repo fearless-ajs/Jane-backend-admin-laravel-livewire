@@ -7,14 +7,15 @@ use App\Models\Product;
 use App\Models\Service;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Traits\FileManager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class CompanyEditContactForm extends Component
+class CompanyEditContactForm extends LiveNotify
 {
-    use WithFileUploads;
+    use WithFileUploads, FileManager;
 
     public $title;
     public $lastname;
@@ -109,7 +110,7 @@ class CompanyEditContactForm extends Component
 
         // Check if image exists
         if ($this->image){
-            $this->image = $this->image->store('/', 'images');
+            $this->image = $this->saveUserAvatar($this->image, 'images');
             // Delete old image
             if ($this->contact->user->image != null && $this->contact->user->image != 'user-avatar.jpg'){
                 // Delete product image
@@ -165,6 +166,7 @@ class CompanyEditContactForm extends Component
             }
         }
         $this->reset(['product', 'service']);
+        $this->emit('refreshContactProfile');
         $this->emit('refreshContactProfile');
         $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Contact updated']);

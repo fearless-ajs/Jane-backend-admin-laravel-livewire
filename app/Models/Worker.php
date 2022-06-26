@@ -14,6 +14,14 @@ class Worker extends Model
     protected $guarded = [];
 
 
+    public function getWorkerImageAttribute(){
+        if (!empty($this->image)){
+            return asset("uploads/img/$this->image");
+        }else{
+            return "https://ui-avatars.com/api/?name=$this->lastname&color=FFFFFF&background=563C5C";
+        }
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }

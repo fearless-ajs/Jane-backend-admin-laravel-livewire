@@ -87,7 +87,7 @@ class CompanyCreateInvoiceForm extends Component
             'worker'            => 'required|numeric',
             'date_issued'       => 'required|string|max:255',
             'due_date'          => 'required|string|max:255',
-            'payment_methods'   => 'required|array',
+            'payment_methods'   => 'nullable|array',
             'note'              => 'nullable|max:2000',
             'invoice_note'              => 'nullable|string|max:2000',
         ]);
@@ -320,7 +320,7 @@ class CompanyCreateInvoiceForm extends Component
             'worker'            => 'required|numeric',
             'date_issued'       => 'required|max:255',
             'due_date'          => 'required|max:255',
-            'payment_methods'   => 'required|array',
+            'payment_methods'   => 'nullable|array',
             'note'              => 'nullable|max:2000',
             'invoice_note'      => 'nullable|string|max:2000',
         ]);

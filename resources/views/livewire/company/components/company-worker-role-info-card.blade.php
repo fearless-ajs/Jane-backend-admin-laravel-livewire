@@ -44,31 +44,29 @@
         </table>
     </div>
 
-    @if(Route::currentRouteName() != 'admin.company-user-profile')
-        @if(Auth::user()->hasModuleAccess('user', 'edit'))
-    <hr />
-    <div class="table-responsive">
-        <div class="modal-body">
-            <form class="row" wire:submit.prevent="updateRole">
-                <div class="col-12 col-md-12">
-                    <p class="mb-1">Assign new role to worker</p>
-                    <select wire:model.lazy="role" multiple  class="select2 form-select">
-                        @if($roles)
-                            @foreach($roles as $role)
-                                <option value="{{$role->id}}">{{$role->display_name}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    @error('role') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                </div>
-                <div class="card-body">
-                    <button type="submit"  wire:loading.remove wire:target="updateRole"  class="btn btn-primary me-1">Save changes</button>
-                    <button type="submit"  wire:loading wire:target="updateRole"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
-                </div>
-            </form>
+    @if(Auth::user()->hasModuleAccess('user', 'edit') || Auth::user()->hasRole('super-admin'))
+        <hr />
+        <div class="table-responsive">
+            <div class="modal-body">
+                <form class="row" wire:submit.prevent="updateRole">
+                    <div class="col-12 col-md-12">
+                        <p class="mb-1">Assign new role to worker</p>
+                        <select wire:model.lazy="role" multiple  class="select2 form-select">
+                            @if($roles)
+                                @foreach($roles as $role)
+                                    <option value="{{$role->id}}">{{$role->display_name}}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        @error('role') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="card-body">
+                        <button type="submit"  wire:loading.remove wire:target="updateRole"  class="btn btn-primary me-1">Save changes</button>
+                        <button type="submit"  wire:loading wire:target="updateRole"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-        @endif
     @endif
 
 </div>

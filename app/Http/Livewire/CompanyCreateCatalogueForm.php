@@ -7,6 +7,7 @@ use App\Models\CompanyBillingCycle;
 use App\Models\CompanyCatalogue;
 use App\Models\CompanyCatalogueImage;
 use App\Models\CompanyTax;
+use App\Traits\FileManager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -14,7 +15,7 @@ use Livewire\WithFileUploads;
 
 class CompanyCreateCatalogueForm extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, FileManager;
 
     public $name;
     public $brand;
@@ -38,15 +39,17 @@ class CompanyCreateCatalogueForm extends Component
     public $cycles;
     public $taxes;
 
+    public $company;
 
-    public function mount(){
+    public function mount($company){
+        $this->company = $company;
         $this->fetchCategories();
     }
 
     public function fetchCategories(){
-        $this->categories = Category::where('company_id', Auth::user()->company_id)->get();
-        $this->cycles     = CompanyBillingCycle::where('company_id', Auth::user()->company_id)->get();
-        $this->taxes      = CompanyTax::where('company_id', Auth::user()->company_id)->get();
+        $this->categories = Category::where('company_id', $this->company->id)->get();
+        $this->cycles     = CompanyBillingCycle::where('company_id', $this->company->id)->get();
+        $this->taxes      = CompanyTax::where('company_id', $this->company->id)->get();
 
     }
 
@@ -125,12 +128,12 @@ class CompanyCreateCatalogueForm extends Component
         }
 
         // Check if the product exist for the company
-        if (CompanyCatalogue::where('company_id', Auth::user()->company_id)->where('name', $this->name)->first()){
+        if (CompanyCatalogue::where('company_id', $this->company->id)->where('name', $this->name)->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Catalogue exist already']);
         }
 
         $catalogue = CompanyCatalogue::create([
-            'company_id'            => Auth::user()->company_id,
+            'company_id'            => $this->company->id,
             'user_id'               => Auth::user()->id,
             'name'                  => $this->name,
             'brand'                 => $this->brand,
@@ -151,7 +154,7 @@ class CompanyCreateCatalogueForm extends Component
 
         // Upload the image
         foreach ($this->images as $image){
-            $catalogueImage = $image->store('/', 'catalogues');
+            $catalogueImage = $this->saveImage($image, 'catalogues');
             CompanyCatalogueImage::create([
                 'company_catalogue_id'    =>  $catalogue->id,
                 'image'                   => $catalogueImage

@@ -7,7 +7,7 @@ use App\Models\Contact;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class AdminCompanyContactList extends Component
+class AdminCompanyContactList extends LiveNotify
 {
     public $company;
 
@@ -16,14 +16,35 @@ class AdminCompanyContactList extends Component
     public $search;
     public $searchResult;
 
+    protected $listeners = [
+        'delete'    =>  'delete'
+    ];
+
     public function updated(){
         if ($this->search){
-            $this->searchResult = Contact::where('company_id', $this->company->id)->where('mobile_phone', 'LIKE', "%{$this->search}%")->get();
+            $this->searchResult = Contact::where('company_id', $this->company->id)->where('lastname', 'LIKE', "%{$this->search}%")->orWhere('firstname', 'LIKE', "%{$this->search}%")->get();
         }
     }
 
     public function mount($company){
         $this->company = $company;
+    }
+
+    public function delete($contact_id){
+        $contact = Contact::find($contact_id);
+
+        // Delete the contact transactions
+//        $contact->transactions->each->delete();
+
+        // Delete contact itself
+        $contact->delete();
+
+        $this->emit('refreshContactList');
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Contact deleted']);
+    }
+
+    public function remove($contact_id){
+        return $this->confirmDelete('warning', 'Do you really want to delete?', 'Press ok to continue', $contact_id);
     }
 
     public function render()

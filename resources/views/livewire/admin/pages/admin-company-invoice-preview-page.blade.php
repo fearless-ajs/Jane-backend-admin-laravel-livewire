@@ -30,8 +30,12 @@
         </div>
 
         <section class="invoice-preview-wrapper">
-            @livewire('admin-company-invoice-preview', ['invoice' => $invoice])
+            @livewire('admin-invoice-preview', ['invoice' => $invoice])
         </section>
+
+        <!-- Send Invoice Sidebar -->
+        @livewire('company-send-invoice-form', ['invoice' => $invoice])
+        <!-- /Send Invoice Sidebar -->
 
     </div>
 @endsection

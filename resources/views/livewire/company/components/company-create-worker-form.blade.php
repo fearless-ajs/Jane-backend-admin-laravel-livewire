@@ -1,4 +1,4 @@
-<div class="modal modal-slide-in new-user-modal fade" wire:ignore.self id="modals-slide-in">
+<div class="modal modal-slide-in new-user-modal fade current-modal" wire:ignore.self id="modals-slide-in">
     <div class="modal-dialog">
         <form class="add-new-user modal-content pt-0" wire:submit.prevent="create">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
@@ -305,6 +305,13 @@
                         @endif
                     </select>
                     @error('role') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                </div>
+
+
+                <div class="mb-1">
+                    <label class="form-label" for="basic-icon-default-company">Staff image</label>
+                    <input type="file" wire:model.lazy="image"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('image')? 'is-invalid' : '' }}"/>
+                    @error('image') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="mb-1">

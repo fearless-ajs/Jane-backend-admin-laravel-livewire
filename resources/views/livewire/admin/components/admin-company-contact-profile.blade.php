@@ -12,7 +12,7 @@
                     <!-- profile picture -->
                     <div class="profile-img-container d-flex align-items-center">
                         <div class="profile-img">
-                            <img src="{{$contact->user->UserImage}}" class="rounded img-fluid" alt="Card image" />
+                            <img src="{{$contact->ContactImage}}" class="rounded img-fluid" alt="Card image" />
                         </div>
                         <!-- profile title -->
                         <div class="profile-title ms-3">
@@ -22,6 +22,11 @@
                             <a class="btn btn-outline-primary mb-1" href="mailto:{{$contact->user->email}}">
                                 <span class="d-none d-md-block">Mail</span>
                                 <i class=" d-block d-md-none">Mail</i>
+                            </a>
+
+                            <a class="btn btn-outline-primary mb-1" href="#" data-bs-toggle="modal" data-bs-target="#editContactModal">
+                                <span class="d-none d-md-block fa fa-edit"></span>
+                                <i class=" d-block d-md-none">Update</i>
                             </a>
                         </div>
                     </div>
@@ -188,5 +193,7 @@
 
         </div>
         <!--/ polls card -->
+
+        @livewire('company-edit-contact-form', ['contact' => $contact])
 
 </div>

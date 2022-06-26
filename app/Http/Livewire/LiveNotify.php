@@ -24,6 +24,15 @@ class LiveNotify extends Component
         ]);
     }
 
+    public function confirmDelete($type, $title, $text="Press Ok to Continue", $id=''){
+        $this->dispatchBrowserEvent('swal:confirmDelete', [
+            'type' => $type,
+            'title' => $title,
+            'text' => $text,
+            'id'   => $id
+        ]);
+    }
+
     public function confirmContactSignatureRequest($type, $title, $text="Press Ok to Continue", $id=''){
         $this->dispatchBrowserEvent('swal:confirmContactSignature', [
             'type' => $type,

@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        @livewire('company-catalogue-list')
+        @livewire('company-catalogue-list', ['company' => $company])
 
 
     </div>
