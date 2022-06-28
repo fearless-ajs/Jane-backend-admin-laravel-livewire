@@ -5,6 +5,8 @@ namespace App\Http\Controllers\View\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyCatalogue;
+use App\Models\CompanyPermission;
+use App\Models\CompanyRole;
 use App\Models\Contact;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -12,6 +14,7 @@ use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Worker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminCompanyViewController extends Controller
 {
@@ -182,5 +185,79 @@ class AdminCompanyViewController extends Controller
             'description' => 'Companies'
         ];
         return view('livewire.admin.pages.admin-company-invoice-edit-page', ['data' => $data, 'invoice' => $invoice]);
+    }
+
+
+    public function companyCategories($id){
+        $company = Company::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-categories-list-page', ['data' => $data, 'company' => $company]);
+    }
+
+    public function companyBillingCycles($id){
+        $company = Company::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-billing-cycle-list-page', ['data' => $data, 'company' => $company]);
+    }
+
+    public function companyTaxes($id){
+        $company = Company::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-tax-list-page', ['data' => $data, 'company' => $company]);
+    }
+
+    public function companyPermissions($id){
+        $company = Company::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-permissions-page', ['data' => $data, 'company' => $company]);
+    }
+
+    public function companyPermissionDetails ($id){
+        $permission = CompanyPermission::find($id);
+        $company = Company::find($permission->company_id);
+        $data = [
+            'title' => 'Permissions',
+            'keywords' => 'Company permissions',
+            'description' => 'Company permissions'
+        ];
+        return view('livewire.admin.pages.admin-company-permission-details-page', ['data' => $data, 'company' => $company, 'permission' => $permission]);
+    }
+
+
+    public function companyRoles($id){
+        $company = Company::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-roles-page', ['data' => $data, 'company' => $company]);
+    }
+
+    public function companyRoleDetails ($id){
+        $role = CompanyRole::find($id);
+        $company = Company::find($role->company_id);
+        $data = [
+            'title' => 'Role',
+            'keywords' => 'Role',
+            'description' => 'Role'
+        ];
+        return view('livewire.admin.pages.admin-company-role-details-page', ['data' => $data, 'company' => $company, 'role' => $role]);
     }
 }

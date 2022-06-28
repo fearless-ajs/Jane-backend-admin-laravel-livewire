@@ -39,14 +39,24 @@ Route::middleware(['auth', 'check-two-factor'])->name('admin.')->group(function 
         Route::get('/companies/{company_id}/users',                             [AdminCompanyViewController::class, 'companyUsers'])->name('company-users');
         Route::get('/companies/users/profile/{user_id}',                        [AdminCompanyViewController::class, 'companyUserProfile'])->name('company-user-profile');
 
-        Route::get('/companies/{company_id}/products',                          [AdminCompanyViewController::class, 'companyProducts'])->name('company-products');
-        Route::get('/companies/products/details/{product_id}',                  [AdminCompanyViewController::class, 'companyProductDetails'])->name('company-product-details');
+//        Route::get('/companies/{company_id}/products',                           [AdminCompanyViewController::class, 'companyProducts'])->name('company-products');
+//        Route::get('/companies/products/details/{product_id}',                   [AdminCompanyViewController::class, 'companyProductDetails'])->name('company-product-details');
 
         Route::get('/companies/{company_id}/catalogues',                        [AdminCompanyViewController::class, 'companyCatalogues'])->name('company-catalogues');
         Route::get('/companies/catalogues/details/{catalogue_id}',              [AdminCompanyViewController::class, 'companyCatalogueDetails'])->name('company-catalogue-details');
 
-        Route::get('/companies/{company_id}/services',                          [AdminCompanyViewController::class, 'companyServices'])->name('company-services');
-        Route::get('/companies/services/details/{service_id}',                  [AdminCompanyViewController::class, 'companyServiceDetails'])->name('company-service-details');
+        Route::get('/companies/{company_id}/categories',                        [AdminCompanyViewController::class, 'companyCategories'])->name('company-categories');
+        Route::get('/companies/{company_id}/billing-cycles',                    [AdminCompanyViewController::class, 'companyBillingCycles'])->name('company-billing-cycles');
+        Route::get('/companies/{company_id}/taxes',                             [AdminCompanyViewController::class, 'companyTaxes'])->name('company-taxes');
+
+        // Company Roles and permissions
+        Route::get('/companies/{company_id}/permissions',                        [AdminCompanyViewController::class, 'companyPermissions'])->name('company-permissions');
+        Route::get('/companies/permissions/{company_permission_id}/details',     [AdminCompanyViewController::class, 'companyPermissionDetails'])->name('company-permission-details');
+        Route::get('/companies/{company_id}/roles',                              [AdminCompanyViewController::class, 'companyRoles'])->name('company-roles');
+        Route::get('/companies/roles/{company_permission_id}/details',           [AdminCompanyViewController::class, 'companyRoleDetails'])->name('company-role-details');
+
+//        Route::get('/companies/{company_id}/services',                          [AdminCompanyViewController::class, 'companyServices'])->name('company-services');
+//        Route::get('/companies/services/details/{service_id}',                  [AdminCompanyViewController::class, 'companyServiceDetails'])->name('company-service-details');
 
         Route::get('/companies/{company_id}/invoices',                          [AdminCompanyViewController::class, 'companyInvoices'])->name('company-invoices');
         Route::get('/companies/invoices/preview/{invoice_id}',                  [AdminCompanyViewController::class, 'companyInvoicePreview'])->name('company-invoice-preview');

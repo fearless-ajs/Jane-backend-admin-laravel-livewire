@@ -32,7 +32,7 @@
                                 @endforeach
                             </select>
                         @else
-                            <p class="form-label" style="color: red" for="basic-icon-default-email">Please create tax, <a href="{{route('company.taxes')}}">click here</a></p>
+                            <p class="form-label" style="color: red" for="basic-icon-default-email">Please create tax, <a href="{{route('admin.company-taxes', $company->id)}}">click here</a></p>
                         @endif
                         @error('vat') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -53,7 +53,7 @@
                                 @endforeach
                             </select>
                         @else
-                                <p class="form-label" style="color: red" for="basic-icon-default-email">Please create category, <a href="{{route('company.categories')}}">click here</a></p>
+                            <p class="form-label" style="color: red" for="basic-icon-default-email">Please create category, <a href="{{route('admin.company-categories', $company->id)}}">click here</a></p>
                         @endif
                         @error('category') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
@@ -115,7 +115,7 @@
                                     @endforeach
                                 </select>
                             @else
-                                <p class="form-label" style="color: red" for="basic-icon-default-email">Please create billing cycle, <a href="{{route('company.billing-cycles')}}">click here</a></p>
+                                <p class="form-label" style="color: red" for="basic-icon-default-email">Please create billing cycle, <a href="{{route('admin.company-billing-cycles', $company->id)}}">click here</a></p>
                             @endif
                             @error('cycle') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                         </div>

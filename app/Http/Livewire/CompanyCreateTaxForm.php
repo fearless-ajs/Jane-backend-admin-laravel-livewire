@@ -10,6 +10,11 @@ class CompanyCreateTaxForm extends Component
 {
     public $title;
     public $percentage;
+    public $company;
+
+    public function mount($company){
+        $this->company = $company;
+    }
 
     public function updated($field){
         $this->validateOnly($field, [
@@ -25,7 +30,7 @@ class CompanyCreateTaxForm extends Component
         ]);
 
         CompanyTax::create([
-            'company_id'    => Auth::user()->company->id,
+            'company_id'    =>  $this->company->id,
             'title'         =>  $this->title,
             'percentage'    =>  $this->percentage
         ]);

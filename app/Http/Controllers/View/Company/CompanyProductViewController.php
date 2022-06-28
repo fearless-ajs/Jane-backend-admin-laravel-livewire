@@ -21,30 +21,33 @@ class CompanyProductViewController extends Controller
     }
 
     public function categories (){
+        $company = Company::find(Auth::user()->company_id);
         $data = [
             'title' => 'Company product Category',
             'keywords' => 'Company product Category',
             'description' => 'Company product Category',
         ];
-        return view('livewire.company.pages.company-categories-list-page', ['data' => $data, 'settings'   => $this->settings]);
+        return view('livewire.company.pages.company-categories-list-page', ['data' => $data, 'company' => $company]);
     }
 
     public function billingCycle (){
+        $company = Company::find(Auth::user()->company_id);
         $data = [
             'title' => 'Company product Category',
             'keywords' => 'Company product Category',
             'description' => 'Company product Category',
         ];
-        return view('livewire.company.pages.company-billing-cycle-list-page', ['data' => $data, 'settings'   => $this->settings]);
+        return view('livewire.company.pages.company-billing-cycle-list-page', ['data' => $data, 'company' => $company]);
     }
 
     public function taxes (){
+        $company = Company::find(Auth::user()->company_id);
         $data = [
             'title' => 'Company taxes',
             'keywords' => 'Company taxes',
             'description' => 'Company product Category',
         ];
-        return view('livewire.company.pages.company-tax-list-page', ['data' => $data]);
+        return view('livewire.company.pages.company-tax-list-page', ['data' => $data, 'company' => $company]);
     }
 
     public function products (){

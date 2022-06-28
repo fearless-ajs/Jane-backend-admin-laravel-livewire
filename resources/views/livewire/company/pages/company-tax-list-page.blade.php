@@ -33,11 +33,11 @@
                     </div>
                 </div>
 
-                @livewire('company-taxes-list')
+                @livewire('company-taxes-list', ['company' => $company])
 
                 @if(Auth::user()->hasModuleAccess('category', 'create'))
                 <!-- Modal to add new user starts-->
-                @livewire('company-create-tax-form')
+                @livewire('company-create-tax-form', ['company' => $company])
                 <!-- Modal to add new user Ends-->
                 @endif
             </div>

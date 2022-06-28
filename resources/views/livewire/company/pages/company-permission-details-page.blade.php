@@ -20,10 +20,6 @@
                 </div>
             </div>
         </div>
-        <h3>Permission Details</h3>
-        <p>Details of the permissions and modifications can be made to the permission and access granted .</p>
-
-
         <!--/ Permission Table -->
         @livewire('edit-company-permission-form', ['company_permission_id' => $permission->id])
 

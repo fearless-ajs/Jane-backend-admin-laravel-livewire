@@ -11,8 +11,14 @@ class CompanyEditTaxForm extends Component
     public $percentage;
 
     public $tax;
+    public $company;
 
     protected $listeners = ['editTax'  => 'parseFormParameters'];
+
+
+    public function mount($company){
+        $this->company = $company;
+    }
 
     public function parseFormParameters($taxId)
     {

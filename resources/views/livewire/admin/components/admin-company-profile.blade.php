@@ -95,11 +95,14 @@
                 <!-- about -->
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="mb-75">Transactions</h5>
+                        <h5 class="mb-75">MARKET AREA</h5>
                         <p class="card-text">
-                            This is the list of transactions carried out by the customer
+                            This are menus related to marketing.
                         </p>
 
+                            <a href="{{route('admin.company-categories', $company->id)}}" class="btn btn-outline-primary w-100 mb-2">Categories</a>
+                            <a href="{{route('admin.company-billing-cycles', $company->id)}}" class="btn btn-outline-primary w-100 mb-2">Billing cycles</a>
+                            <a href="{{route('admin.company-taxes', $company->id)}}" class="btn btn-outline-primary w-100 mb-2">Taxes</a>
 {{--                        @if($contact->transactions)--}}
 {{--                            @foreach($contact->transactions as $transaction)--}}
 {{--                                <div class="mt-2">--}}
@@ -114,6 +117,18 @@
 {{--                                </div>--}}
 {{--                            @endforeach--}}
 {{--                        @endif--}}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="mb-75">ROLES AND PERMISSIONS</h5>
+                        <p class="card-text">
+                            This are menus related to the company's role base access control system
+                        </p>
+
+                        <a href="{{route('admin.company-permissions', $company->id)}}" class="btn btn-outline-warning w-100 mb-2">Permissions</a>
+                        <a href="{{route('admin.company-roles', $company->id)}}" class="btn btn-outline-warning w-100 mb-2">Roles</a>
                     </div>
                 </div>
                 <!--/ about -->

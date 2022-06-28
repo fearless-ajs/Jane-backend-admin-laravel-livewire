@@ -33,11 +33,11 @@
                     </div>
                 </div>
 
-                @livewire('company-category-list')
+                @livewire('company-category-list', ['company' => $company])
 
                 @if(Auth::user()->hasModuleAccess('category', 'create'))
                 <!-- Modal to add new user starts-->
-                @livewire('company-create-category-form')
+                @livewire('company-create-category-form', ['company' => $company])
                 <!-- Modal to add new user Ends-->
                 @endif
             </div>

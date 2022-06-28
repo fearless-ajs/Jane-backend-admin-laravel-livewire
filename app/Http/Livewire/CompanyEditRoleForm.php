@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Company;
 use App\Models\CompanyPermission;
 use App\Models\CompanyPermissionRole;
 use App\Models\CompanyRole;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -26,17 +26,19 @@ class CompanyEditRoleForm extends Component
 //    public $delete = [];
 
     public $role;
+    public $company;
 
 
     public function mount($role)
     {
         $this->role = $role;
+        $this->company = Company::find($role->company_id);
         $this->fetchCompanyPermissions();
         $this->fetchData();
     }
 
     public function fetchCompanyPermissions(){
-        $this->permissions = CompanyPermission::where('company_id', Auth::user()->company_id)->get();
+        $this->permissions = CompanyPermission::where('company_id', $this->company->id)->get();
     }
 
     public function fetchData(){
@@ -49,7 +51,7 @@ class CompanyEditRoleForm extends Component
 
     public function fetchSelectedModules(){
         $selected = [];
-        $permissions = CompanyPermissionRole::where('company_id', Auth::user()->company_id)->where('company_role_id', $this->role->id)->get();
+        $permissions = CompanyPermissionRole::where('company_id', $this->company->id)->where('company_role_id', $this->role->id)->get();
         if (count($permissions) > 0){
             foreach ($permissions as $permission){
                 array_push($selected, $permission->company_permission_id);
@@ -72,7 +74,7 @@ class CompanyEditRoleForm extends Component
         ]);
 
         // Check if the role exist for the Company
-        if (CompanyRole::where('company_id', Auth::user()->company_id)->where('name', Str::slug($this->name))->where('id', '!=', $this->role->id)->first()){
+        if (CompanyRole::where('company_id', $this->company->id)->where('name', Str::slug($this->name))->where('id', '!=', $this->role->id)->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Role exist']);
         }
 
@@ -86,9 +88,9 @@ class CompanyEditRoleForm extends Component
         // Check if assign all permission is selected
         if ($this->assignAllPermissions){
             foreach ($this->permissions as $permission){
-                if (!CompanyPermissionRole::where('company_id', Auth::user()->company_id)->where('company_permission_id', $permission->id)->first()){
+                if (!CompanyPermissionRole::where('company_id', $this->company->id)->where('company_role_id', $this->role->id)->where('company_permission_id', $permission->id)->first()){
                     CompanyPermissionRole::create([
-                        'company_id'            => Auth::user()->company_id,
+                        'company_id'            => $this->company->id,
                         'company_role_id'       => $this->role->id,
                         'company_permission_id' => $permission->id
                     ]);
@@ -99,9 +101,9 @@ class CompanyEditRoleForm extends Component
                 return $this->emit('alert', ['type' => 'error', 'message' => 'Please a select at least one permission']);
             }
             foreach ($this->selectedPermissions as $permission){
-                if (!CompanyPermissionRole::where('company_id', Auth::user()->company_id)->where('company_permission_id', $permission)->first()){
+                if (!CompanyPermissionRole::where('company_id', $this->company->id)->where('company_role_id', $this->role->id)->where('company_permission_id', $permission)->first()){
                     CompanyPermissionRole::create([
-                        'company_id'            => Auth::user()->company_id,
+                        'company_id'            => $this->company->id,
                         'company_role_id'       => $this->role->id,
                         'company_permission_id' => $permission
                     ]);
@@ -110,7 +112,7 @@ class CompanyEditRoleForm extends Component
 
 
             // Delete the unchecked records
-            $existingRolePermissions = CompanyPermissionRole::where('company_role_id', $this->role->id)->where('company_id', Auth::user()->company_id)->get();
+            $existingRolePermissions = CompanyPermissionRole::where('company_role_id', $this->role->id)->where('company_id', $this->company->id)->get();
             $permissions = [];
             // find each id from the selectModule
             if (count($existingRolePermissions) > 0){
@@ -122,7 +124,7 @@ class CompanyEditRoleForm extends Component
             $diff_permissions = array_diff($permissions, $this->selectedPermissions);
             if (count($diff_permissions) > 0){
                 foreach ($diff_permissions as $diff_permission){
-                    CompanyPermissionRole::where('company_role_id', $this->role->id)->where('company_id', Auth::user()->company_id)->where('company_permission_id', $diff_permission)->first()->delete();
+                    CompanyPermissionRole::where('company_role_id', $this->role->id)->where('company_id', $this->company->id)->where('company_permission_id', $diff_permission)->first()->delete();
                 }
             }
 

@@ -180,6 +180,6 @@
         </div>
     </div>
 
-    @livewire('company-create-catalogue-form', ['company' => $company])
+    @livewire('admin-company-create-catalogue-form', ['company' => $company])
 
 </div>

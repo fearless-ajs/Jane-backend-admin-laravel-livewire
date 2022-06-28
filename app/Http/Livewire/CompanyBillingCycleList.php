@@ -8,18 +8,21 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyBillingCycleList extends Component
+class CompanyBillingCycleList extends LiveNotify
 {
     use WithPagination;
-    protected $listeners = ['refreshCompanyBillingCycleList' => '$refresh'];
+    protected $listeners = [
+        'refreshCompanyBillingCycleList' => '$refresh',
+        'delete'                         => 'delete'
+    ];
 
     public $search;
     public $searchResult;
 
     public $company;
 
-    public function mount(){
-        $this->company = Company::find(Auth::user()->company_id);
+    public function mount($company){
+        $this->company = $company;
     }
 
     public function updated(){
@@ -33,6 +36,10 @@ class CompanyBillingCycleList extends Component
     }
 
     public function remove($id){
+        return $this->confirmDelete('warning', 'Are really sure to delete?', 'Press ok to continue', $id);
+    }
+
+    public function delete($id){
         CompanyBillingCycle::find($id)->delete();
         $this->emit('alert', ['type' => 'success', 'message' => 'Billing cycle deleted']);
         return  $this->emit('refreshCompanyBillingCycleList');

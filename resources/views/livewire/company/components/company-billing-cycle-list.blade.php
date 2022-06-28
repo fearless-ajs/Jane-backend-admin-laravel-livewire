@@ -1,5 +1,5 @@
 <div class="card-datatable table-responsive pt-0">
-    @if(Auth::user()->hasModuleAccess('category', 'create'))
+    @if(Auth::user()->hasModuleAccess('category', 'create') || Auth::user()->hasRole('super-admin'))
         <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#addBillingCycleModal">
             Add billing cycle
         </button>
@@ -34,7 +34,7 @@
                     <td>{{$cycle->days }}</td>
                     <td>{{$cycle->created_at->diffForHumans()}}</td>
                     <td><a href="#" wire:click="edit({{$cycle->id}})" >Edit</a> </td>
-                    @if(Auth::user()->hasModuleAccess('invoice', 'delete'))
+                    @if(Auth::user()->hasModuleAccess('invoice', 'delete') || Auth::user()->hasRole('super-admin'))
                         <td wire:loading wire:target="remove({{$cycle->id}})" >
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </td>
@@ -51,6 +51,6 @@
         {{ $cycles->links('components.general.pagination-links') /* For pagination links */}}
     @endif
 
-        @livewire('company-edit-billing-cycle-form')
+        @livewire('company-edit-billing-cycle-form', ['company' => $company])
 </div>
 

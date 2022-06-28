@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyCategoryList extends Component
+class CompanyCategoryList extends LiveNotify
 {
     use WithPagination;
-    protected $listeners = ['refreshCompanyCategoryList' => '$refresh'];
+    protected $listeners = [
+        'refreshCompanyCategoryList' => '$refresh',
+        'delete'                     => 'delete'
+    ];
 
     public $search;
     public $searchResult;
@@ -19,8 +22,8 @@ class CompanyCategoryList extends Component
     public $totalCategories;
     public $company;
 
-    public function mount(){
-       $this->company = Company::find(Auth::user()->company_id);
+    public function mount($company){
+       $this->company = $company;
     }
 
     public function updated(){
@@ -31,10 +34,15 @@ class CompanyCategoryList extends Component
 
 
     public function remove($id){
+       return $this->confirmDelete('warning', 'Are really sure to delete?', 'Press ok to continue', $id);
+    }
+
+    public function delete($id){
         Category::find($id)->delete();
         $this->emit('alert', ['type' => 'success', 'message' => 'Category deleted']);
         return  $this->emit('refreshCompanyCategoryList');
     }
+
     public function render()
     {
         if ($this->searchResult && !empty($this->search)){

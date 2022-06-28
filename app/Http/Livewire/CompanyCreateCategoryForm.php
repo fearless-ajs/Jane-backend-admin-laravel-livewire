@@ -9,6 +9,11 @@ use Livewire\Component;
 class CompanyCreateCategoryForm extends Component
 {
     public $name;
+    public $company;
+
+    public function mount($company){
+        $this->company = $company;
+    }
 
     public function addCategory(){
         $this->validate([
@@ -16,12 +21,12 @@ class CompanyCreateCategoryForm extends Component
         ]);
 
         // Check if category exist in company's record
-        if (Category::where('company_id', Auth::user()->company_id)->where('name', $this->name)->first()){
+        if (Category::where('company_id', $this->company->id)->where('name', $this->name)->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Category exist']);
         }
 
         Category::create([
-            'company_id'    => Auth::user()->company_id,
+            'company_id'    => $this->company->id,
             'name'          => $this->name
         ]);
 

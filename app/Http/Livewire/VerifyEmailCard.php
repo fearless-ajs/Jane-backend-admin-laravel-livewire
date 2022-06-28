@@ -50,6 +50,9 @@ class VerifyEmailCard extends LiveNotify
         // Create a company worker account too
          Worker::create([
             'user_id'     => $user->id,
+            'email'       => $user->email,
+            'lastname'    => $user->lastname,
+            'firstname'   => $user->firstname,
             'company_id'  => $company->id,
         ]);
 

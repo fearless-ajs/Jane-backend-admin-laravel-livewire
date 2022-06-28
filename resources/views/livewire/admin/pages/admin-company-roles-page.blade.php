@@ -1,4 +1,4 @@
-@extends('layouts.company.app')
+@extends('layouts.admin.app')
 
 
 @section('content')
@@ -11,9 +11,11 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('company.dashboard')}}">Home</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="{{route('company.roles')}}">Roles</a>
+                            <li class="breadcrumb-item"><a href="{{route('admin.companies')}}">Companies</a>
                             </li>
-                            <li class="breadcrumb-item active">{{$role->name}}
+                            <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $company->id)}}">{{$company->name}}</a>
+                            </li>
+                            <li class="breadcrumb-item active">Roles
                             </li>
                         </ol>
                     </div>
@@ -21,9 +23,13 @@
             </div>
         </div>
 
+        <!-- Role cards -->
+        @livewire('admin-company-roles-list', ['company' => $company])
+        <!--/ Role cards -->
 
-        <!--/ Permission Table -->
-        @livewire('company-edit-role-form', ['role' => $role])
+        <!-- Add Role Modal -->
+        @livewire('company-create-role-form', ['company' => $company])
+        <!--/ Add Role Modal -->
 
     </div>
 @endsection

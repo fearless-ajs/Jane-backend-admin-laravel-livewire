@@ -2,15 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Company;
 use App\Models\CompanyPermission;
 use App\Models\CompanyPermissionModule;
 use App\Models\CompanyPermissionRole;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyPermissionsList extends LiveNotify
+class AdminCompanyPermissionList extends Component
 {
     use WithPagination;
     public $company;
@@ -40,7 +38,7 @@ class CompanyPermissionsList extends LiveNotify
 
 
     public function remove($company_permission_id){
-       $this->confirmDelete('Warning', 'Do you really want to delete?', 'Press ok to continue', $company_permission_id);
+        $this->confirmDelete('Warning', 'Do you really want to delete?', 'Press ok to continue', $company_permission_id);
     }
 
 
@@ -57,15 +55,16 @@ class CompanyPermissionsList extends LiveNotify
         return $this->emit('alert', ['type' => 'success', 'message' => 'Permission deleted']);
     }
 
+
     public function render()
     {
         if ($this->searchResult && !empty($this->search)){
-            return view('livewire.company.components.company-permissions-list', [
+            return view('livewire.admin.components.admin-company-permission-list', [
                 'permissions' => $this->searchResult
             ]);
         }else {
             $this->searchResult = false;
-            return view('livewire.company.components.company-permissions-list', [
+            return view('livewire.admin.components.admin-company-permission-list', [
                 'permissions' => CompanyPermission::where('company_id', $this->company->id)->paginate(12)
             ]);
         }

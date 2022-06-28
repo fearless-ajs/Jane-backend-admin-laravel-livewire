@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Company;
 use App\Models\CompanyPermission;
 use App\Models\CompanyPermissionRole;
 use App\Models\CompanyRole;
@@ -26,14 +27,17 @@ class CompanyCreateRoleForm extends Component
 //    public $update = [];
 //    public $delete = [];
 
+    public $company;
 
-    public function mount()
+
+    public function mount($company)
     {
+        $this->company = $company;
         $this->fetchCompanyPermissions();
     }
 
     public function fetchCompanyPermissions(){
-        $this->permissions = CompanyPermission::where('company_id', Auth::user()->company_id)->get();
+        $this->permissions = CompanyPermission::where('company_id', $this->company->id)->get();
     }
 
     public function updated($field){
@@ -50,13 +54,13 @@ class CompanyCreateRoleForm extends Component
         ]);
 
         // Check if the role exist for the Company
-        if (CompanyRole::where('company_id', Auth::user()->company_id)->where('name', Str::slug($this->name))->first()){
+        if (CompanyRole::where('company_id', $this->company->id)->where('name', Str::slug($this->name))->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Role exist']);
         }
 
         // Create the Company role
         $company_role = CompanyRole::create([
-            'company_id'    => Auth::user()->company_id,
+            'company_id'    => $this->company->id,
             'display_name'  => $this->name,
             'name'          => Str::slug($this->name),
             'description'   => $this->description
@@ -66,7 +70,7 @@ class CompanyCreateRoleForm extends Component
         if ($this->assignAllPermissions){
                 foreach ($this->permissions as $permission){
                     CompanyPermissionRole::create([
-                    'company_id'            => Auth::user()->company_id,
+                    'company_id'            => $this->company->id,
                     'company_role_id'       => $company_role->id,
                     'company_permission_id' => $permission->id
                 ]);
@@ -77,7 +81,7 @@ class CompanyCreateRoleForm extends Component
             }
             foreach ($this->selectedPermissions as $permission){
                 CompanyPermissionRole::create([
-                    'company_id'            => Auth::user()->company_id,
+                    'company_id'            => $this->company->id,
                     'company_role_id'       => $company_role->id,
                     'company_permission_id' => $permission
                 ]);

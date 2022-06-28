@@ -1,16 +1,22 @@
-@extends('layouts.company.app')
+@extends('layouts.admin.app')
 
 
 @section('content')
     <div class="content-body">
+        <!-- users list start -->
         <div class="content-header row">
+
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-start mb-0">Billing</h2>
+                        <h2 class="content-header-title float-start mb-0">Company billing cycles</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{route('company.dashboard')}}">Home</a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="{{route('admin.companies')}}">Companies</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $company->id)}}">{{$company->name}}</a>
                                 </li>
                                 <li class="breadcrumb-item active">Billing cycles
                                 </li>
@@ -19,8 +25,9 @@
                     </div>
                 </div>
             </div>
+
         </div>
-        <!-- users list start -->
+
         <section class="app-user-list">
             <!-- list and filter start -->
             <div class="card">
@@ -33,17 +40,14 @@
                     </div>
                 </div>
 
+
                 @livewire('company-billing-cycle-list', ['company' => $company])
 
-                @if(Auth::user()->hasModuleAccess('category', 'create'))
-                <!-- Modal to add new user starts-->
                 @livewire('company-create-billing-cycle-form', ['company' => $company])
-                <!-- Modal to add new user Ends-->
-                @endif
+
             </div>
             <!-- list and filter end -->
         </section>
-        <!-- users list ends -->
 
     </div>
 @endsection

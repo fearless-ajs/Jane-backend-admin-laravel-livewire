@@ -18,8 +18,10 @@ class CreatePermissionForm extends LiveNotify
     public $assignAllModules;
     public $modules;
     public $selectedModules = [];
+    public $company;
 
-    public function mount(){
+    public function mount($company){
+        $this->company = $company;
         $this->fetchModules();
     }
 
@@ -34,6 +36,7 @@ class CreatePermissionForm extends LiveNotify
         ]);
     }
 
+
     public function create(){
         $this->validate([
             'name'           => 'required|string|max:255',
@@ -41,13 +44,13 @@ class CreatePermissionForm extends LiveNotify
         ]);
 
         // Check if the permission already exist for the Company
-        if (CompanyPermission::where('name', $this->name)->where('company_id', Auth::user()->company_id)->first()){
+        if (CompanyPermission::where('name', $this->name)->where('company_id', $this->company->id)->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Permission exist']);
         }
 
         // CLose the modal
       $permission =   CompanyPermission::create([
-           'company_id'     => Auth::user()->company_id,
+           'company_id'     => $this->company->id,
            'name'           => Str::slug($this->name),
            'display_name'   => $this->name,
            'description'    => $this->description,
@@ -58,9 +61,9 @@ class CreatePermissionForm extends LiveNotify
         if ($this->assignAllModules){
             foreach ($this->modules as $module){
                 CompanyPermissionModule::create([
-                    'company_id'                  => Auth::user()->company_id,
+                    'company_id'                  => $this->company->id,
                     'company_permission_id'       => $permission->id,
-                    'company_module_id'           => $module
+                    'company_module_id'           => $module->id
                 ]);
             }
         }else{
@@ -69,14 +72,14 @@ class CreatePermissionForm extends LiveNotify
             }
             foreach ($this->selectedModules as $module){
                 CompanyPermissionModule::create([
-                    'company_id'                  => Auth::user()->company_id,
+                    'company_id'                  => $this->company->id,
                     'company_permission_id'       => $permission->id,
                     'company_module_id'           => $module
                 ]);
             }
         }
 
-        $this->resetExcept('modules');
+        $this->resetExcept(['modules', 'company']);
         $this->emit('refreshCompanyPermissions');
         $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Permission created']);

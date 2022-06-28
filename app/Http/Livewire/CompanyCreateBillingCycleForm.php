@@ -11,6 +11,12 @@ class CompanyCreateBillingCycleForm extends Component
     public $title;
     public $days;
 
+    public $company;
+
+    public function mount($company){
+        $this->company = $company;
+    }
+
     public function updated($field){
         $this->validateOnly($field, [
            'title'  =>  'required|string|max:255',
@@ -25,7 +31,7 @@ class CompanyCreateBillingCycleForm extends Component
         ]);
 
         CompanyBillingCycle::create([
-           'company_id'     =>   Auth::user()->company_id,
+           'company_id'     =>  $this->company->id,
             'title'         =>  $this->title,
             'days'          =>  $this->days
         ]);

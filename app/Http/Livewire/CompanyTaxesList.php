@@ -2,24 +2,24 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Company;
 use App\Models\CompanyTax;
-use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyTaxesList extends Component
+class CompanyTaxesList extends LiveNotify
 {
     use WithPagination;
-    protected $listeners = ['refreshCompanyTaxList' => '$refresh'];
+    protected $listeners = [
+        'refreshCompanyTaxList' => '$refresh',
+        'delete'                => 'delete'
+    ];
 
     public $search;
     public $searchResult;
 
     public $company;
 
-    public function mount(){
-        $this->company = Company::find(Auth::user()->company_id);
+    public function mount($company){
+        $this->company = $company;
     }
 
     public function updated(){
@@ -33,11 +33,14 @@ class CompanyTaxesList extends Component
     }
 
     public function remove($id){
+        return $this->confirmDelete('warning', 'Are really sure to delete?', 'Press ok to continue', $id);
+    }
+
+    public function delete($id){
         CompanyTax::find($id)->delete();
         $this->emit('alert', ['type' => 'success', 'message' => 'Tax deleted']);
         return  $this->emit('refreshCompanyTaxList');
     }
-
 
     public function render()
     {

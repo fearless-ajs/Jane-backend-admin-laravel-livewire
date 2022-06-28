@@ -1,5 +1,5 @@
 <div class="card-datatable table-responsive pt-0">
-    @if(Auth::user()->hasModuleAccess('category', 'create'))
+    @if(Auth::user()->hasModuleAccess('category', 'create') || Auth::user()->hasRole('super-admin'))
         <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
             Add category
         </button>
@@ -31,7 +31,7 @@
                     <td>{{$category->name }}</td>
 
                     <td>{{$category->created_at->diffForHumans()}}</td>
-                    @if(Auth::user()->hasModuleAccess('category', 'delete'))
+                    @if(Auth::user()->hasModuleAccess('category', 'delete')  || Auth::user()->hasRole('super-admin'))
                     <td wire:loading wire:target="remove({{$category->id}})" >
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     </td>

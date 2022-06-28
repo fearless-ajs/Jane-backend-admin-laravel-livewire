@@ -20,11 +20,11 @@
         </div>
 
         <!-- Role cards -->
-        @livewire('company-roles-list')
+        @livewire('company-roles-list', ['company' => $company])
         <!--/ Role cards -->
 
         <!-- Add Role Modal -->
-        @livewire('company-create-role-form')
+        @livewire('company-create-role-form', ['company' => $company])
         <!--/ Add Role Modal -->
 
     </div>

@@ -190,6 +190,15 @@
     window.livewire.on('close-current-modal', param => {
         $('.current-modal').modal('hide');
     });
+
+    window.livewire.on('editBillingCycle', param => {
+        $('.edit-company-billing-cycle-modal').modal('show');
+    });
+
+    window.livewire.on('editTax', param => {
+        $('.edit-company-tax-modal').modal('show');
+    });
+
 </script>
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Company;
 use App\Models\CompanyModule;
 use App\Models\CompanyPermission;
 use App\Models\CompanyPermissionModule;
@@ -21,6 +22,8 @@ class EditCompanyPermissionForm extends Component
     public $assignAllModules;
     public $modules;
     public $selectedModules = [];
+
+    public $company;
 
     public function updated($field){
         $this->validateOnly($field, [
@@ -45,6 +48,7 @@ class EditCompanyPermissionForm extends Component
         $this->fetchModules();
         $this->fetchData();
         $this->fetchSelectedModules();
+        $this->company =  Company::find($this->companyPermission->company_id);
     }
 
     public function fetchSelectedModules(){
@@ -65,7 +69,7 @@ class EditCompanyPermissionForm extends Component
         ]);
 
         // Check if the permission already exist for the Company
-        if (CompanyPermission::where('name', $this->name)->where('company_id', Auth::user()->company_id)->where('id', '!=', $this->permission_id)->first()){
+        if (CompanyPermission::where('name', $this->name)->where('company_id', $this->company->id)->where('id', '!=', $this->permission_id)->first()){
             return $this->emit('alert', ['type' => 'error', 'message' => 'Permission exist']);
         }
 
@@ -79,11 +83,11 @@ class EditCompanyPermissionForm extends Component
         if ($this->assignAllModules){
             foreach ($this->modules as $module){
                 // Check if exist already
-                if (!CompanyPermissionModule::where('company_permission_id', $this->permission_id)->where('company_module_id', $module)->where('company_id', Auth::user()->company_id)->first()){
+                if (!CompanyPermissionModule::where('company_permission_id', $this->permission_id)->where('company_module_id', $module)->where('company_id', $this->company->id)->first()){
                     CompanyPermissionModule::create([
-                        'company_id'                  => Auth::user()->company_id,
+                        'company_id'                  => $this->company->id,
                         'company_permission_id'       => $this->permission_id,
-                        'company_module_id'           => $module
+                        'company_module_id'           => $module->id
                     ]);
                 }
             }
@@ -92,9 +96,9 @@ class EditCompanyPermissionForm extends Component
                 return $this->emit('alert', ['type' => 'error', 'message' => 'Please a select at least one module']);
             }
             foreach ($this->selectedModules as $module){
-                if (!CompanyPermissionModule::where('company_permission_id', $this->permission_id)->where('company_module_id', $module)->where('company_id', Auth::user()->company_id)->first()){
+                if (!CompanyPermissionModule::where('company_permission_id', $this->permission_id)->where('company_module_id', $module)->where('company_id', $this->company->id)->first()){
                     CompanyPermissionModule::create([
-                        'company_id'                  => Auth::user()->company_id,
+                        'company_id'                  => $this->company->id,
                         'company_permission_id'       => $this->permission_id,
                         'company_module_id'           => $module
                     ]);
@@ -102,7 +106,7 @@ class EditCompanyPermissionForm extends Component
             }
 
             // Delete the unchecked records
-            $existingPermissionModules = CompanyPermissionModule::where('company_permission_id', $this->permission_id)->where('company_id', Auth::user()->company_id)->get();
+            $existingPermissionModules = CompanyPermissionModule::where('company_permission_id', $this->permission_id)->where('company_id', $this->company->id)->get();
             $modules = [];
             // find each id from the selectModule
             if (count($existingPermissionModules) > 0){
@@ -114,7 +118,7 @@ class EditCompanyPermissionForm extends Component
             $diff_modules = array_diff($modules, $this->selectedModules);
             if (count($diff_modules) > 0){
                 foreach ($diff_modules as $diff_module){
-                    CompanyPermissionModule::where('company_permission_id', $this->permission_id)->where('company_id', Auth::user()->company_id)->where('company_module_id', $diff_module)->first()->delete();
+                    CompanyPermissionModule::where('company_permission_id', $this->permission_id)->where('company_id', $this->company->id)->where('company_module_id', $diff_module)->first()->delete();
                 }
             }
 

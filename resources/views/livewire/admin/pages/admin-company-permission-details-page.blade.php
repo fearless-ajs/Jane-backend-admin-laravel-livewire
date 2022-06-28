@@ -1,4 +1,4 @@
-@extends('layouts.company.app')
+@extends('layouts.admin.app')
 
 
 @section('content')
@@ -11,23 +11,21 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('company.dashboard')}}">Home</a>
                             </li>
-                            <li class="breadcrumb-item active">Permissions
+                            <li class="breadcrumb-item"><a href="{{route('admin.companies')}}">Companies</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $company->id)}}">{{$company->name}}</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="{{route('admin.company-permissions', $company->id)}}">Permissions</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{$permission->name}}
                             </li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Permission Table -->
-        <button type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#addPermissionModal">
-            Create permission
-        </button>
-        @livewire('company-permissions-list', ['company' => $company])
         <!--/ Permission Table -->
-        <!-- Add Permission Modal -->
-        @livewire('create-permission-form', ['company' => $company])
-        <!--/ Add Permission Modal -->
+        @livewire('edit-company-permission-form', ['company_permission_id' => $permission->id])
 
     </div>
 @endsection

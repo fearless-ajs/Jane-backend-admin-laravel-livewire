@@ -10,8 +10,13 @@ class CompanyEditBillingCycleForm extends Component
     public $title;
     public $days;
     public $billingCycle;
+    public $company;
     protected $listeners = ['editBillingCycle'  => 'parseFormParameters'];
 
+
+    public function mount($company){
+        $this->company = $company;
+    }
 
     public function parseFormParameters($billingCycleId)
     {
