@@ -22,11 +22,11 @@
                                 <h4 class="invoice-title">Code: {{$invoice_number}}</h4>
                                 @error('invoice_number') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
-                            <div class="d-flex align-items-center mb-1">
-                                <span class="title">Date:* </span>
-                                <input type="date" wire:model.lazy="date_issued" class="form-control invoice-edit-input date-picker {{$errors->has('date_issued')? 'is-invalid' : '' }}" />
-                                @error('date_issued') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                            </div>
+{{--                            <div class="d-flex align-items-center mb-1">--}}
+{{--                                <span class="title">Date:* </span>--}}
+{{--                                <input type="date" wire:model.lazy="date_issued" class="form-control invoice-edit-input date-picker {{$errors->has('date_issued')? 'is-invalid' : '' }}" />--}}
+{{--                                @error('date_issued') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
+{{--                            </div>--}}
                             <div class="d-flex align-items-center">
                                 <span class="title">Due Date:* </span>
                                 <input type="date" wire:model.lazy="due_date"  class="form-control invoice-edit-input due-date-picker {{$errors->has('due_date')? 'is-invalid' : '' }}" />
@@ -414,13 +414,13 @@
 
 
 
-                    @if(Route::currentRouteName() == 'admin.edit-invoice')
-                        <a class="btn btn-outline-success w-100 mb-75" href="{{route('admin.invoice-preview', $invoice->id)}}" wire:loading.remove wire:target="updateInvoice">Preview invoice</a>
-                    @endif
+{{--                    @if(Route::currentRouteName() == 'admin.edit-invoice')--}}
+{{--                        <a class="btn btn-outline-success w-100 mb-75" href="{{route('admin.invoice-preview', $invoice->id)}}">Preview invoice</a>--}}
+{{--                    @endif--}}
 
-                    @if(Route::currentRouteName() == 'admin.company-invoice-edit')
-                        <a class="btn btn-outline-success w-100 mb-75" href="{{route('admin.company-invoice-preview', $invoice->id)}}" wire:loading.remove wire:target="updateInvoice">Preview invoice</a>
-                    @endif
+{{--                    @if(Route::currentRouteName() == 'admin.company-invoice-edit')--}}
+{{--                        <a class="btn btn-outline-success w-100 mb-75" href="{{route('admin.company-invoice-preview', $invoice->id)}}" wire:loading.remove wire:target="updateInvoice">Preview invoice</a>--}}
+{{--                    @endif--}}
 
 
                 </div>

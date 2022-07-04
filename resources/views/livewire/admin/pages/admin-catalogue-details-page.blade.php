@@ -20,14 +20,8 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a>
                                 </li>
-                                @if($catalogue->type == 'product')
-                                <li class="breadcrumb-item"><a href="{{route('admin.products')}}">Products</a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.products')}}">Catalog</a>
                                 </li>
-                                @endif
-                                @if($catalogue->type == 'service')
-                                    <li class="breadcrumb-item"><a href="{{route('admin.services')}}">Services</a>
-                                    </li>
-                                @endif
 
                                 <li class="breadcrumb-item active">{{$catalogue->name}}
                                 </li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\View\Company;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Setting;
 use App\Models\Worker;
 use Illuminate\Http\Request;
@@ -18,12 +19,13 @@ class CompanyUsersViewController extends Controller
     }
 
     public function workers (){
+        $company = Company::find(Auth::user()->company_id);
         $data = [
             'title' => 'Company workers',
             'keywords' => 'Company dashboard',
             'description' => 'Company dashboard'
         ];
-        return view('livewire.company.pages.company-workers-list-page', ['data' => $data, 'settings'  => $this->settings]);
+        return view('livewire.company.pages.company-workers-list-page', ['data' => $data, 'settings'  => $this->settings, 'company' => $company]);
     }
 
     public function workerProfile ($worker){

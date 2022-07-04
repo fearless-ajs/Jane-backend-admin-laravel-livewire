@@ -62,6 +62,7 @@ class CompanyWorkerRoleInfoCard extends Component
 
         $this->emit('refreshWorkerRole');
         $this->emit('refreshWorkerBasicInfoCard');
+        $this->emit('refreshWorkerBasicInfoCard');
         $this->resetExcept(['roles', 'worker']);
         return $this->emit('alert', ['type' => 'success', 'message' => 'Worker roles updated']);
     }

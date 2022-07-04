@@ -29,60 +29,50 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('admin.dashboard')}}"><i class="fa fa-home"></i><span class="menu-title text-truncate" >Dashboard</span></a>
+            <li class="nav-item @if(Route::currentRouteName() == 'admin.dashboard') active @endif"><a class="d-flex align-items-center" href="{{route('admin.dashboard')}}"><i class="fa fa-home"></i><span class="menu-title text-truncate" >Dashboard</span></a>
             </li>
-            <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
+
+            <li class="navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
             </li>
 
 
 
             @if(Auth::user()->hasRole('super-admin'))
-                <li class="nav-item @if(Route::currentRouteName() == 'admin.companies' || Route::currentRouteName() == 'company.create-invoice') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-users"></i><span class="menu-title text-truncate" data-i18n="Invoice">Companies</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'admin.companies') active @endif" href="{{route('admin.companies')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
-                        </li>
-                    </ul>
-                </li>
-            @endif
-            @if(Auth::user()->hasRole('super-admin'))
-                <li class="nav-item @if(Route::currentRouteName() == 'admin.invoices') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-file-archive"></i><span class="menu-title text-truncate" data-i18n="Invoice">Invoices</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'admin.invoices') active @endif" href="{{route('admin.invoices')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
-                        </li>
-                    </ul>
+                <li class="nav-item @if(Route::currentRouteName() == 'admin.companies') active @endif"><a class="d-flex align-items-center" href="{{route('admin.companies')}}"><i class="fa fa-users"></i><span class="menu-title text-truncate" >Companies</span></a>
                 </li>
             @endif
 
+            @if(Auth::user()->hasRole('super-admin'))
+                <li class="nav-item @if(Route::currentRouteName() == 'admin.contacts' || Route::currentRouteName() == 'admin.contact-profile') active @endif"><a class="d-flex align-items-center" href="{{route('admin.contacts')}}"><i class="fa fa-users"></i><span class="menu-title text-truncate" >Contacts</span></a>
+                </li>
+            @endif
+
+            @if(Auth::user()->hasRole('super-admin'))
+                <li class="nav-item @if(Route::currentRouteName() == 'admin.invoices') active @endif"><a class="d-flex align-items-center" href="{{route('admin.invoices')}}"><i class="fa fa-file-archive"></i><span class="menu-title text-truncate" data-i18n="Invoice">Invoices</span></a>
+                </li>
+            @endif
 
 
             @if(Auth::user()->hasRole('super-admin'))
                 <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Market area</span><i data-feather="more-horizontal"></i>
                 </li>
-                <li class=" nav-item @if(Route::currentRouteName() == 'admin.products') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Products</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'admin.products') active @endif" href="{{route('admin.products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
-                        </li>
-                    </ul>
+                <li class=" nav-item @if(Route::currentRouteName() == 'admin.products') active @endif"><a class="d-flex align-items-center" href="{{route('admin.products')}}"><i class="fa fa-shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Catalog</span></a>
                 </li>
             @endif
 
-            @if(Auth::user()->hasRole('super-admin'))
-                <li class=" nav-item @if(Route::currentRouteName() == 'admin.services') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-toolbox"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Services</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'admin.services') active @endif" href="{{route('admin.services')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
-                        </li>
-                    </ul>
-                </li>
-            @endif
+{{--            @if(Auth::user()->hasRole('super-admin'))--}}
+{{--                <li class=" nav-item @if(Route::currentRouteName() == 'admin.services') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-toolbox"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Services</span></a>--}}
+{{--                    <ul class="menu-content">--}}
+{{--                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'admin.services') active @endif" href="{{route('admin.services')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
+{{--            @endif--}}
 
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">SYSTEM</span><i data-feather="more-horizontal"></i>
             </li>
             @if(Auth::user()->hasRole('super-admin'))
-                <li class=" nav-item @if(Route::currentRouteName() == 'admin.currencies') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-money-bill"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Currencies</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'admin.currencies') active @endif" href="{{route('admin.currencies')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
-                        </li>
-                    </ul>
+                <li class=" nav-item @if(Route::currentRouteName() == 'admin.currencies') active @endif"><a class="d-flex align-items-center" href="{{route('admin.currencies')}}"><i class="fa fa-money-bill"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Currencies</span></a>
                 </li>
             @endif
             @if(Auth::user()->hasRole('super-admin'))

@@ -17,7 +17,8 @@ class AdminCompanyContactList extends LiveNotify
     public $searchResult;
 
     protected $listeners = [
-        'delete'    =>  'delete'
+        'delete'    =>  'delete',
+        'refreshAdminContactList'   =>  '$refresh'
     ];
 
     public function updated(){

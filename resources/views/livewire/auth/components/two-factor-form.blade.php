@@ -1,4 +1,9 @@
 <form class="auth-login-form mt-2" wire:submit.prevent="verify">
+    @if(session()->has('tokenError'))
+    <div class="text-center">
+        <h5 class="text-danger">{{session()->get('tokenError')}}</h5>
+    </div>
+    @endif
     <div class="mb-1">
         <label for="email" class="form-label">Code</label>
         <input type="number" wire:model.lazy="code" class="form-control {{$errors->has('code')? 'is-invalid' : '' }} " placeholder="Enter the two factor code here"/>

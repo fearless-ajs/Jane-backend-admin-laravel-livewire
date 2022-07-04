@@ -34,7 +34,7 @@
         @if($contacts)
             @foreach($contacts as $contact)
                 <tr>
-                    <td>{{$contact->lastname. ' ' .$contact->firstname }}</td>
+                    <td>{{$contact->firstname. ' ' .$contact->lastname }}</td>
                     <td>{{$contact->email}}</td>
                     <td>{{$contact->mobile_phone}}</td>
                     <td>{{$contact->country}}</td>

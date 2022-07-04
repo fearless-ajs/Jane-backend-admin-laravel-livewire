@@ -7,7 +7,7 @@ use App\Models\Invoice;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class AdminInvoiceList extends Component
+class AdminInvoiceList extends LiveNotify
 {
     use WithPagination;
 
@@ -17,12 +17,32 @@ class AdminInvoiceList extends Component
     public $company;
     public $companyInvoices;
 
+    protected $listeners = [
+        'delete'    => 'delete'
+    ];
+
     public function updated(){
         if ($this->companySearch){
             $this->companies = Company::where('name', 'LIKE', "%{$this->companySearch}%")->get();
         }
     }
 
+    public function delete($invoice_id){
+        $invoice = Invoice::find($invoice_id);
+        if ($invoice){
+            // Delete invoice catalogues
+            if (count($invoice->catalogues) > 0){
+                $invoice->catalogues->each->delete();
+            }
+            $invoice->delete();
+        }
+        $this->reset();
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Invoice deleted']);
+    }
+
+    public function remove($id){
+        $this->confirmDelete('warning', 'Do you really want to delete?', 'Press ok to continue', $id);
+    }
 
     public function clearFilter(){
         $this->company       = null;

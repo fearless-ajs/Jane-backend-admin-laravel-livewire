@@ -27,19 +27,25 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-company">Image</label>
+                        <small wire:loading wire:target="image" class="form-text text-muted mb-1"><i class="fa fa-spin"><i class="fa fa-spinner"></i></i>&nbsp;&nbsp; Validating image...</small>
+                        <label  wire:loading.remove wire:target="image"  class="form-label" for="basic-icon-default-company">Image</label>
                         <input type="file" wire:model.lazy="image"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('image')? 'is-invalid' : '' }}"/>
                         @error('image') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 
 
-                    <div class="col-12 text-center mt-2 pt-50">
+                    <div class="col-12 text-center mt-2 pt-50"  wire:loading.remove wire:target="image">
                         <button type="submit"  wire:loading.remove wire:target="updateUser"  class="btn btn-primary me-1">update profile</button>
                         <button type="submit"  wire:loading wire:target="updateUser"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
                             Discard
                         </button>
                     </div>
+
+                    <div class="col-12  text-center mt-2 pt-50" wire:loading wire:target="image">
+                        <button type="button" disabled class="btn btn-outline-secondary mt-1">Please wait...</button>
+                    </div>
+
                 </form>
             </div>
         </div>

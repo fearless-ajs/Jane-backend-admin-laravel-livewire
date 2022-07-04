@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Contact;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\Category;
+use App\Models\CompanyCatalogue;
 use App\Models\Product;
 
 class ProductCategoryController extends ApiController
@@ -19,7 +20,7 @@ class ProductCategoryController extends ApiController
     }
 
     public function categoryProducts($category_name){
-        $products   = Product::where('category', $category_name)->get();
+        $products   = CompanyCatalogue::where('category', $category_name)->get();
         return $this->showAll($products);
     }
 }

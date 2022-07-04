@@ -23,7 +23,6 @@ class AdminEditInvoice extends Component
     public $worker;
 
     public $invoice_number;
-    public $date_issued;
     public $due_date;
     public $account_number;
     public $account_name;
@@ -93,7 +92,6 @@ class AdminEditInvoice extends Component
         $this->validateOnly($field, [
             'to'                        => 'required|numeric',
             'worker'                    => 'required|numeric',
-            'date_issued'               => 'required|string|max:255',
             'due_date'                  => 'required|string|max:255',
             'payment_methods'           => 'nullable|array',
             'invoice_note'              => 'nullable|string|max:2000',
@@ -321,7 +319,7 @@ class AdminEditInvoice extends Component
 
     public function generateInvoiceFormData(){
         $this->invoice_number        = $this->invoice->invoice_code;
-        $this->date_issued           = Date::parse($this->invoice->date_issued)->format('Y-m-d');
+//        $this->date_issued           = Date::parse($this->invoice->date_issued)->format('Y-m-d');
         $this->due_date              = Date::parse($this->invoice->due_date)->format('Y-m-d');
         $this->to                    = $this->invoice->contact_id;
 
@@ -392,7 +390,6 @@ class AdminEditInvoice extends Component
         $this->validate([
             'to'                => 'required|numeric',
             'worker'            => 'required|numeric',
-            'date_issued'       => 'required|max:255',
             'due_date'          => 'required|max:255',
             'payment_methods'   => 'nullable|array',
             'invoice_note'      => 'nullable|max:2000'
@@ -418,7 +415,7 @@ class AdminEditInvoice extends Component
             'contact_id'                => $this->to,
             'worker_id'                 => $this->worker,
 
-            'date_issued'               => $this->date_issued,
+//            'date_issued'               => $this->date_issued,
             'due_date'                  => $this->due_date,
 
             'products_total_price'      => $productTotalPrice,

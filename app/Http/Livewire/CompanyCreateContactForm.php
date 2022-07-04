@@ -45,9 +45,12 @@ class CompanyCreateContactForm extends Component
     public $services;
 
 
-    public function mount(){
-        $this->products = Product::where('company_id', Auth::user()->company_id)->get();
-        $this->services = Service::where('company_id', Auth::user()->company_id)->get();
+    public $company;
+
+    public function mount($company){
+        $this->company = $company;
+//        $this->products = Product::where('company_id', $this->company->id)->get();
+//        $this->services = Service::where('company_id', $this->company->id)->get();
     }
 
     public function updated($field){
@@ -59,7 +62,7 @@ class CompanyCreateContactForm extends Component
             'mobile_phone'      => 'nullable',
             'organization'      => 'nullable',
             'fax'               => 'nullable|numeric',
-            'primary_email'     => 'required|string|email|',
+            'primary_email'     => 'required|string|email',
             'date_of_birth'     => 'required|max:255',
             'product'           => 'nullable|array',
             'service'           => 'nullable|array',
@@ -82,7 +85,7 @@ class CompanyCreateContactForm extends Component
             'mobile_phone'      => 'nullable',
             'organization'      => 'nullable',
             'fax'               => 'nullable|numeric',
-            'primary_email'     => 'required|string|email|',
+            'primary_email'     => 'required|string|email',
             'date_of_birth'     => 'required|max:255',
             'product'           => 'nullable|array',
             'service'           => 'nullable|array',
@@ -116,11 +119,9 @@ class CompanyCreateContactForm extends Component
             // Attach customer role to the user
             $user->attachRole('customer');
 
-            // fetch the company details
-            $company = Company::find(Auth::user()->company_id);
 
             // Mail the user concerning the account creation and "crmcode" as password
-            Mail::to($user->email)->send(new ContactUserAccountCreationMail($user, $company));
+            Mail::to($user->email)->send(new ContactUserAccountCreationMail($user, $this->company));
         }
 
         if (!$user->hasRole('customer')){
@@ -128,7 +129,7 @@ class CompanyCreateContactForm extends Component
         }
 
         $contact = Contact::create([
-            'company_id'        => Auth::user()->company_id,
+            'company_id'        => $this->company->id,
             'user_id'           => $user->id,
             'lastname'          => $this->lastname,
             'firstname'         => $this->firstname,
@@ -179,7 +180,7 @@ class CompanyCreateContactForm extends Component
             foreach ($this->product as $prod){
                 Transaction::create([
                     'contact_id'     => $contact->id,
-                    'company_id'     => Auth::user()->company_id,
+                    'company_id'     => $this->company->id,
                     'product_id'     => $prod
                 ]);
             }
@@ -189,14 +190,15 @@ class CompanyCreateContactForm extends Component
             foreach ($this->service as $serv){
                 Transaction::create([
                     'contact_id'     => $contact->id,
-                    'company_id'     => Auth::user()->company_id,
+                    'company_id'     => $this->company->id,
                     'service_id'     => $serv
                 ]);
             }
         }
 
-        $this->resetExcept(['products', 'services']);
+        $this->resetExcept(['products', 'services', 'company']);
         $this->emit('refreshContactList');
+        $this->emit('refreshAdminContactList');
         $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Contact created']);
     }

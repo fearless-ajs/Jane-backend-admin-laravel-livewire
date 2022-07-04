@@ -7,7 +7,9 @@
                 <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
                     <div>
                         <div class="logo-wrapper">
-                            <h3 class="text-primary invoice-logo">{{$invoice->company->name}}</h3>
+                            <a href="{{route('admin.company-profile', $invoice->company->id)}}">
+                                <h3 class="text-primary invoice-logo">{{$invoice->company->name}}</h3>
+                            </a>
                         </div>
                         <p class="card-text mb-25 w-50">{{$invoice->company->address}}</p>
                         <p class="card-text mb-25">{{$invoice->company->city}}, {{$invoice->company->state}}, {{$invoice->company->country}}</p>

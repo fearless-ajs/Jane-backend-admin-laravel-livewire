@@ -5,14 +5,10 @@ namespace App\Http\Livewire;
 use App\Mail\NewWorkerMail;
 use App\Models\CompanyRole;
 use App\Models\CompanyRoleUser;
-use App\Models\CompanyTeam;
-use App\Models\CompanyTeamUser;
 use App\Models\User;
 use App\Models\Worker;
 use App\Traits\FileManager;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 
 class CompanyCreateWorkerForm extends LiveNotify
@@ -33,8 +29,10 @@ class CompanyCreateWorkerForm extends LiveNotify
     public $image;
 
     public $roles;
+    public $company;
 
-    public function mount(){
+    public function mount($company){
+        $this->company = $company;
         $this->fetchData();
     }
 
@@ -42,7 +40,7 @@ class CompanyCreateWorkerForm extends LiveNotify
         $this->validateOnly($field, [
             'lastname'              => 'required|string|max:255',
             'firstname'             => 'required|string|max:255',
-            'email'                 => 'required|email|unique:users',
+            'email'                 => 'required|email',
             'phone'                 => 'required|numeric',
             'image'                 => 'nullable|image',
             'country'               => 'required|string|max:255',
@@ -56,14 +54,14 @@ class CompanyCreateWorkerForm extends LiveNotify
     }
 
     public function fetchData(){
-        $this->roles  = CompanyRole::where('company_id', Auth::user()->company_id)->get();
+        $this->roles  = CompanyRole::where('company_id', $this->company->id)->get();
     }
 
     public function create(){
         $this->validate([
             'lastname'              => 'required|string|max:255',
             'firstname'             => 'required|string|max:255',
-            'email'                 => 'required|email|unique:users',
+            'email'                 => 'required|email',
             'phone'                 => 'required|numeric',
             'image'                 => 'nullable|image',
             'country'               => 'required|string|max:255',
@@ -88,7 +86,7 @@ class CompanyCreateWorkerForm extends LiveNotify
                 'firstname'          => $this->firstname,
                 'email'              => $this->email,
                 'user_type'          => 'Company-worker',
-                'company_id'         => Auth::user()->company_id,
+                'company_id'         => $this->company->id,
                 'image'              => ($this->image)?$this->image:null,
                 'password'           => $this->password
             ]);
@@ -100,7 +98,7 @@ class CompanyCreateWorkerForm extends LiveNotify
             'lastname'      => $this->lastname,
             'firstname'     => $this->firstname,
             'email'         => $this->email,
-            'company_id'    => Auth::user()->company_id,
+            'company_id'    => $this->company->id,
             'phone'         => $this->phone,
             'city'          => $this->city,
             'state'         => $this->state,
@@ -111,7 +109,7 @@ class CompanyCreateWorkerForm extends LiveNotify
 
        // Create user Role
         CompanyRoleUser::create([
-            'company_id'        => Auth::user()->company_id,
+            'company_id'        => $this->company->id,
             'user_id'           => $user->id,
             'company_role_id'   => $this->role,
         ]);
@@ -122,7 +120,7 @@ class CompanyCreateWorkerForm extends LiveNotify
         // Mail the worker of the account creation
         try {
             retry(5, function () use ($user) {
-                Mail::to($user->email)->send(new NewWorkerMail($user, Auth::user()->company));
+                Mail::to($user->email)->send(new NewWorkerMail($user, $this->company));
             });
         } catch (\Exception $e) {
 
@@ -131,6 +129,7 @@ class CompanyCreateWorkerForm extends LiveNotify
         // Display a notification about verification link
         $this->resetExcept(['roles']);
         $this->emit('refreshWorkersList');
+        $this->emit('refreshAdminCompanyWorkerList');
         $this->emit('close-current-modal');
         $this->alert('success', 'Worker created', 'A mail has been sent to the worker');
     }

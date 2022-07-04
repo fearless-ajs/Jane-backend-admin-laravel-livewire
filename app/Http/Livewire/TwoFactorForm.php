@@ -45,6 +45,7 @@ class TwoFactorForm extends Component
             return redirect()->intended(route('company.dashboard'));
         }
     }
+
     public function render()
     {
         return view('livewire.auth.components.two-factor-form');

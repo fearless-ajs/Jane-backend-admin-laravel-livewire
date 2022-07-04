@@ -10,7 +10,7 @@ use App\Traits\FileManager;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class AdminServiceList extends Component
+class AdminServiceList extends LiveNotify
 {
     use WithPagination;
     use FileManager;
@@ -92,7 +92,7 @@ class AdminServiceList extends Component
         $this->confirmDelete('warning', 'Do you really want to delete?', 'Press ok to continue', $service_id);
     }
 
-    public function deleteProduct($service_id){
+    public function deleteService($service_id){
         $catalogue =  CompanyCatalogue::find($service_id);
 
 

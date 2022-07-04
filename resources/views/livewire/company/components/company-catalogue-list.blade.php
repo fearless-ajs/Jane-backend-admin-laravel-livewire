@@ -20,7 +20,7 @@
                             </div>
                             <div class="view-options d-flex">
                                 <div class="btn-group dropdown-sort" wire:ignore>
-                                    @if(Auth::user()->hasModuleAccess('product', 'create'))
+                                    @if(Auth::user()->hasModuleAccess('catalogue', 'create'))
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCatalogueModal">
                                             Add catalogue
                                         </button>
@@ -99,10 +99,10 @@
                             <div class="item-options text-center">
                                 <div class="item-wrapper">
                                     <div class="item-cost">
-                                        <h4 class="item-price">₦ {{$catalogue->price}}</h4>
+                                        <h4 class="item-price">{{$settings->currency->currency_symbol}} {{$catalogue->price}}</h4>
                                     </div>
                                 </div>
-                                @if(Auth::user()->hasModuleAccess('product', 'delete'))
+                                @if(Auth::user()->hasModuleAccess('catalogue', 'delete'))
                                     <a href="#" wire:click="remove({{$catalogue->id}})" class="btn btn-light btn-wishlist">
                                         <span wire:loading wire:target="remove({{$catalogue->id}})"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                         <i wire:loading.remove wire:target="remove({{$catalogue->id}})"  class="fa fa-trash"></i>
@@ -184,7 +184,7 @@
         </div>
     </div>
 
-    @if(Auth::user()->hasModuleAccess('product', 'create'))
+    @if(Auth::user()->hasModuleAccess('catalogue', 'create'))
         @livewire('company-create-catalogue-form', ['company' => $company])
     @endif
 

@@ -103,6 +103,19 @@ class User extends Authenticatable
         return $this->hasOne(Contact::class, 'user_id', 'id');
     }
 
+    public function billingAddress(){
+        return $this->hasOne(ContactBillingAddress::class, 'user_id', 'id');
+    }
+
+    public function paymentMethod(){
+        return $this->hasOne(ContactPaymentMethod::class, 'user_id', 'id');
+    }
+
+    public function cart(){
+        return $this->hasOne(Cart::class, 'user_id', 'id');
+    }
+
+
     public function generateTwoFactorCode (){
         $this->timestamps = false;
         $this->two_factor_code = rand(100000, 999999);

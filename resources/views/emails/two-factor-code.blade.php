@@ -3,7 +3,7 @@
 <p>Your two factor code is {{$user->two_factor_code}}</p>
 
 
-@component('mail::button', ['url' => route('verify-two-factor')])
+@component('mail::button', ['url' => route('verify-two-factor-through-link', $user->two_factor_code)])
     Verify Here
 @endcomponent
 

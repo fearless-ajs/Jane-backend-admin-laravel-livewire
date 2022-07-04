@@ -167,6 +167,16 @@ class AdminCompanyViewController extends Controller
         return view('livewire.admin.pages.admin-company-invoices-list-page', ['data' => $data, 'company' => $company]);
     }
 
+    public function companyCreateInvoices($id){
+        $company = Company::find($id);
+        $data = [
+            'title' => 'Companies',
+            'keywords' => 'Companies',
+            'description' => 'Companies'
+        ];
+        return view('livewire.admin.pages.admin-company-create-invoice-page', ['data' => $data, 'company' => $company]);
+    }
+
     public function companyInvoicePreview($id){
         $invoice = Invoice::find($id);
         $data = [

@@ -13,20 +13,20 @@
             <div class="d-flex justify-content-around my-2 pt-75">
                 <div class="d-flex align-items-start me-2">
                                             <span class="badge bg-light-primary p-75 rounded">
-                                                <i data-feather="check" class="font-medium-2"></i>
+                                                <i class="font-medium-2 fa fa-lock-open"></i>
                                             </span>
                     <div class="ms-75">
-                        <h4 class="mb-0">3</h4>
-                        <small>Team member</small>
+                        <h4 class="mb-0">{{count($permissions)}}</h4>
+                        <small>Permissions</small>
                     </div>
                 </div>
                 <div class="d-flex align-items-start">
                                             <span class="badge bg-light-primary p-75 rounded">
-                                                <i data-feather="briefcase" class="font-medium-2"></i>
+                                                <i  class="font-medium-2 fa fa-file-archive"></i>
                                             </span>
                     <div class="ms-75">
-                        <h4 class="mb-0">4</h4>
-                        <small>Assigned roles</small>
+                        <h4 class="mb-0">{{count($roles)}}</h4>
+                        <small>Roles</small>
                     </div>
                 </div>
             </div>

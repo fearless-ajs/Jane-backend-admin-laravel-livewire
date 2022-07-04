@@ -150,13 +150,18 @@
                         </div>
                     </div>
 
-                    <div class="col-12 text-center mt-2 pt-50">
+                    <div class="col-12 text-center mt-2 pt-50"  wire:loading.remove wire:target="images">
                         <button type="submit"  wire:loading.remove wire:target="addCatalogue"  class="btn btn-primary me-1">Add catalogue</button>
                         <button type="submit"  wire:loading wire:target="addCatalogue"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
                             Discard
                         </button>
                     </div>
+
+                    <div class="col-12  text-center mt-2 pt-50" wire:loading wire:target="images">
+                        <button type="button" disabled class="btn btn-outline-secondary mt-1">Please wait...</button>
+                    </div>
+
                 </form>
             </div>
         </div>

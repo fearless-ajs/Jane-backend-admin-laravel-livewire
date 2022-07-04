@@ -47,25 +47,25 @@
 
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Market area</span><i data-feather="more-horizontal"></i>
             </li>
-            <li class=" nav-item @if(Route::currentRouteName() == 'company.products') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Market</span></a>
+            <li class=" nav-item @if(Route::currentRouteName() == 'company.catalogues' || Route::currentRouteName() == 'contact.cart') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Market</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'contact.catalogues') active @endif" href="{{route('contact.catalogues')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Catalogue</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'contact.catalogues') active @endif" href="{{route('contact.catalogues')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Catalog</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.products') active @endif" href="{{route('company.products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Cart</span></a>
+                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'contact.cart') active @endif" href="{{route('contact.cart')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Cart</span></a>
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item @if(Route::currentRouteName() == 'company.products') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-money-bill"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Orders</span></a>
-                <ul class="menu-content">
-                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.products') active @endif" href="{{route('company.products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
-                    </li>
-                </ul>
-            </li>
+{{--            <li class=" nav-item @if(Route::currentRouteName() == 'company.products') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-money-bill"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Orders</span></a>--}}
+{{--                <ul class="menu-content">--}}
+{{--                    <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'company.products') active @endif" href="{{route('company.products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
 
 
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Billing</span><i data-feather="more-horizontal"></i>
             </li>
-            <li class=" nav-item @if(Route::currentRouteName() == 'contact.payment-info') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-cash-register"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Payments</span></a>
+            <li class=" nav-item @if(Route::currentRouteName() == 'contact.payment-info') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-cash-register"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Payment</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'contact.payment-info') active @endif" href="{{route('contact.payment-info')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Payment Info</span></a>
                     </li>

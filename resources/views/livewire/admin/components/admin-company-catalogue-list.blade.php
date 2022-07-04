@@ -97,7 +97,7 @@
                             <div class="item-options text-center">
                                 <div class="item-wrapper">
                                     <div class="item-cost">
-                                        <h4 class="item-price">₦ {{$catalogue->price}}</h4>
+                                        <h4 class="item-price">{{$settings->currency->currency_symbol}} {{$catalogue->price}}</h4>
                                     </div>
                                 </div>
                                 <a href="#" wire:click="remove({{$catalogue->id}})" class="btn btn-light btn-wishlist">
@@ -179,7 +179,5 @@
 
         </div>
     </div>
-
-    @livewire('admin-company-create-catalogue-form', ['company' => $company])
 
 </div>

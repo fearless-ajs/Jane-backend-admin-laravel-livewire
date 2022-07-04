@@ -14,9 +14,9 @@
 
 
     <div class="card-datatable table-responsive pt-0">
-        {{--    <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#addContactModal">--}}
-        {{--        Add contact--}}
-        {{--    </button>--}}
+            <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                Add contact
+            </button>
         <table class="user-list-table table">
             <thead class="table-light">
             <tr>
@@ -34,7 +34,7 @@
             @if($contacts)
                 @foreach($contacts as $contact)
                     <tr>
-                        <td>{{$contact->lastname. ' ' .$contact->firstname }}</td>
+                        <td>{{$contact->firstname. ' ' .$contact->lastname }}</td>
                         <td>{{$contact->email}}</td>
                         <td>{{$contact->mobile_phone}}</td>
                         <td>{{$contact->country}}</td>

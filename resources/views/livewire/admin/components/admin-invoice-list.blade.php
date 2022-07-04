@@ -72,7 +72,10 @@
                                     <td>Unsigned</td>
                                 @endif
                                 <td><a href="{{route('admin.invoice-preview', $invoice->id)}}">Preview</a></td>
-
+                                <td style="cursor:pointer;" wire:click="remove({{$invoice->id}})">
+                                    <li wire:target="remove({{$invoice->id}})" wire:loading.remove class="fa fa-trash"></li>
+                                    <li wire:target="remove({{$invoice->id}})" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></li>
+                                </td>
                             </tr>
                         @endforeach
                     @endif
@@ -113,6 +116,11 @@
                             <td>Unsigned</td>
                         @endif
                         <td><a href="{{route('admin.invoice-preview', $invoice->id)}}">Preview</a></td>
+
+                        <td style="cursor:pointer;" wire:click="remove({{$invoice->id}})">
+                            <li wire:target="remove({{$invoice->id}})" wire:loading.remove class="fa fa-trash"></li>
+                            <li wire:target="remove({{$invoice->id}})" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></li>
+                        </td>
 
                     </tr>
                 @endforeach

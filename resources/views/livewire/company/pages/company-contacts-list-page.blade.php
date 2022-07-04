@@ -29,7 +29,7 @@
 
                 @if(Auth::user()->hasModuleAccess('contact', 'create'))
                 <!-- Modal to add new user starts-->
-                @livewire('company-create-contact-form')
+                @livewire('company-create-contact-form', ['company' => $company])
                 <!-- Modal to add new user Ends-->
                 @endif
 

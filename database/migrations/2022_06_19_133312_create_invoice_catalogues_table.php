@@ -17,11 +17,15 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('invoice_id');
             $table->bigInteger('catalogue_id');
+
             $table->bigInteger('quantity')->nullable();
             $table->bigInteger('unit_price')->nullable();
             $table->bigInteger('total_price')->nullable();
             $table->text('description')->nullable();
             $table->enum('type', ['product', 'service']);
+            $table->float('total_tax')->default(0);
+            $table->float('total_price_with_tax')->default(0);
+
             $table->softDeletes();
             $table->timestamps();
         });

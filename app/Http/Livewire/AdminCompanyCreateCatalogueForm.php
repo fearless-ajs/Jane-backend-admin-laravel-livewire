@@ -164,7 +164,7 @@ class AdminCompanyCreateCatalogueForm extends Component
 
         $this->emit('refreshCompanyCatalogueList');
         $this->emit('close-current-modal');
-        $this->resetExcept(['categories', 'cycles', 'taxes']);
+        $this->resetExcept(['categories', 'cycles', 'taxes', 'company']);
         return $this->emit('alert', ['type' => 'success', 'message' => 'Catalogue added to store']);
     }
 

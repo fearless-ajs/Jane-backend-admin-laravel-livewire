@@ -45,7 +45,7 @@
             @if($workers)
                 @foreach($workers as $worker)
                     <tr>
-                        <td>{{$worker->lastname. ' ' .$worker->firstname }}</td>
+                        <td>{{$worker->firstname. ' ' .$worker->lastname }}</td>
                         <td>{{$worker->email}}</td>
                         <td>{{$worker->phone}}</td>
                         <td>{{$worker->country}}</td>

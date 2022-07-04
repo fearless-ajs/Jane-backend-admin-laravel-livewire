@@ -6,7 +6,7 @@ use App\Models\Currency;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class AdminCurrencyList extends Component
+class AdminCurrencyList extends LiveNotify
 {
     use WithPagination;
 
@@ -14,7 +14,8 @@ class AdminCurrencyList extends Component
     public $searchResult;
 
     protected $listeners = [
-      'refreshAdminCurrencyList'        =>  '$refresh'
+      'refreshAdminCurrencyList'        =>  '$refresh',
+       'delete'                         =>  'delete'
     ];
 
     public function updated(){
@@ -24,6 +25,10 @@ class AdminCurrencyList extends Component
     }
 
     public function remove($id){
+        return $this->confirmDelete('warning', 'Do you really want to delete', 'Press ok to continue', $id);
+    }
+
+    public function delete($id){
         Currency::find($id)->delete();
 
         $this->emit('refreshAdminCurrencyList');

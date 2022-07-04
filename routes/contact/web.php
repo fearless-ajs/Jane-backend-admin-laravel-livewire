@@ -25,15 +25,24 @@ Route::middleware(['auth', 'check-two-factor'])->name('contact.')->group(functio
 
     Route::middleware('role:customer')->group(function (){
         Route::get('/',                                     [ContactViewController::class, 'dashboard'])->name('dashboard');
+        Route::get('/profile',                              [ContactViewController::class, 'profile'])->name('profile');
+
+
         Route::get('/invoices/signed',                      [ContactInvoiceViewController::class, 'signedInvoices'])->name('signed-invoices');
         Route::get('/invoices/unsigned',                    [ContactInvoiceViewController::class, 'unSignedInvoices'])->name('unsigned-invoices');
         Route::get('/invoices/{invoice_id}',                [ContactInvoiceViewController::class, 'previewInvoice'])->name('invoices-preview');
 
-        Route::get('/catalogues',                            [ContactCatalogueViewController::class, 'catalogues'])->name('catalogues');
-        Route::get('/catalogues/{catalogue_id}',             [ContactCatalogueViewController::class, 'catalogueDetails'])->name('catalogue-details');
+        Route::get('/catalogues',                           [ContactCatalogueViewController::class, 'catalogues'])->name('catalogues');
+        Route::get('/catalogues/{catalogue_id}',            [ContactCatalogueViewController::class, 'catalogueDetails'])->name('catalogue-details');
 
 
-        Route::get('/payment-info',                          [ContactPaymentViewController::class, 'paymentInfo'])->name('payment-info');
+        Route::get('/payment-info',                         [ContactPaymentViewController::class, 'paymentInfo'])->name('payment-info');
+        Route::get('/cart',                                 [ContactPaymentViewController::class, 'cart'])->name('cart');
+        Route::get('/checkout-now',                          [ContactPaymentViewController::class, 'checkout'])->name('checkout');
+
+
+        Route::get('checkout','App\Http\Controllers\View\Contact\CheckoutController@checkoutCart')->name('pay-cart-for-now');
+        Route::post('checkout','App\Http\Controllers\View\Contact\CheckoutController@afterCartpayment')->name('checkout.credit-card');
 
     });
 

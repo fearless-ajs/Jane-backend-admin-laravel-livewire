@@ -15,7 +15,7 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href="{{route('company.contacts')}}">Contacts</a>
                                 </li>
-                                <li class="breadcrumb-item active">{{$contact->user->lastname. '  '. $contact->user->lastname }}
+                                <li class="breadcrumb-item active">{{$contact->lastname. '  '. $contact->lastname }}
                                 </li>
                             </ol>
                         </div>

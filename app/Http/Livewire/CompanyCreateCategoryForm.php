@@ -30,7 +30,7 @@ class CompanyCreateCategoryForm extends Component
             'name'          => $this->name
         ]);
 
-        $this->reset();
+        $this->resetExcept('company');
         $this->emit('refreshCompanyCategoryList');
         $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Category created']);

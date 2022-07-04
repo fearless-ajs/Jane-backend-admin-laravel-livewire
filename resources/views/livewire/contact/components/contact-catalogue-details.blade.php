@@ -12,12 +12,19 @@
                     </div>
                     <div class="col-12 col-md-7">
                         <h4>{{$catalogue->name}}</h4>
+
                         @if($catalogue->type === 'product')
                             <span class="card-text item-company">By <a href="#" class="company-name">{{$catalogue->manufacturer}}</a></span>
                         @endif
+
                         <div class="ecommerce-details-price d-flex flex-wrap mt-1">
-                            <h4 class="item-price me-1">{{$settings->currency->currency_symbol}}{{$catalogue->price}}</h4>
-                            @if($catalogue->category)
+                            @if($catalogue->tax)
+                                <h4 class="item-price me-1"><span class="text-warning"> {{$settings->currency->currency_symbol}}{{$catalogue->price}} <small>+ Tax: {{$catalogue->tax->percentage}}%</small> </span>| Total: {{$settings->currency->currency_symbol}}{{ (($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price }}</h4>
+                            @else
+                                <h4 class="item-price me-1">{{$settings->currency->currency_symbol}}{{$catalogue->price}}</h4>
+                            @endif
+
+                        @if($catalogue->category)
                                 <ul class="unstyled-list list-inline ps-1 border-start">
                                     <span class="badge badge-light-success">Category: {{$catalogue->category}} </span>
                                 </ul>
@@ -69,30 +76,28 @@
                         @endif
                         <div class="d-flex flex-column flex-sm-row pt-1">
 
-                            @if($catalogue->type == 'product')
-                                @if($isPresentInCart)
+                            @if($isPresentInCart)
                                 <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" wire:click="removeProductFromCart">
                                     <i class="me-50 fa fa-cart-plus"></i> Remove from cart
                                 </button>
-                                @else
-                                    <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" wire:click="addProductToCart">
-                                        <i class="me-50 fa fa-cart-plus"></i> Add to cart
-                                    </button>
-                                @endif
+                            @else
+                                <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" wire:click="addProductToCart">
+                                    <i class="me-50 fa fa-cart-plus"></i> Add to cart
+                                </button>
                             @endif
 
-                                @if($catalogue->type == 'service')
-                                    @if($isPresentInCart)
-                                        <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" wire:click="removeServiceFromCart">
-                                            <i class="me-50 fa fa-cart-plus"></i> Remove from cart
-                                        </button>
-                                    @else
-                                        <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" wire:click="addServiceToCart">
-                                            <i class="me-50 fa fa-cart-plus"></i> Add to cart
-                                        </button>
-                                    @endif
+{{--                                @if($catalogue->type == 'service')--}}
+{{--                                    @if($isPresentInCart)--}}
+{{--                                        <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" wire:click="removeServiceFromCart">--}}
+{{--                                            <i class="me-50 fa fa-cart-plus"></i> Remove from cart--}}
+{{--                                        </button>--}}
+{{--                                    @else--}}
+{{--                                        <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" wire:click="addServiceToCart">--}}
+{{--                                            <i class="me-50 fa fa-cart-plus"></i> Add to cart--}}
+{{--                                        </button>--}}
+{{--                                    @endif--}}
 
-                                @endif
+{{--                                @endif--}}
 
                             <button type="button" class="btn btn-outline-primary me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#productLinkModal">
                                 Generate link

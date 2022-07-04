@@ -8,7 +8,7 @@ use App\Models\CompanyPermissionRole;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class AdminCompanyPermissionList extends Component
+class AdminCompanyPermissionList extends LiveNotify
 {
     use WithPagination;
     public $company;

@@ -40,6 +40,7 @@ Route::get('/sign-out',                           [AuthViewController::class, 'l
 
 Route::middleware('auth')->group(function () {
     Route::get('/two-factor',                         [AuthViewController::class, 'twoFactor'])->name('verify-two-factor');
+    Route::get('/two-factor-through-link/{code}',     [AuthViewController::class, 'twoFactorThroughLink'])->name('verify-two-factor-through-link');
 });
 
 Route::get('/markets/{company_id}/{product_slug}',                      [CompanyProductViewController::class, 'productPublicShowCase']);
@@ -54,6 +55,6 @@ Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
 
 
 // For stripe
-Route::get('checkout','App\Http\Controllers\CheckoutController@checkout');
-Route::post('checkout','App\Http\Controllers\CheckoutController@afterpayment')->name('checkout.credit-card');
+//Route::get('checkout','App\Http\Controllers\CheckoutController@checkout');
+//Route::post('checkout','App\Http\Controllers\CheckoutController@afterpayment')->name('checkout.credit-card');
 

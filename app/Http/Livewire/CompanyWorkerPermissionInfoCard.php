@@ -76,6 +76,7 @@ class CompanyWorkerPermissionInfoCard extends Component
         CompanyPermissionUser::where('id', $permission_id)->delete();
         $this->emit('refreshWorkerPermission');
         $this->emit('refreshWorkerBasicInfoCard');
+        $this->emit('refreshWorkerBasicInfoCard');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Permission detached from user']);
     }
 

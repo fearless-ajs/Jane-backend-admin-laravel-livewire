@@ -17,7 +17,8 @@ class AdminCompanyWorkerList extends LiveNotify
     public $searchResult;
 
     protected $listeners = [
-        'delete'    =>  'delete'
+        'delete'    =>  'delete',
+        'refreshAdminCompanyWorkerList' => '$refresh'
     ];
 
     public function updated(){

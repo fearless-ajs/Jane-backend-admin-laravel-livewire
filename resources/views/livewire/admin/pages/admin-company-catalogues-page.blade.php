@@ -27,5 +27,7 @@
 
         @livewire('admin-company-catalogue-list', ['company' => $company])
 
+
+        @livewire('admin-company-create-catalogue-form', ['company' => $company])
     </div>
 @endsection

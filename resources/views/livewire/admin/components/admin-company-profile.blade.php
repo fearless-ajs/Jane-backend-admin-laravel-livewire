@@ -48,13 +48,13 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link fw-bold" href="{{route('admin.company-users', $company->id)}}" >
-                                            <span class="d-none d-md-block">Staffs({{count($company->users)}})</span>
+                                            <span class="d-none d-md-block">Staff({{count($company->users)}})</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link fw-bold" href="{{route('admin.company-catalogues', $company->id)}}" >
-                                            <span class="d-none d-md-block">Catalogues({{count($company->catalogues)}})</span>
+                                            <span class="d-none d-md-block">Catalog({{count($company->catalogues)}})</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>

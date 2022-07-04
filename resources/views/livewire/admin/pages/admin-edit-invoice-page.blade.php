@@ -28,6 +28,9 @@
 
             @livewire('admin-edit-invoice', ['invoice' => $invoice])
 
+            <div class="w-25">
+                <a class="btn btn-outline-success w-100 mb-75" href="{{route('admin.invoice-preview', $invoice->id)}}">Preview invoice</a>
+            </div>
 
         </section>
     </div>

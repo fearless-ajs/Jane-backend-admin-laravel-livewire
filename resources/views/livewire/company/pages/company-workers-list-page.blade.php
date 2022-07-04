@@ -28,7 +28,7 @@
             @livewire('company-worker-list')
 
             <!-- Modal to add new user starts-->
-            @livewire('company-create-worker-form')
+            @livewire('company-create-worker-form', ['company' => $company])
             <!-- Modal to add new user Ends-->        </section>
         <!-- users list ends -->
 

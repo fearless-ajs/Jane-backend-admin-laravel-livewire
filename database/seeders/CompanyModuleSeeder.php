@@ -253,7 +253,7 @@ class CompanyModuleSeeder extends Seeder
             ]);
         }
 
-        // Roles and permission SystemModule
+        // Roles and permission EmailModule
         if (!CompanyModule::where('name', 'email')->where('access', 'create')->first()){
             CompanyModule::create([
                 'name'   => 'email',
@@ -278,6 +278,96 @@ class CompanyModuleSeeder extends Seeder
         if (!CompanyModule::where('name', 'email')->where('access', 'read')->first()){
             CompanyModule::create([
                 'name'   => 'email',
+                'access' => 'read'
+            ]);
+        }
+
+
+        // Roles and permission Catalogue
+        if (!CompanyModule::where('name', 'catalogue')->where('access', 'create')->first()){
+            CompanyModule::create([
+                'name'   => 'catalogue',
+                'access' => 'create'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'catalogue')->where('access', 'edit')->first()){
+            CompanyModule::create([
+                'name'   => 'catalogue',
+                'access' => 'edit'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'catalogue')->where('access', 'delete')->first()){
+            CompanyModule::create([
+                'name'   => 'catalogue',
+                'access' => 'delete'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'catalogue')->where('access', 'read')->first()){
+            CompanyModule::create([
+                'name'   => 'catalogue',
+                'access' => 'read'
+            ]);
+        }
+
+
+        // Roles and permission Billing Cycle
+        if (!CompanyModule::where('name', 'billing-cycle')->where('access', 'create')->first()){
+            CompanyModule::create([
+                'name'   => 'billing-cycle',
+                'access' => 'create'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'billing-cycle')->where('access', 'edit')->first()){
+            CompanyModule::create([
+                'name'   => 'billing-cycle',
+                'access' => 'edit'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'billing-cycle')->where('access', 'delete')->first()){
+            CompanyModule::create([
+                'name'   => 'billing-cycle',
+                'access' => 'delete'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'billing-cycle')->where('access', 'read')->first()){
+            CompanyModule::create([
+                'name'   => 'billing-cycle',
+                'access' => 'read'
+            ]);
+        }
+
+
+        // Roles and permission Taxes
+        if (!CompanyModule::where('name', 'tax')->where('access', 'create')->first()){
+            CompanyModule::create([
+                'name'   => 'tax',
+                'access' => 'create'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'tax')->where('access', 'edit')->first()){
+            CompanyModule::create([
+                'name'   => 'tax',
+                'access' => 'edit'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'tax')->where('access', 'delete')->first()){
+            CompanyModule::create([
+                'name'   => 'tax',
+                'access' => 'delete'
+            ]);
+        }
+
+        if (!CompanyModule::where('name', 'tax')->where('access', 'read')->first()){
+            CompanyModule::create([
+                'name'   => 'tax',
                 'access' => 'read'
             ]);
         }

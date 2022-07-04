@@ -89,18 +89,6 @@
                             <button type="button" class="btn btn-outline-success me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#productLinkModal">
                                 Generate link
                             </button>
-                            @if($catalogue->type == 'product')
-                            <a href="{{route('admin.products')}}" class="btn btn-outline-secondary btn-wishlist me-0 me-sm-1 mb-1 mb-sm-0">
-                                <i class="me-50 fa fa-heart"></i>
-                                <span>Shop</span>
-                            </a>
-                            @endif
-                            @if($catalogue->type == 'service')
-                                <a href="{{route('admin.services')}}" class="btn btn-outline-secondary btn-wishlist me-0 me-sm-1 mb-1 mb-sm-0">
-                                    <i class="me-50 fa fa-heart"></i>
-                                    <span>Shop</span>
-                                </a>
-                            @endif
                         </div>
                     </div>
                 </div>

@@ -35,7 +35,7 @@
 
                 @livewire('company-billing-cycle-list', ['company' => $company])
 
-                @if(Auth::user()->hasModuleAccess('category', 'create'))
+                @if(Auth::user()->hasModuleAccess('billing-cycle', 'create'))
                 <!-- Modal to add new user starts-->
                 @livewire('company-create-billing-cycle-form', ['company' => $company])
                 <!-- Modal to add new user Ends-->

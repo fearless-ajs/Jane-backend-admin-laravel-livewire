@@ -16,16 +16,17 @@ class CheckoutController extends Controller
         $amount *= 100;
         $amount = (int) $amount;
 
+        // Min amount is 100cent
         $payment_intent = \Stripe\PaymentIntent::create([
             'description' => 'Stripe Test Payment',
             'amount' => $amount,
-            'currency' => 'AED',
+            'currency' => 'USD',
             'description' => 'Payment From All About Laravel',
             'payment_method_types' => ['card'],
         ]);
         $intent = $payment_intent->client_secret;
 
-        return view('checkout.credit-card',compact('intent'));
+        return view('checkout.checkout',compact('intent'));
 
     }
 

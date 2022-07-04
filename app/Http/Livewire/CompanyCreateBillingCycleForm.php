@@ -36,7 +36,7 @@ class CompanyCreateBillingCycleForm extends Component
             'days'          =>  $this->days
         ]);
 
-        $this->reset();
+        $this->resetExcept('company');
         $this->emit('refreshCompanyBillingCycleList');
         $this->emit('close-current-modal');
         return $this->emit('alert', ['type' => 'success', 'message' => 'Billing cycle added to the company']);

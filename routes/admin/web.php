@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\View\Admin\AdminCatalogueViewController;
 use App\Http\Controllers\View\Admin\AdminCompanyViewController;
+use App\Http\Controllers\View\Admin\AdminContactViewController;
 use App\Http\Controllers\View\Admin\AdminCurrencyViewController;
 use App\Http\Controllers\View\Admin\AdminInvoiceViewController;
 use App\Http\Controllers\View\Admin\AdminViewController;
@@ -28,6 +29,9 @@ Route::middleware(['auth', 'check-two-factor'])->name('admin.')->group(function 
         Route::get('/',                                                         [AdminViewController::class, 'dashboard'])->name('dashboard');
         Route::get('/settings',                                                 [AdminViewController::class, 'settings'])->name('settings');
         Route::get('/users',                                                    [AdminViewController::class, 'usersList'])->name('users');
+
+        Route::get('/contacts',                                                 [AdminContactViewController::class, 'contacts'])->name('contacts');
+        Route::get('/contacts/{contact_id}',                                    [AdminContactViewController::class, 'contactProfile'])->name('contact-profile');
 
         Route::get('/companies',                                                [AdminCompanyViewController::class, 'companies'])->name('companies');
         Route::get('/companies/{id}',                                           [AdminCompanyViewController::class, 'companyProfile'])->name('company-profile');
@@ -59,6 +63,7 @@ Route::middleware(['auth', 'check-two-factor'])->name('admin.')->group(function 
 //        Route::get('/companies/services/details/{service_id}',                  [AdminCompanyViewController::class, 'companyServiceDetails'])->name('company-service-details');
 
         Route::get('/companies/{company_id}/invoices',                          [AdminCompanyViewController::class, 'companyInvoices'])->name('company-invoices');
+        Route::get('/companies/{company_id}/create-invoice',                    [AdminCompanyViewController::class, 'companyCreateInvoices'])->name('company-create-invoice');
         Route::get('/companies/invoices/preview/{invoice_id}',                  [AdminCompanyViewController::class, 'companyInvoicePreview'])->name('company-invoice-preview');
         Route::get('/companies/invoices/edit/{invoice_id}',                     [AdminCompanyViewController::class, 'companyInvoiceEdit'])->name('company-invoice-edit');
 

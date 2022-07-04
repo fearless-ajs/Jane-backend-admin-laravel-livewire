@@ -51,53 +51,59 @@ class ContactCatalogueDetails extends Component
     public function addProductToCart(){
         $catalogue = CompanyCatalogue::findOrFail($this->catalogue->id);
 
-        // If cart doesn't exist
-        $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
-        if(!$cart){
-            // Create cart
-            $cart = Cart::create([
-                'user_id'        => auth()->user()->id,
-                'checkout'       => false,
-                'total_price'    => $catalogue->price
-            ]);
-
-            // Check if the product quantity is available
-            if ($catalogue->quantity < 1){
-                return $this->emit('alert', ['type' => 'error', 'message' => 'The product does not have enough quantity']);
-            }
-            // Create cart product
-            CartProduct::create([
-                'cart_id'               => $cart->id,
-                'catalogue_id'          => $catalogue->id,
-                'quantity'              => 1,
-                'total_product_price'   => $catalogue->price
-            ]);
-        }else{
-            // If cart already exist
-            $cartProduct = CartProduct::where('cart_id', $cart->id)->where('catalogue_id', $catalogue->id)->first();
-            if ($cartProduct){
-                // Update the cart product
-                $cartProduct->update([
-                    'quantity'             => $cartProduct->quantity + 1,
-                    'total_product_price' =>  $catalogue->price *($cartProduct->quantity + 1),
+        if ($catalogue->type == 'product'){
+            // If cart doesn't exist
+            $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
+            if(!$cart){
+                // Create cart
+                $cart = Cart::create([
+                    'user_id'        => auth()->user()->id,
+                    'checkout'       => false,
+                    'total_price'    => $catalogue->price
                 ]);
-                // Update the cart total price
-                $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ($catalogue->price * ($cartProduct->quantity + 1));
-                $cart->save();
-            }else{
+
+                // Check if the product quantity is available
+                if ($catalogue->quantity < 1){
+                    return $this->emit('alert', ['type' => 'error', 'message' => 'The product does not have enough quantity']);
+                }
+                // Create cart product
                 CartProduct::create([
                     'cart_id'               => $cart->id,
-                    'catalogue_id'            => $catalogue->id,
+                    'catalogue_id'          => $catalogue->id,
                     'quantity'              => 1,
                     'total_product_price'   => $catalogue->price
                 ]);
-                $cart->total_price  = $cart->total_price + $catalogue->price;
-                $cart->save();
+            }else{
+                // If cart already exist
+                $cartProduct = CartProduct::where('cart_id', $cart->id)->where('catalogue_id', $catalogue->id)->first();
+                if ($cartProduct){
+                    // Update the cart product
+                    $cartProduct->update([
+                        'quantity'             => $cartProduct->quantity + 1,
+                        'total_product_price' =>  $catalogue->price *($cartProduct->quantity + 1),
+                    ]);
+                    // Update the cart total price
+                    $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ($catalogue->price * ($cartProduct->quantity + 1));
+                    $cart->save();
+                }else{
+                    CartProduct::create([
+                        'cart_id'               => $cart->id,
+                        'catalogue_id'            => $catalogue->id,
+                        'quantity'              => 1,
+                        'total_product_price'   => $catalogue->price
+                    ]);
+                    $cart->total_price  = $cart->total_price + $catalogue->price;
+                    $cart->save();
+                }
             }
+        }else if ($catalogue->type == 'service'){
+            $this->addServiceToCart();
         }
 
+        $this->isPresentInCart = true;
         $this->emit('refreshContactCatalogueDetails');
-        return $this->emit('alert', ['type' => 'success', 'message' => 'Product added to cart']);
+        $this->emit('refreshMyCart');
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Added to cart']);
     }
 
     public function addServiceToCart(){
@@ -131,19 +137,23 @@ class ContactCatalogueDetails extends Component
                 $cart->save();
             }
         }
-
-        $this->emit('refreshContactCatalogueDetails');
-        return $this->emit('alert', ['type' => 'success', 'message' => 'Service added to cart']);
     }
 
 
     public function removeProductFromCart(){
-        // If cart doesn't exist
-        $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
-        $product = CartProduct::where('cart_id', $cart->id)->where('catalogue_id', $this->catalogue->id)->first();
-        $product->delete();
+        if ($this->catalogue->type == 'product'){
+            // If cart doesn't exist
+            $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
+            $product = CartProduct::where('cart_id', $cart->id)->where('catalogue_id', $this->catalogue->id)->first();
+            $product->delete();
+        }else if ($this->catalogue->type == 'service'){
+            $this->removeServiceFromCart();
+        }
+
+        $this->isPresentInCart = false;
         $this->emit('refreshContactCatalogueDetails');
-        return $this->emit('alert', ['type' => 'success', 'message' => 'Product removed from cart']);
+        $this->emit('refreshMyCart');
+        return $this->emit('alert', ['type' => 'success', 'message' => 'Removed from cart']);
     }
 
     public function removeServiceFromCart(){
@@ -151,8 +161,6 @@ class ContactCatalogueDetails extends Component
         $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
         $service = CartService::where('cart_id', $cart->id)->where('catalogue_id', $this->catalogue->id)->first();
         $service->delete();
-        $this->emit('refreshContactCatalogueDetails');
-        return $this->emit('alert', ['type' => 'success', 'message' => 'Service removed from cart']);
     }
 
     public function render()

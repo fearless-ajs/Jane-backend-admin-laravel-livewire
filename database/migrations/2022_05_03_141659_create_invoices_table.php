@@ -38,8 +38,8 @@ return new class extends Migration
             $table->float('amount_paid')->default(0);
             $table->float('total_tax')->default(0);
             $table->float('total_price_with_tax')->default(0);
-
-            $table->bigInteger('last_updated_by_id');
+//
+//            $table->bigInteger('last_updated_by_id');
 
             $table->timestamps();
             $table->softDeletes();

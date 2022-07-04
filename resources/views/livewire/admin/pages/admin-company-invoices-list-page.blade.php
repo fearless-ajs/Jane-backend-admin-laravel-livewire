@@ -28,7 +28,7 @@
             <div class="card">
                 <div class="card-datatable table-responsive">
                     <p class="badge-light-primary mb-1 mt-1 m-lg-1" >
-                        {{$company->name}}
+                        <a class="btn btn-primary" href="{{route('admin.company-create-invoice', $company->id)}}">Create Invoice</a>
                     </p>
                     @livewire('admin-company-invoice-list', ['company' => $company])
                 </div>

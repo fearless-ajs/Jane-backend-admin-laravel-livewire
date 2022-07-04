@@ -332,14 +332,116 @@ trait CompanyDefaultPermissions
 
 
 
+
+        // Catalogue role and permission
+        $cataloguePermission =  CompanyPermission::create([
+            'company_id'    => $company_id,
+            'display_name'  => 'Manage Catalogue',
+            'name'          => 'manage-catalogue',
+            'description'   => 'This permission allows user to manage catalogues',
+            'type'          => 'default'
+        ]);
+
+        $catalogueModules = CompanyModule::where('name', 'catalogue')->get();
+        if (count($catalogueModules) > 0){
+            foreach ($catalogueModules as $module){
+                CompanyPermissionModule::create([
+                    'company_id'            => $company_id,
+                    'company_permission_id' => $cataloguePermission->id,
+                    'company_module_id'     => $module->id
+                ]);
+            }
+        }
+
+        // Attach permission to user
+        CompanyPermissionUser::create([
+            'company_id'            => $company_id,
+            'user_id'               => $user->id,
+            'company_permission_id' => $cataloguePermission->id
+        ]);
+
+        // Attach permission to role
+        CompanyPermissionRole::create([
+            'company_id'            => $company_id,
+            'company_role_id'       => $role->id,
+            'company_permission_id' => $cataloguePermission->id
+        ]);
+
+
+        // Billing Cycle role and permission
+        $cyclePermission =  CompanyPermission::create([
+            'company_id'    => $company_id,
+            'display_name'  => 'Manage Billing Cycle',
+            'name'          => 'manage-billing-cycle',
+            'description'   => 'This permission allows user to manage billing cycle',
+            'type'          => 'default'
+        ]);
+
+        $cycleModules = CompanyModule::where('name', 'billing-cycle')->get();
+        if (count($cycleModules) > 0){
+            foreach ($cycleModules as $module){
+                CompanyPermissionModule::create([
+                    'company_id'            => $company_id,
+                    'company_permission_id' => $cyclePermission->id,
+                    'company_module_id'     => $module->id
+                ]);
+            }
+        }
+
+        // Attach permission to user
+        CompanyPermissionUser::create([
+            'company_id'            => $company_id,
+            'user_id'               => $user->id,
+            'company_permission_id' => $cyclePermission->id
+        ]);
+
+        // Attach permission to role
+        CompanyPermissionRole::create([
+            'company_id'            => $company_id,
+            'company_role_id'       => $role->id,
+            'company_permission_id' => $cyclePermission->id
+        ]);
+
+        // Tax role and permission
+        $taxPermission =  CompanyPermission::create([
+            'company_id'    => $company_id,
+            'display_name'  => 'Manage Tax',
+            'name'          => 'manage-tax',
+            'description'   => 'This permission allows user to manage taxes',
+            'type'          => 'default'
+        ]);
+
+        $taxModules = CompanyModule::where('name', 'tax')->get();
+        if (count($taxModules) > 0){
+            foreach ($taxModules as $module){
+                CompanyPermissionModule::create([
+                    'company_id'            => $company_id,
+                    'company_permission_id' => $taxPermission->id,
+                    'company_module_id'     => $module->id
+                ]);
+            }
+        }
+
+        // Attach permission to user
+        CompanyPermissionUser::create([
+            'company_id'            => $company_id,
+            'user_id'               => $user->id,
+            'company_permission_id' => $taxPermission->id
+        ]);
+
+        // Attach permission to role
+        CompanyPermissionRole::create([
+            'company_id'            => $company_id,
+            'company_role_id'       => $role->id,
+            'company_permission_id' => $taxPermission->id
+        ]);
+
+
+
     }
 
     public function attachPermissionToUser($user){
 
     }
-
-
-
-
 
 }

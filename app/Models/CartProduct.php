@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class CartProduct extends Model
 {
@@ -15,7 +16,8 @@ class CartProduct extends Model
 
     protected $guarded = [];
 
-    public function product(){
-        return $this->hasOne(Product::class, 'product_id');
+    public function catalogue(){
+        return $this->hasOne(CompanyCatalogue::class,  'id', 'catalogue_id');
     }
+
 }

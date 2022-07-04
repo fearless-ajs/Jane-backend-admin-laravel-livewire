@@ -20,7 +20,7 @@ class ContactPaymentInfoForm extends Component
     }
 
     public function mount(){
-        $this->showPaymentMethod();
+        $this->showBillingAddress();
     }
 
     public function render()

@@ -49,19 +49,18 @@ class AdminProductList extends LiveNotify
         if ($this->search){
             if ($this->order){
                 if ($this->category){
-                    $this->searchResult = CompanyCatalogue::where('type', 'product')
-                        ->orderBy('price', $this->order)
+                    $this->searchResult = CompanyCatalogue::orderBy('price', $this->order)
                         ->where('name', 'LIKE', "%{$this->search}%")
                         ->where('category', $this->category)->get();
                 }else{
-                    $this->searchResult = CompanyCatalogue::where('type', 'product')->orderBy('price', $this->order)->where('name', 'LIKE', "%{$this->search}%")->get();
+                    $this->searchResult = CompanyCatalogue::orderBy('price', $this->order)->where('name', 'LIKE', "%{$this->search}%")->get();
                 }
             }else{
                 if ($this->category){
 
-                    $this->searchResult = CompanyCatalogue::where('type', 'product')->where('name', 'LIKE', "%{$this->search}%")->where('category', $this->category)->get();
+                    $this->searchResult = CompanyCatalogue::where('name', 'LIKE', "%{$this->search}%")->where('category', $this->category)->get();
                 }else{
-                    $this->searchResult = CompanyCatalogue::where('type', 'product')->where('name', 'LIKE', "%{$this->search}%")->get();
+                    $this->searchResult = CompanyCatalogue::where('name', 'LIKE', "%{$this->search}%")->get();
                 }
             }
         }
@@ -123,16 +122,16 @@ class AdminProductList extends LiveNotify
                 if ($this->category){
                     if ($this->order){
                         return view('livewire.admin.components.admin-product-list', [
-                            'catalogues' => CompanyCatalogue::where('type', 'product')->where('category', $this->category)->where('company_id', $this->company)->orderBy('price', $this->order)->paginate(12)
+                            'catalogues' => CompanyCatalogue::where('category', $this->category)->where('company_id', $this->company)->orderBy('price', $this->order)->paginate(12)
                         ]);
                     }else{
                         return view('livewire.admin.components.admin-product-list', [
-                            'catalogues' => CompanyCatalogue::where('type', 'product')->where('category', $this->category)->where('company_id', $this->company)->paginate(12)
+                            'catalogues' => CompanyCatalogue::where('category', $this->category)->where('company_id', $this->company)->paginate(12)
                         ]);
                     }
                 }else{
                     return view('livewire.admin.components.admin-product-list', [
-                        'catalogues' => CompanyCatalogue::where('type', 'product')->where('company_id', $this->company)->paginate(12)
+                        'catalogues' => CompanyCatalogue::where('company_id', $this->company)->paginate(12)
                     ]);
                 }
             }
@@ -146,16 +145,16 @@ class AdminProductList extends LiveNotify
                 if ($this->category){
                     if ($this->order){
                         return view('livewire.admin.components.admin-product-list', [
-                            'catalogues' => CompanyCatalogue::where('type', 'product')->where('category', $this->category)->orderBy('price', $this->order)->paginate(12)
+                            'catalogues' => CompanyCatalogue::where('category', $this->category)->orderBy('price', $this->order)->paginate(12)
                         ]);
                     }else{
                         return view('livewire.admin.components.admin-product-list', [
-                            'catalogues' => CompanyCatalogue::where('type', 'product')->where('category', $this->category)->paginate(12)
+                            'catalogues' => CompanyCatalogue::where('category', $this->category)->paginate(12)
                         ]);
                     }
                 }else{
                     return view('livewire.admin.components.admin-product-list', [
-                        'catalogues' => CompanyCatalogue::where('type', 'product')->paginate(12)
+                        'catalogues' => CompanyCatalogue::paginate(12)
                     ]);
                 }
             }

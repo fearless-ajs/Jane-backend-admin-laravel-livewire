@@ -35,7 +35,7 @@
 
                 @livewire('company-taxes-list', ['company' => $company])
 
-                @if(Auth::user()->hasModuleAccess('category', 'create'))
+                @if(Auth::user()->hasModuleAccess('tax', 'create'))
                 <!-- Modal to add new user starts-->
                 @livewire('company-create-tax-form', ['company' => $company])
                 <!-- Modal to add new user Ends-->

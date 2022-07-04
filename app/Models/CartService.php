@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class CartService extends Model
 {
@@ -13,4 +14,8 @@ class CartService extends Model
     protected $dates = ['deleted_at'];
 
     protected $guarded = [];
+
+    public function catalogue(){
+        return $this->hasOne(CompanyCatalogue::class,  'id', 'catalogue_id');
+    }
 }

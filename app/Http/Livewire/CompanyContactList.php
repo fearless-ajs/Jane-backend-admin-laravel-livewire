@@ -8,13 +8,16 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyContactList extends Component
+class CompanyContactList extends LiveNotify
 {
     use WithPagination;
 
     public $company;
 
-    protected $listeners = ['refreshContactList' => '$refresh'];
+    protected $listeners = [
+        'refreshContactList' => '$refresh',
+        'delete'             => 'delete'
+    ];
 
     public $search;
     public $searchResult;
@@ -30,6 +33,10 @@ class CompanyContactList extends Component
     }
 
     public function remove($contact_id){
+       return $this->confirmDelete('warning', 'Do you really want to delete', 'Press ok to continue', $contact_id);
+    }
+
+    public function delete($contact_id){
         $contact = Contact::find($contact_id);
 
         // Delete the contact transactions

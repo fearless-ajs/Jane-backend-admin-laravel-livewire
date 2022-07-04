@@ -40,8 +40,13 @@
             @livewire('admin-company-contact-list', ['company' => $company])
 
             <!-- list and filter end -->
+            <div class="card">
+                @livewire('company-create-contact-form', ['company' => $company])
+            </div>
         </section>
         <!-- users list ends -->
+
+
 
     </div>
 @endsection

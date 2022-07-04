@@ -1,14 +1,9 @@
 <div class="row">
-    <div class="card-body border-bottom">
+    <div class="card-body">
         <h4 wire:loading.remove wire:target="search" class="card-title">@if($searchResult)  {{count($searchResult)}}  @else {{count($company->roles)}} @endif Roles</h4>
         <h4 wire:loading wire:target="search" class="card-title">Searching... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h4>
 
         <input type="text" class="form-control" wire:model="search" placeholder="Search for role by name"/>
-        <div class="row">
-            <div class="col-md-4 user_role"></div>
-            <div class="col-md-4 user_plan"></div>
-            <div class="col-md-4 user_status"></div>
-        </div>
     </div>
     <div class="col-xl-4 col-lg-6 col-md-6">
         <div class="card">

@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartProduct;
 use App\Models\CartService;
+use App\Models\ContactBillingAddress;
+use App\Models\ContactPaymentMethod;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\OrderService;
 use Illuminate\Http\Request;
+use LVR\CreditCard\CardNumber;
 
 class OrderController extends Controller
 {
@@ -26,7 +29,7 @@ class OrderController extends Controller
         if (!$cart){
             return $this->errorResponse([
                 'errorCode' => 'CART_ERROR',
-                'message'   => 'Please select at least one product or service'
+                'message'   => 'Please select at least one catalog'
             ], 422);
         }
 
@@ -129,5 +132,70 @@ class OrderController extends Controller
         return $this->showAll($orders, 200);
     }
 
+    public function getMyBillingInformation(){
+        $billingAddress = ContactBillingAddress::where('user_id', auth()->user()->id)->first();
+        return $this->showOne($billingAddress);
+    }
+
+    public function updateMyBillingInformation(Request $request){
+        $request->validate([
+            'fullname'       =>  'nullable|string|max:255',
+            'phone'          =>  'nullable|numeric',
+            'email'          =>  'nullable|email|max:255',
+            'vat'            =>  'nullable|string|max:255',
+            'tax_id'         =>  'nullable|string|max:255',
+            'city'           =>  'nullable|string|max:255',
+            'state'          =>  'nullable|string|max:255',
+            'country'        =>  'nullable|string|max:255',
+            'address'        =>  'nullable|string|max:255',
+            'zip'            =>  'nullable|string|max:255'
+        ]);
+
+        $billingAddress = ContactBillingAddress::where('user_id', auth()->user()->id)->first();
+
+        $billingAddress->fill($request->only([
+            'fullname',
+            'phone',
+            'email',
+            'vat',
+            'tax_id',
+            'city',
+            'state',
+            'country',
+            'address',
+            'zip'
+        ]));
+
+        $billingAddress->save();
+
+        return $this->showOne($billingAddress);
+    }
+
+    public function getMyPaymentMethod(){
+        $paymentMethod = ContactPaymentMethod::where('user_id', auth()->user()->id)->first();
+        return $this->showOne($paymentMethod);
+    }
+
+    public function updateMyPaymentMethod(Request $request){
+        $request->validate([
+            'card_number'    =>  ['nullable', new CardNumber],
+            'name'           =>  'nullable|string|max:255',
+            'exp'            =>  'nullable|string',
+            'cvv'            =>  'nullable|numeric'
+        ]);
+
+        $paymentMethod = ContactPaymentMethod::where('user_id', auth()->user()->id)->first();
+
+        $paymentMethod->fill($request->only([
+            'card_number',
+            'name',
+            'exp',
+            'cvv'
+        ]));
+
+        $paymentMethod->save();
+
+        return $this->showOne($paymentMethod);
+    }
 
 }

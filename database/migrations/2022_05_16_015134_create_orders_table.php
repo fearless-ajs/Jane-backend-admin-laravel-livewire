@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('total_price');
             $table->bigInteger('total_paid')->nullable(0);
-            $table->enum('status', ['placed', 'in_progress', 'delivered']);
+            $table->boolean('fulfilled')->default(false);
             $table->string('address');
             $table->string('country');
             $table->string('state');

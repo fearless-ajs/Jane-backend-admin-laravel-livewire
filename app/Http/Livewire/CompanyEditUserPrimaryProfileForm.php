@@ -92,6 +92,8 @@ class CompanyEditUserPrimaryProfileForm extends LiveNotify
         $this->emit('refreshCompanyMyUserUserProfile');
         $this->emit('close-current-modal');
         $this->emit('refreshAdminAppHeader');
+        $this->emit('refreshContactMyProfile');
+        $this->emit('refreshContactAppHeader');
         $this->emit('refreshCompanyAppHeader');
         return $this->alert('success', 'Profile updated');
     }

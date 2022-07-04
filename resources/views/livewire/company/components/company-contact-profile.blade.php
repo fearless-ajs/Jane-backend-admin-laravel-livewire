@@ -46,8 +46,16 @@
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>
+                                    @if($contact->company && Auth::user()->hasRole('super-admin'))
+                                    <li class="nav-item">
+                                        <a class="nav-link fw-bold" href="{{route('admin.company-profile', $contact->company->id)}}">
+                                            <span class="d-none d-md-block">{{$contact->company->name}}</span>
+                                            <i data-feather="rss" class="d-block d-md-none"></i>
+                                        </a>
+                                    </li>
+                                    @endif
                                 </ul>
-                               @if(Auth::user()->hasModuleAccess('contact', 'edit'))
+                               @if(Auth::user()->hasModuleAccess('contact', 'edit') || Auth::user()->hasRole('super-admin'))
                                 <!-- edit button -->
                                 <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editContactModal">
                                     <i data-feather="edit" class="d-block d-md-none"></i>
@@ -71,29 +79,29 @@
             <!-- left profile info section -->
             <div class="col-lg-3 col-12 order-2 order-lg-1">
                 <!-- about -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="mb-75">Transactions</h5>
-                        <p class="card-text">
-                            This is the list of transactions carried out by the customer
-                        </p>
+{{--                <div class="card">--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h5 class="mb-75">Transactions</h5>--}}
+{{--                        <p class="card-text">--}}
+{{--                            This is the list of transactions carried out by the customer--}}
+{{--                        </p>--}}
 
-                        @if($contact->transactions)
-                            @foreach($contact->transactions as $transaction)
-                                <div class="mt-2">
-                                    @if($transaction->product)
-                                        <h5 class="mb-75">{{$transaction->product->name}}</h5>
-                                        <p class="card-text">{{$transaction->created_at->diffForHumans()}}</p>
-                                    @endif
-                                    @if($transaction->service)
-                                        <h5 class="mb-75">{{$transaction->service->name}}</h5>
-                                        <p class="card-text">{{$transaction->created_at->diffForHumans()}}</p>
-                                    @endif
-                                </div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
+{{--                        @if($contact->transactions)--}}
+{{--                            @foreach($contact->transactions as $transaction)--}}
+{{--                                <div class="mt-2">--}}
+{{--                                    @if($transaction->product)--}}
+{{--                                        <h5 class="mb-75">{{$transaction->product->name}}</h5>--}}
+{{--                                        <p class="card-text">{{$transaction->created_at->diffForHumans()}}</p>--}}
+{{--                                    @endif--}}
+{{--                                    @if($transaction->service)--}}
+{{--                                        <h5 class="mb-75">{{$transaction->service->name}}</h5>--}}
+{{--                                        <p class="card-text">{{$transaction->created_at->diffForHumans()}}</p>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <!--/ about -->
             </div>
             <!--/ left profile info section -->
@@ -239,7 +247,7 @@
         </div>
         <!--/ polls card -->
 
-        @if(Auth::user()->hasModuleAccess('contact', 'edit'))
+        @if(Auth::user()->hasModuleAccess('contact', 'edit') || Auth::user()->hasRole('super-admin'))
         @livewire('company-edit-contact-form', ['contact' => $contact])
         @endif
 

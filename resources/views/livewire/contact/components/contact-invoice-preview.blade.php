@@ -132,9 +132,6 @@
                                     <td class="py-1">
                                         <span class="fw-bold">{{$settings->currency->currency_symbol}}{{number_format($service->total_price_with_tax)}}</span>
                                     </td>
-                                    <td class="py-1">
-                                        <span class="fa fa-trash" style="cursor:pointer;" wire:click="removeService({{$loop->index}})"></span>
-                                    </td>
 
                                 </tr>
                             @endif

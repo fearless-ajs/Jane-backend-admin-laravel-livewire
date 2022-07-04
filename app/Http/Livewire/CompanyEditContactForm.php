@@ -41,8 +41,8 @@ class CompanyEditContactForm extends LiveNotify
 
     public $contact;
     public function mount($contact){
-        $this->products = Product::where('company_id', Auth::user()->company_id)->get();
-        $this->services = Service::where('company_id', Auth::user()->company_id)->get();
+//        $this->products = Product::where('company_id', Auth::user()->company_id)->get();
+//        $this->services = Service::where('company_id', Auth::user()->company_id)->get();
 
         $this->contact          = $contact;
         $this->title            = $contact->title;
@@ -150,7 +150,7 @@ class CompanyEditContactForm extends LiveNotify
             foreach ($this->product as $prod){
                 Transaction::create([
                     'contact_id'     => $this->contact->id,
-                    'company_id'     => Auth::user()->company_id,
+                    'company_id'     => $this->contact->company_id,
                     'product_id'     => $prod
                 ]);
             }
@@ -160,7 +160,7 @@ class CompanyEditContactForm extends LiveNotify
             foreach ($this->service as $serv){
                 Transaction::create([
                     'contact_id'     => $this->contact->id,
-                    'company_id'     => Auth::user()->company_id,
+                    'company_id'     => $this->contact->company_id,
                     'service_id'     => $serv
                 ]);
             }

@@ -14,6 +14,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('app-assets/images/ico/favicon.ico')}}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/charts/apexcharts.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/toastr.min.css')}}">
@@ -81,7 +87,7 @@
 @livewire('contact-main-menu')
 
 <!-- BEGIN: Content-->
-@if(Route::currentRouteName() == 'contact.catalogues')
+@if(Route::currentRouteName() == 'contact.catalogues' || Route::currentRouteName() == 'contact.cart' || Route::currentRouteName() == 'contact.checkout')
     <div class="app-content content ecommerce-application">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -198,6 +204,24 @@
         });
     });
 </script>
+
+<script>
+    window.addEventListener('swal:confirm', event => {
+        swal({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type,
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+
+            if(willDelete){
+                window.livewire.emit('acceptTwoFactor', event.detail.id);
+            }
+        });
+    });
+</script>
+
 <script>
     window.livewire.on('close-current-modal', param => {
         $('.current-modal').modal('hide');

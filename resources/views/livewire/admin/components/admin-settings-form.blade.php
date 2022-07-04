@@ -70,7 +70,8 @@
                         </div>
 
                         <div class="col-12 col-sm-6 mb-1">
-                            <label class="form-label" for="account-upload">Logo</label>
+                            <small wire:loading wire:target="app_logo" class="form-text text-muted mb-1"><i class="fa fa-spin"><i class="fa fa-spinner"></i></i>&nbsp;&nbsp; Validating image...</small>
+                            <label wire:loading.remove wire:target="app_logo" class="form-label" for="account-upload">Logo (Max: 2MB)</label>
                             <input type="file" wire:model="app_logo" class="form-control {{$errors->has('app_logo')? 'is-invalid' : '' }}" id="account-upload" accept="image/*"  />
                             @error('app_logo') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                         </div>
@@ -329,10 +330,13 @@
                             @error('app_country') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12" wire:loading.remove wire:target="app_logo">
                             <button type="submit" wire:loading.remove wire:target="updateSetting" class="btn btn-primary mt-1 me-1">Save changes</button>
                             <button class="btn btn-primary  mt-1 me-1" type="button" disabled wire:loading wire:target="updateSetting" tabindex="4"> <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                             <button type="reset" class="btn btn-outline-secondary mt-1">Clear all fields</button>
+                        </div>
+                        <div class="col-12" wire:loading wire:target="app_logo">
+                            <button type="button" disabled class="btn btn-outline-secondary mt-1">Please wait...</button>
                         </div>
                     </div>
                 </form>

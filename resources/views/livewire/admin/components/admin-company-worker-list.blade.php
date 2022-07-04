@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body border-bottom">
-        <h4 wire:loading.remove wire:target="search" class="card-title">@if($searchResult)  {{count($searchResult)}}  @else {{count($company->users)}} @endif Users</h4>
+        <h4 wire:loading.remove wire:target="search" class="card-title">@if($searchResult)  {{count($searchResult)}}  @else {{count($company->users)}} @endif Staff</h4>
         <h4 wire:loading wire:target="search" class="card-title">Searching... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></h4>
 
         <input type="text" class="form-control" wire:model="search" placeholder="Search for contact by name"/>
@@ -13,9 +13,9 @@
 
 
     <div class="card-datatable table-responsive pt-0">
-        {{--    <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#modals-slide-in">--}}
-        {{--        Add user--}}
-        {{--    </button>--}}
+            <button type="button" class="btn btn-primary mb-1 mt-1" style="margin-left: 10px" data-bs-toggle="modal" data-bs-target="#modals-slide-in">
+                Add staff member
+            </button>
         <table class="user-list-table table">
             <thead class="table-light">
             <tr>
@@ -33,7 +33,7 @@
             @if($workers)
                 @foreach($workers as $worker)
                     <tr>
-                        <td>{{$worker->lastname. ' ' .$worker->firstname }}</td>
+                        <td>{{$worker->firstname. ' ' .$worker->lastname }}</td>
                         <td>{{$worker->email}}</td>
                         <td>{{$worker->phone}}</td>
                         <td>{{$worker->country}}</td>

@@ -75,6 +75,13 @@
                                                 @endif
                                             @endif
 
+                                                @if($catalogue->company)
+                                                    <a href="#">
+                                                        <span class="text text-primary">{{Str::limit($catalogue->company->name, 15, $end='...')}}</span>
+                                                    </a>
+                                                @else
+                                                    <span class="badge badge-light-primary">Company unavailable </span>
+                                                @endif
                                         </ul>
                                     </div>
                                     <div>
@@ -92,14 +99,32 @@
                             <div class="item-options text-center">
                                 <div class="item-wrapper">
                                     <div class="item-cost">
-                                        <h4 class="item-price">₦ {{$catalogue->price}}</h4>
+                                        <h4 class="item-price">{{$settings->currency->currency_symbol}} {{$catalogue->price}}</h4>
                                     </div>
                                 </div>
-                                <a href="#" wire:click="remove({{$catalogue->id}})" class="btn btn-light btn-wishlist">
-                                    <span wire:loading wire:target="remove({{$catalogue->id}})"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    <i wire:loading.remove wire:target="remove({{$catalogue->id}})"  class="fa fa-cart-plus"></i>
-                                    <span>Add to cart</span>
-                                </a>
+
+                                @if(Auth::user()->cart)
+                                    @if(Auth::user()->cart->isCataloguePresent($catalogue->id))
+                                        <a href="#" wire:click="removeProductFromCart({{$catalogue->id}})" class="btn btn-light btn-wishlist">
+                                            <span wire:loading wire:target="removeProductFromCart({{$catalogue->id}})"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            <i wire:loading.remove wire:target="removeProductFromCart({{$catalogue->id}})"  class="fa fa-cart-plus"></i>
+                                            <span class="text text-warning">Remove from cart</span>
+                                        </a>
+                                    @else
+                                        <a href="#" wire:click="addProductToCart({{$catalogue->id}})" class="btn btn-light btn-wishlist">
+                                            <span wire:loading wire:target="addProductToCart({{$catalogue->id}})"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            <i wire:loading.remove wire:target="addProductToCart({{$catalogue->id}})"  class="fa fa-cart-plus"></i>
+                                            <span>Add to cart</span>
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="#" wire:click="addProductToCart({{$catalogue->id}})" class="btn btn-light btn-wishlist">
+                                        <span wire:loading wire:target="addProductToCart({{$catalogue->id}})"  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        <i wire:loading.remove wire:target="addProductToCart({{$catalogue->id}})"  class="fa fa-cart-plus"></i>
+                                        <span>Add to cart</span>
+                                    </a>
+                                @endif
+
                                 <a href="{{route('contact.catalogue-details', $catalogue->id)}}" class="btn btn-primary">
                                     <span>See details</span>
                                 </a>

@@ -23,7 +23,7 @@
                         @else
                             <a class="btn btn-primary mb-1 btn-sm-block" href="{{route('sign-in')}}">Back to login</a>
                         @endif
-                        <img class="img-fluid" src="../../../app-assets/images/pages/not-authorized-dark.svg" alt="Not authorized page" />
+                        <img class="img-fluid" src="{{asset('app-assets/images/pages/not-authorized-dark.svg')}}" alt="Not authorized page" />
                     </div>
                 </div>
             </div>

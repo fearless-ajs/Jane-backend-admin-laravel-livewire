@@ -16,8 +16,8 @@ class AdminCreateCurrencyForm extends Component
     public function updated($field){
         $this->validateOnly($field, [
             'country'           => 'required|string',
-            'currency_symbol'   => 'required|string|max:2',
-            'currency_name'     => 'required|string|max:symbol',
+            'currency_symbol'   => 'required|string',
+            'currency_name'     => 'required|string|max:255',
             'rate_to_dollar'    => 'required|numeric'
         ]);
     }
@@ -25,8 +25,8 @@ class AdminCreateCurrencyForm extends Component
     public function addCurrency(){
         $this->validate([
             'country'           => 'required|string',
-            'currency_symbol'   => 'required|string|max:2',
-            'currency_name'     => 'required|string|max:symbol',
+            'currency_symbol'   => 'required|string',
+            'currency_name'     => 'required|string|max:255',
             'rate_to_dollar'    => 'required|numeric'
         ]);
 
