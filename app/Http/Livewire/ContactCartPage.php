@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Cart;
 use App\Models\CartProduct;
 use App\Models\CartService;
 use App\Models\CompanyCatalogue;
@@ -53,9 +54,9 @@ class ContactCartPage extends Component
 
             if (count($this->cart->products) > 0){
                 foreach ($this->cart->services as $item){
-                    $itemTax = (($item->catalogue->tax->percentage / 100) * $item->catalogue->price);
-                    $serviceTotalPrice = $serviceTotalPrice+$serviceTotalPrice + $item->catalogue->price;
-                    $totalTax+=$itemTax;
+                    $productTax = (($item->catalogue->tax->percentage / 100) * $item->catalogue->price);
+                    $serviceTotalPrice = $serviceTotalPrice + $item->catalogue->price;
+                    $totalTax+=$productTax;
                 }
             }
         }
@@ -72,15 +73,31 @@ class ContactCartPage extends Component
         }
     }
 
+
     public function addItem($catalogue_id){
         $catalogue = CompanyCatalogue::find($catalogue_id);
         $cartItem = CartProduct::where('cart_id', $this->cart->id)->where('catalogue_id', $catalogue->id)->first();
+        $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
+
         if($cartItem){
             if (($cartItem->quantity + 1) > $catalogue->quantity){
                 return $this->emit('alert', ['type' => 'warning', 'message' => 'Cannot add above available quantity']);
             }
-            $cartItem->quantity+=1;
+
+            $cartItem->quantity += 1;
+
+            // Calculate product new price with tax
+            if ($cartItem->catalogue->tax){
+                $cartItem->total_product_price = $cartItem->total_product_price + ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+                $cart->total_price  = $cart->total_price + ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+
+            }else{
+                $cartItem->total_product_price = $cartItem->total_product_price + $catalogue->price;
+                $cart->total_price  = $cart->total_price + $catalogue->price;;
+            }
+
             $cartItem->save();
+            $cart->save();
         }
         $this->emit('refreshMyCart');
         $this->emit('refreshMyCartPage');
@@ -89,13 +106,33 @@ class ContactCartPage extends Component
     public function removeItem($catalogue_id){
         $catalogue = CompanyCatalogue::find($catalogue_id);
         $cartItem = CartProduct::where('cart_id', $this->cart->id)->where('catalogue_id', $catalogue->id)->first();
+        $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
+
+
         if($cartItem){
             if ($cartItem->quantity - 1 == 0){
+                // Calculate product new price with tax
+                if ($cartItem->catalogue->tax){
+                    $cart->total_price  = $cart->total_price - ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+                }else{
+                    $cart->total_price  = $cart->total_price - $catalogue->price;
+                }
                 $cartItem->delete();
             }else{
+                if ($cartItem->catalogue->tax){
+                    $cartItem->total_product_price = $cartItem->total_product_price - ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+                    $cart->total_price  = $cart->total_price - ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+
+                }else{
+                    $cartItem->total_product_price = $cartItem->total_product_price - $catalogue->price;
+                    $cart->total_price  = $cart->total_price - $catalogue->price;
+                }
+
                 $cartItem->quantity-=1;
                 $cartItem->save();
             }
+
+            $cart->save();
         }
         $this->emit('refreshMyCart');
         $this->emit('refreshMyCartPage');
@@ -103,18 +140,36 @@ class ContactCartPage extends Component
         $this->emit('refreshContactCatalogueDetails');
     }
 
+
+
     public function removeCatalogue($catalogue_id){
         $catalogue = CompanyCatalogue::find($catalogue_id);
+        $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
+
         if ($catalogue->type == 'product'){
             $cartItem = CartProduct::where('cart_id', $this->cart->id)->where('catalogue_id', $catalogue->id)->first();
-            if ($cartItem){
 
+            if ($cartItem->catalogue->tax){
+                $cart->total_price  = $cart->total_price - ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+            }else{
+                $cart->total_price  = $cart->total_price - $catalogue->price;
+            }
+
+            if ($cartItem){
                 $cartItem->delete();
             }
         }
 
         if ($catalogue->type == 'service'){
             $cartItem = CartService::where('cart_id', $this->cart->id)->where('catalogue_id', $catalogue->id)->first();
+
+            if ($cartItem->catalogue->tax){
+                $cart->total_price  = $cart->total_price - ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+            }else{
+                $cart->total_price  = $cart->total_price - $catalogue->price;
+            }
+
+
             if ($cartItem){
                 $cartItem->delete();
             }

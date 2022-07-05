@@ -48,6 +48,7 @@ class ContactCatalogueDetails extends Component
         $this->checkCatalogueInCart();
     }
 
+
     public function addProductToCart(){
         $catalogue = CompanyCatalogue::findOrFail($this->catalogue->id);
 
@@ -55,11 +56,12 @@ class ContactCatalogueDetails extends Component
             // If cart doesn't exist
             $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
             if(!$cart){
+
                 // Create cart
                 $cart = Cart::create([
                     'user_id'        => auth()->user()->id,
                     'checkout'       => false,
-                    'total_price'    => $catalogue->price
+                    'total_price'    => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                 ]);
 
                 // Check if the product quantity is available
@@ -71,7 +73,7 @@ class ContactCatalogueDetails extends Component
                     'cart_id'               => $cart->id,
                     'catalogue_id'          => $catalogue->id,
                     'quantity'              => 1,
-                    'total_product_price'   => $catalogue->price
+                    'total_product_price'   => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                 ]);
             }else{
                 // If cart already exist
@@ -80,24 +82,34 @@ class ContactCatalogueDetails extends Component
                     // Update the cart product
                     $cartProduct->update([
                         'quantity'             => $cartProduct->quantity + 1,
-                        'total_product_price' =>  $catalogue->price *($cartProduct->quantity + 1),
+                        'total_product_price' => ($catalogue->tax)?((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price) * ($cartProduct->quantity + 1):  $catalogue->price * ($cartProduct->quantity + 1),
                     ]);
                     // Update the cart total price
-                    $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ($catalogue->price * ($cartProduct->quantity + 1));
+                    if ($catalogue->tax){
+                        $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price) * ($cartProduct->quantity + 1);
+                    }else{
+                        $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ($catalogue->price * ($cartProduct->quantity + 1));
+                    }
                     $cart->save();
                 }else{
                     CartProduct::create([
                         'cart_id'               => $cart->id,
                         'catalogue_id'            => $catalogue->id,
                         'quantity'              => 1,
-                        'total_product_price'   => $catalogue->price
+                        'total_product_price'   => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                     ]);
-                    $cart->total_price  = $cart->total_price + $catalogue->price;
+
+                    if ($catalogue->tax){
+                        $cart->total_price  = $cart->total_price + ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+
+                    }else{
+                        $cart->total_price  = $cart->total_price + $catalogue->price;;
+                    }
                     $cart->save();
                 }
             }
         }else if ($catalogue->type == 'service'){
-            $this->addServiceToCart();
+            $this->addServiceToCart($catalogue);
         }
 
         $this->isPresentInCart = true;
@@ -106,9 +118,7 @@ class ContactCatalogueDetails extends Component
         return $this->emit('alert', ['type' => 'success', 'message' => 'Added to cart']);
     }
 
-    public function addServiceToCart(){
-        $catalogue = CompanyCatalogue::findOrFail($this->catalogue->id);
-
+    public function addServiceToCart($catalogue){
         // If cart doesn't exist
         $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
         if(!$cart){
@@ -116,13 +126,13 @@ class ContactCatalogueDetails extends Component
             $cart = Cart::create([
                 'user_id'        => auth()->user()->id,
                 'checkout'       => false,
-                'total_price'    => $catalogue->price
+                'total_price'    => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
             ]);
             // Create cart product
             CartService::create([
                 'cart_id'                 => $cart->id,
                 'catalogue_id'            => $catalogue->id,
-                'total_service_price'    => $catalogue->price
+                'total_service_price'     => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
             ]);
         }else{
             // If cart already exist
@@ -131,9 +141,14 @@ class ContactCatalogueDetails extends Component
                 CartService::create([
                     'cart_id'                 => $cart->id,
                     'catalogue_id'            => $catalogue->id,
-                    'total_service_price'     => $catalogue->price
+                    'total_service_price'     => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                 ]);
-                $cart->total_price  = $cart->total_price + $catalogue->price;
+
+                if ($catalogue->tax){
+                    $cart->total_price  = $cart->total_price + ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+                }else{
+                    $cart->total_price  = $cart->total_price + $catalogue->price;
+                }
                 $cart->save();
             }
         }
@@ -141,13 +156,21 @@ class ContactCatalogueDetails extends Component
 
 
     public function removeProductFromCart(){
-        if ($this->catalogue->type == 'product'){
+        $catalogue = CompanyCatalogue::findOrFail($this->catalogue->id);
+        if ($catalogue->type == 'product'){
             // If cart doesn't exist
             $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
-            $product = CartProduct::where('cart_id', $cart->id)->where('catalogue_id', $this->catalogue->id)->first();
-            $product->delete();
-        }else if ($this->catalogue->type == 'service'){
-            $this->removeServiceFromCart();
+            $cartProduct = CartProduct::where('cart_id', $cart->id)->where('catalogue_id', $catalogue->id)->first();
+
+            // Update cart total price
+            $cart->total_price = $cart->total_price - $cartProduct->total_product_price;
+
+            // Delete product from cart
+            $cartProduct->delete();
+            $cart->save();
+
+        }else if ($catalogue->type == 'service'){
+            $this->removeServiceFromCart($catalogue);
         }
 
         $this->isPresentInCart = false;
@@ -156,12 +179,20 @@ class ContactCatalogueDetails extends Component
         return $this->emit('alert', ['type' => 'success', 'message' => 'Removed from cart']);
     }
 
-    public function removeServiceFromCart(){
+    public function removeServiceFromCart($catalogue){
         // If cart doesn't exist
         $cart = Cart::where('user_id', auth()->user()->id)->where('checkout', false)->first();
-        $service = CartService::where('cart_id', $cart->id)->where('catalogue_id', $this->catalogue->id)->first();
-        $service->delete();
+        $cartService = CartService::where('cart_id', $cart->id)->where('catalogue_id', $catalogue->id)->first();
+
+        // Update cart total price
+        $cart->total_price = $cart->total_price - $cartService->total_service_price;
+
+        // Delete service from cart
+        $cartService->delete();
+        $cart->save();
     }
+
+
 
     public function render()
     {

@@ -24,7 +24,7 @@ class CartController extends ApiController
                 $cart = Cart::create([
                     'user_id'        => auth()->user()->id,
                     'checkout'       => false,
-                    'total_price'    => $catalogue->price
+                    'total_price'    => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                 ]);
 
                 // Check if the product quantity is available
@@ -40,7 +40,7 @@ class CartController extends ApiController
                     'cart_id'               => $cart->id,
                     'catalogue_id'          => $catalogue_id,
                     'quantity'              => 1,
-                    'total_product_price'   => $catalogue->price
+                    'total_product_price'   => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                 ]);
             }else{
                 // If cart already exist
@@ -52,16 +52,24 @@ class CartController extends ApiController
                         'total_product_price' =>  $catalogue->price *($cartProduct->quantity + 1),
                     ]);
                     // Update the cart total price
-                    $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ($catalogue->price * ($cartProduct->quantity + 1));
+                    if ($catalogue->tax){
+                        $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price) * ($cartProduct->quantity + 1);
+                    }else{
+                        $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ($catalogue->price * ($cartProduct->quantity + 1));
+                    }
                     $cart->save();
                 }else{
                     CartProduct::create([
                         'cart_id'               => $cart->id,
                         'catalogue_id'          => $catalogue_id,
                         'quantity'              => 1,
-                        'total_product_price'   => $catalogue->price
+                        'total_product_price'   => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                     ]);
-                    $cart->total_price  = $cart->total_price + $catalogue->price;
+                    if ($catalogue->tax){
+                        $cart->total_price  = $cart->total_price + ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+                    }else{
+                        $cart->total_price  = $cart->total_price + $catalogue->price;;
+                    }
                     $cart->save();
                 }
             }
@@ -75,13 +83,13 @@ class CartController extends ApiController
                 $cart = Cart::create([
                     'user_id'        => auth()->user()->id,
                     'checkout'       => false,
-                    'total_price'    => $catalogue->price
+                    'total_price'    => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                 ]);
                 // Create cart product
                 CartService::create([
                     'cart_id'               => $cart->id,
                     'catalogue_id'          => $catalogue_id,
-                    'total_service_price'   => $catalogue->price
+                    'total_service_price'   => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                 ]);
             }else{
                 // If cart already exist
@@ -99,9 +107,15 @@ class CartController extends ApiController
                     CartService::create([
                         'cart_id'               => $cart->id,
                         'catalogue_id'          => $catalogue_id,
-                        'total_service_price'   => $catalogue->price
+                        'total_service_price'   => ($catalogue->tax)?(($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price : $catalogue->price
                     ]);
-                    $cart->total_price  = $cart->total_price + $catalogue->price;
+
+                    if ($catalogue->tax){
+                        $cart->total_price  = $cart->total_price + ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+                    }else{
+                        $cart->total_price  = $cart->total_price + $catalogue->price;
+                    }
+
                     $cart->save();
                 }
             }
@@ -143,13 +157,23 @@ class CartController extends ApiController
                 $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price);
                 $cart->save();
             }else{
-                //Update the cart product
-                $cartProduct->update([
-                    'quantity'             => $cartProduct->quantity - 1,
-                    'total_product_price' =>  $catalogue->price * ($cartProduct->quantity - 1),
-                ]);
-                // Update the cart total price
-                $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price) + ($catalogue->price * ($cartProduct->quantity - 1));
+                if ($catalogue->tax){
+                    //Update the cart product
+                    $cartProduct->update([
+                        'quantity'             => $cartProduct->quantity - 1,
+                        'total_product_price' =>  $cartProduct->total_product_price - ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price)
+                    ]);
+                    // Update the cart total price
+                    $cart->total_price  =  $cart->total_price - ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);;
+                }else{
+                    //Update the cart product
+                    $cartProduct->update([
+                        'quantity'             => $cartProduct->quantity - 1,
+                        'total_product_price' =>  $cartProduct->total_product_price -  $catalogue->price
+                    ]);
+                    // Update the cart total price
+                    $cart->total_price  =  $cart->total_price -  $catalogue->price;
+                }
                 $cart->save();
             }
 
@@ -172,9 +196,13 @@ class CartController extends ApiController
                 ], 422);
             }
 
-            // Check if the quantity is equal to 1, then delete the record from cart
             // Update the cart total price
-            $cart->total_price  = ($cart->total_price - $cartService->total_service_price) + ($catalogue->price);
+            if ($catalogue->tax){
+                $cart->total_price  = $cart->total_price - ((($catalogue->tax->percentage / 100 ) * $catalogue->price) + $catalogue->price);
+            }else{
+                $cart->total_price  = $cart->total_price - $catalogue->price;
+            }
+
             $cartService->delete();
             $cart->save();
         }
@@ -212,6 +240,7 @@ class CartController extends ApiController
                     'message'   => 'This product is not in your cart'
                 ], 422);
             }
+
 
             // remove the product from cart
             $cart->total_price  = ($cart->total_price - $cartProduct->total_product_price);

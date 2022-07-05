@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('cart_id');
             $table->bigInteger('catalogue_id');
             $table->bigInteger('quantity')->default(1);
-            $table->bigInteger('total_product_price');
+            $table->float('total_product_price');
             $table->timestamps();
             $table->softDeletes();
         });

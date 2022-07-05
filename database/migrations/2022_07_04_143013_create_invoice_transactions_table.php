@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('invoice_order_id');
             $table->bigInteger('amount');
             $table->boolean('successful')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

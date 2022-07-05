@@ -44,7 +44,7 @@
                                                                         {{--                                            <input class="touchspin-cart" wire:model="quantity" type="number" value="{{$cartItem->quantity}}">--}}
                                                     </div>
                                                 </div>
-                                                <h5 class="cart-item-price">{{$settings->currency->currency_symbol}}{{$cartItem->catalogue->price * $cartItem->quantity}}</h5>
+                                                <h5 class="cart-item-price">{{$settings->currency->currency_symbol}}{{$cartItem->total_product_price}}</h5>
                                             </div>
                                             @else
                                                 <p class="text text-danger">Item not Available</p>
@@ -78,7 +78,7 @@
                                                                             {{--                                            <input class="touchspin-cart" wire:model="quantity" type="number" value="{{$cartItem->quantity}}">--}}
                                                                         </div>
                                                                     </div>
-                                                                    <h5 class="cart-item-price">{{$settings->currency->currency_symbol}}{{$cartItem->catalogue->price}}</h5>
+                                                                    <h5 class="cart-item-price">{{$settings->currency->currency_symbol}}{{$cartItem->total_service_price}}</h5>
                                                                 </div>
                                                                 @else
                                                                     <p class="text text-danger">Item not Available</p>

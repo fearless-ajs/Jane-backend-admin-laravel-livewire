@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('cart_id');
             $table->bigInteger('catalogue_id');
-            $table->bigInteger('total_service_price');
+            $table->float('total_service_price');
             $table->timestamps();
             $table->softDeletes();
         });

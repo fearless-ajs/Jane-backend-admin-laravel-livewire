@@ -51,7 +51,7 @@
                                             <div class="item-options text-center">
                                                 <div class="item-wrapper">
                                                     <div class="item-cost">
-                                                        <h4 class="item-price">{{$settings->currency->currency_symbol}}{{$cartItem->catalogue->price * $cartItem->quantity}}</h4>
+                                                        <h4 class="item-price">{{$settings->currency->currency_symbol}}{{$cartItem->total_product_price}}</h4>
                                                         {{--                                                    <p class="card-text shipping">--}}
                                                         {{--                                                        <span class="badge rounded-pill badge-light-success">Free Shipping</span>--}}
                                                         {{--                                                    </p>--}}
@@ -113,7 +113,7 @@
                                             <div class="item-options text-center">
                                                 <div class="item-wrapper">
                                                     <div class="item-cost">
-                                                        <h4 class="item-price">{{$settings->currency->currency_symbol}}{{$cartItem->catalogue->price}}</h4>
+                                                        <h4 class="item-price">{{$settings->currency->currency_symbol}}{{$cartItem->total_service_price}}</h4>
                                                         {{--                                                    <p class="card-text shipping">--}}
                                                         {{--                                                        <span class="badge rounded-pill badge-light-success">Free Shipping</span>--}}
                                                         {{--                                                    </p>--}}
