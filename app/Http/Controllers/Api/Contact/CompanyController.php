@@ -4,83 +4,40 @@ namespace App\Http\Controllers\Api\Contact;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\Company;
+use App\Models\CompanyCatalogue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->showAll(Company::all());
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Company  $company
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Company $company)
+
+    public function show($company_id)
     {
-        //
+        $company = Company::findOrFail($company_id);
+        return $this->showOne($company);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Company $company)
-    {
-        //
+    public function fetchCompanyCatalogue($company_id){
+        // Check if company Exist
+        Company::findOrFail($company_id);
+        $catalogues = CompanyCatalogue::where('company_id', $company_id)->get();
+        return $this->showAll($catalogues);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Company $company)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Company $company)
-    {
-        //
-    }
 }

@@ -14,6 +14,7 @@
 use App\Http\Controllers\Api\Contact\AuthController;
 use App\Http\Controllers\Api\Contact\CartController;
 use App\Http\Controllers\Api\Contact\CatalogueController;
+use App\Http\Controllers\Api\Contact\CompanyController;
 use App\Http\Controllers\Api\Contact\OrderController;
 use App\Http\Controllers\Api\Contact\ProductCategoryController;
 use App\Http\Controllers\Api\Contact\ProductController;
@@ -54,6 +55,11 @@ Route::prefix('contact-route')->group(function () {
     Route::get('/categories',                                 [ProductCategoryController::class, 'categories']);
     Route::get('/company/{company_id}/categories',            [ProductCategoryController::class, 'companyCategories']);
     Route::get('/category/{category_name}/products',          [ProductCategoryController::class, 'categoryProducts']);
+
+
+    Route::get('/companies',                                  [CompanyController::class, 'index']);
+    Route::get('/companies/{id}',                             [CompanyController::class, 'show']);
+    Route::get('/companies/{id}/catalogue',                   [CompanyController::class, 'fetchCompanyCatalogue']);
 
 
     // Protection routes for signed in users only
