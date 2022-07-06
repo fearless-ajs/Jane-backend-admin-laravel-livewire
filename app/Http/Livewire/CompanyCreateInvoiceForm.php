@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Worker;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -85,7 +86,6 @@ class CompanyCreateInvoiceForm extends Component
         $this->validateOnly($field, [
             'to'                => 'required|numeric',
             'worker'            => 'required|numeric',
-            'date_issued'       => 'required|string|max:255',
             'due_date'          => 'required|string|max:255',
             'payment_methods'   => 'nullable|array',
             'note'              => 'nullable|max:2000',
@@ -318,7 +318,6 @@ class CompanyCreateInvoiceForm extends Component
         $this->validate([
             'to'                => 'required|numeric',
             'worker'            => 'required|numeric',
-            'date_issued'       => 'required|max:255',
             'due_date'          => 'required|max:255',
             'payment_methods'   => 'nullable|array',
             'note'              => 'nullable|max:2000',
@@ -347,7 +346,7 @@ class CompanyCreateInvoiceForm extends Component
             'worker_id'         => $this->worker,
             'creator_id'        => Auth::user()->id, // User_id not worker id
 
-            'date_issued'       => $this->date_issued,
+            'date_issued'       => Carbon::now(),
             'due_date'          => $this->due_date,
 
             'products_total_price'      => $productTotalPrice,

@@ -36,7 +36,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Country</th>
-                <th>Created_at</th>
+                <th>Created</th>
                 <th></th>
                 <th></th>
             </tr>

@@ -16,7 +16,7 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href="{{route('admin.company-profile', $catalogue->company->id)}}">{{$catalogue->company->name}}</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{route('admin.company-catalogues', $catalogue->company->id)}}">Catalogues</a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.company-catalogues', $catalogue->company->id)}}">Catalog</a>
                                 </li>
                                 <li class="breadcrumb-item active">{{$catalogue->name}}
                                 </li>

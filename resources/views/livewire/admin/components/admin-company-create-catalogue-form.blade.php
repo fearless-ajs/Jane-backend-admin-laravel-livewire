@@ -6,8 +6,8 @@
             </div>
             <div class="modal-body pb-5 px-sm-5 pt-50">
                 <div class="text-center mb-2">
-                    <h1 class="mb-1">Add New Catalogue</h1>
-                    <p>Add new catalogue to your store.</p>
+                    <h1 class="mb-1">Add New item</h1>
+                    <p>Add new item to company store.</p>
                 </div>
                 <form class="row gy-1 pt-75" wire:submit.prevent="addCatalogue">
                     <div class="col-12 col-md-6">
@@ -123,7 +123,7 @@
 
                     <div class="col-12">
                         <div class="form-group" wire:ignore>
-                            <label>Images <sup>max 20MB</sup></label><br>
+                            <label>Images(Multiple) <sup>max 20MB</sup></label><br>
                             <input name="images[]"  class="form-control {{$errors->has('images.*')? 'is-invalid' : '' }}" type="file" wire:model="images" multiple data-min-file-count="1" data-theme="fas">
                             @error('images') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             <small wire:loading wire:target="images" class="form-text text-muted"><i class="fa fa-spin"><i class="fa fa-spinner"></i></i>&nbsp;&nbsp; Loading preview...</small>
@@ -151,7 +151,7 @@
                     </div>
 
                     <div class="col-12 text-center mt-2 pt-50">
-                        <button type="submit"  wire:loading.remove wire:target="addCatalogue"  class="btn btn-primary me-1">Add catalogue</button>
+                        <button type="submit"  wire:loading.remove wire:target="addCatalogue"  class="btn btn-primary me-1">Add item</button>
                         <button type="submit"  wire:loading wire:target="addCatalogue"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
                             Discard

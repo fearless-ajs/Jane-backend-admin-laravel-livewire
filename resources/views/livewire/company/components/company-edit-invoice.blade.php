@@ -22,11 +22,11 @@
                                 <h4 class="invoice-title">Code: {{$invoice_number}}</h4>
                                 @error('invoice_number') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             </div>
-                            <div class="d-flex align-items-center mb-1">
-                                <span class="title">Date:* </span>
-                                <input type="date" wire:model.lazy="date_issued" class="form-control invoice-edit-input date-picker {{$errors->has('date_issued')? 'is-invalid' : '' }}" />
-                                @error('date_issued') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                            </div>
+{{--                            <div class="d-flex align-items-center mb-1">--}}
+{{--                                <span class="title">Date:* </span>--}}
+{{--                                <input type="date" wire:model.lazy="date_issued" class="form-control invoice-edit-input date-picker {{$errors->has('date_issued')? 'is-invalid' : '' }}" />--}}
+{{--                                @error('date_issued') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
+{{--                            </div>--}}
                             <div class="d-flex align-items-center">
                                 <span class="title">Due Date:* </span>
                                 <input type="date" wire:model.lazy="due_date"  class="form-control invoice-edit-input due-date-picker {{$errors->has('due_date')? 'is-invalid' : '' }}" />
@@ -199,9 +199,6 @@
                 </div>
                 <!-- Product Details ends -->
 
-
-                <hr class="invoice-spacing mt-0" />
-
                 @if(count($service_selected_items) > 0)
                     <div class="table-responsive">
                         <table class="table">
@@ -336,7 +333,7 @@
                                 <h6 class="invoice-to-title">Designated staff:*</h6>
                                 <div class="invoice-customer">
                                     <select wire:model.lazy="worker" class="invoiceto form-select {{$errors->has('worker')? 'is-invalid' : '' }}">
-                                        <option value="">Select staff in charge</option>
+                                        <option value="">-- Select --</option>
                                         @if($workers)
                                             @foreach($workers as $worker)
                                                 <option value="{{$worker->id}}">{{$worker->user->lastname. ' '.$worker->user->firstname }}</option>

@@ -2,6 +2,8 @@
     <div class="navbar-container d-flex content">
 
         <ul class="nav navbar-nav align-items-center ms-auto" >
+
+            <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon fa fa-sun" ></i></a></li>
             <li class="nav-item dropdown dropdown-cart me-25"><a class="nav-link" href="#" data-bs-toggle="dropdown"><i class="ficon fa fa-shopping-cart"></i><span class="badge rounded-pill bg-primary badge-up cart-item-count">{{$cartCataloguesTotal}}</span></a>
                 <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
                     <li class="dropdown-menu-header">
@@ -98,12 +100,14 @@
             </li>
 
 
+
+
             <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">{{  Auth::user()->lastname . ' ' . Auth::user()->firstname }}</span><span class="user-status">Contact</span></div><span class="avatar"><img class="round" src="{{Auth::user()->UserImage}}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="{{route('contact.profile')}}"><i class="me-50" data-feather="settings"></i> Profile</a>
-                    <a class="dropdown-item" href="{{route('sign-out')}}"><i class="me-50" data-feather="power"></i> Logout</a>
+                    <a class="dropdown-item" href="{{route('contact.profile')}}"><i class="me-50 fa fa-user"></i>Personal Profile</a>
+                    <a class="dropdown-item" href="{{route('sign-out')}}"><i class="me-50 fa fa-sign-out-alt" ></i> Logout</a>
                 </div>
             </li>
         </ul>

@@ -21,7 +21,7 @@
                 <td>{{$loop->index + 1}}</td>
                 <td>
                     @if($invoice->ContactInfo)
-                    {{$invoice->contactInfo->lastname. '  '.$invoice->contactInfo->firstname}}
+                    {{$invoice->contactInfo->firstname. '  '.$invoice->contactInfo->lastname}}
                     @else
                     <span class="text-danger">Contact deleted</span>
                     @endif
@@ -29,7 +29,14 @@
                 <td>{{$settings->app_currency_symbol}}{{$invoice->products_total_price + $invoice->services_total_price}}</td>
                 <td>{{ \Carbon\Carbon::parse($invoice->date_issued)->translatedFormat(' j F Y')}}</td>
                 <td>{{ \Carbon\Carbon::parse($invoice->due_date)->translatedFormat(' j F Y')}}</td>
-                <td>{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</td>
+
+                @if($invoice->worker)
+                    <td>{{$invoice->worker->firstname. '  ' .$invoice->worker->lastname }}</td>
+                @else
+                    <span class="text-danger">Staff not available</span>
+                @endif
+
+
                 @if($invoice->signed)
                     <td class="text-success">Signed</td>
                 @else

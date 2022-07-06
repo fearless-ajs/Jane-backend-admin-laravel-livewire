@@ -7,10 +7,13 @@
     <div class="content-body">
         <div class="auth-wrapper auth-basic px-2">
             <div class="auth-inner my-2">
+                <div style="text-align: center" class="mb-2">
+                    <img src="{{$settings->AppImage}}" style="max-width: 20%; margin-right: -10px" />
+                </div>
                 <!-- Login basic -->
                 <div class="card mb-0">
                     <div class="card-body">
-
+                        <h2 class="mb-1 text-center text-primary font-large-1 mb-2">{{$settings->app_name}}</h2>
                         <h4 class="card-title mb-1 text-center">Two Factor Verification</h4>
                         <p class="card-text mb-2 text-center">You have received an email which contains two factor login code</p>
 

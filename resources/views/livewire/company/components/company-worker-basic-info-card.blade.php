@@ -5,7 +5,7 @@
                 <div class="d-flex align-items-center flex-column">
                     <img class="img-fluid rounded mt-3 mb-2" src="{{$worker->WorkerImage}}" height="110" width="110" alt="User avatar" />
                     <div class="user-info text-center">
-                        <h4>{{$worker->lastname. '  ' .$worker->firstname }}</h4>
+                        <h4>{{$worker->firstname. '  ' .$worker->lastname }}</h4>
                         <span class="badge bg-light-secondary">{{$worker->email}}</span>
                     </div>
                 </div>

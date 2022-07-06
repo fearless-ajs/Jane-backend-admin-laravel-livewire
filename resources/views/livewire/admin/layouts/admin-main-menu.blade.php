@@ -32,10 +32,6 @@
             <li class="nav-item @if(Route::currentRouteName() == 'admin.dashboard') active @endif"><a class="d-flex align-items-center" href="{{route('admin.dashboard')}}"><i class="fa fa-home"></i><span class="menu-title text-truncate" >Dashboard</span></a>
             </li>
 
-            <li class="navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
-            </li>
-
-
 
             @if(Auth::user()->hasRole('super-admin'))
                 <li class="nav-item @if(Route::currentRouteName() == 'admin.companies') active @endif"><a class="d-flex align-items-center" href="{{route('admin.companies')}}"><i class="fa fa-users"></i><span class="menu-title text-truncate" >Companies</span></a>

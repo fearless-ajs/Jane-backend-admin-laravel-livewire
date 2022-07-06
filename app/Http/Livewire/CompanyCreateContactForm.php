@@ -112,7 +112,7 @@ class CompanyCreateContactForm extends Component
                 'firstname'          => $this->firstname,
                 'email'              => $this->primary_email,
                 'user_type'          => 'contact',
-                'image'              => ($this->image)?$this->image:null,
+                'image'              => ($this->image)?$this->image:'user-avatar.jpg',
                 'password'           => $this->lastname
             ]);
 
@@ -134,7 +134,7 @@ class CompanyCreateContactForm extends Component
             'lastname'          => $this->lastname,
             'firstname'         => $this->firstname,
             'email'             => $this->primary_email,
-            'image'             => ($this->image)?$this->image:null,
+            'image'             => ($this->image)?$this->image:'user-avatar.jpg',
             'title'             => $this->title,
             'office_phone'      => $this->office_phone,
             'mobile_phone'      => $this->mobile_phone,

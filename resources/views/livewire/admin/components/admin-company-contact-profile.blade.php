@@ -16,10 +16,10 @@
                         </div>
                         <!-- profile title -->
                         <div class="profile-title ms-3">
-                            <h2 class="text-white">{{$contact->title. ' ' .$contact->user->lastname. ' '. $contact->user->firstname}}</h2>
+                            <h2 class="text-white">{{$contact->title. ' ' .$contact->firstname. ' '. $contact->lastname}}</h2>
                             <p class="text-white">{{$contact->user->email}}</p>
 
-                            <a class="btn btn-outline-primary mb-1" href="mailto:{{$contact->user->email}}">
+                            <a class="btn btn-outline-primary mb-1" href="mailto:{{$contact->email}}">
                                 <span class="d-none d-md-block">Mail</span>
                                 <i class=" d-block d-md-none">Mail</i>
                             </a>
@@ -79,11 +79,11 @@
                         <div class="d-flex justify-content-start align-items-center mb-1">
                             <!-- avatar -->
                             <div class="avatar me-1">
-                                <img src="{{$contact->user->UserImage}}" alt="avatar img" height="50" width="50" />
+                                <img src="{{$contact->user->UserImage}}" alt="avatar img" height="50" width="50" style="cursor: default" />
                             </div>
                             <!--/ avatar -->
                             <div class="profile-user-info">
-                                <h6 class="mb-0">{{$contact->title. ' ' .$contact->user->lastname. ' '. $contact->user->firstname}}</h6>
+                                <h6 class="mb-0">{{$contact->title. ' ' .$contact->firstname. ' '. $contact->lastname}}</h6>
                                 <small class="text-muted">Joined {{$contact->created_at->diffForHumans()}}</small>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h6 class="mb-0">Email</h6>
                                 </div>
-                                <small>{{$contact->user->email}}</small>
+                                <small>{{$contact->email}}</small>
                             </div>
                         </div>
 

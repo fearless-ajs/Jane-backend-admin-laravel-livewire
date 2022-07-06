@@ -12,7 +12,7 @@
                     <!-- profile picture -->
                     <div class="profile-img-container d-flex align-items-center">
                         <div class="profile-img">
-                            <img src="{{$user->userImage}}" class="rounded img-fluid" alt="Card image" />
+                            <img src="{{$user->userImage}}" class="rounded img-fluid" alt="Card image" style="cursor: default" />
                         </div>
                         <!-- profile title -->
                         <div class="profile-title ms-3">
@@ -48,9 +48,9 @@
                                     </li>
                                 </ul>
                                 <!-- edit button -->
-                                <a href="{{route('contact.payment-info')}}" class="btn btn-primary">
+                                <a href="{{route('contact.payment-info')}}" class="btn btn-outline-primary">
                                     <i data-feather="edit" class="d-block d-md-none"></i>
-                                    <span class="fw-bold d-none d-md-block">Update other info</span>
+                                    <span class="fw-bold d-none d-md-block">Update billing info</span>
                                 </a>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
         </div>
         <!--/ polls card -->
 
-        @livewire('company-edit-user-primary-profile-form', ['user' => $user])
+        @livewire('admin-edit-user-primary-profile-form', ['user' => $user])
 
 {{--        @livewire('company-edit-user-worker-info-form', ['user' => $user])--}}
 

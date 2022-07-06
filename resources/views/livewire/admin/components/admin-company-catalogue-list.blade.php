@@ -21,7 +21,7 @@
                             <div class="view-options d-flex">
                                 <div class="btn-group dropdown-sort" wire:ignore>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCatalogueModal">
-                                        Add catalogue
+                                        Add item
                                     </button>
                                 </div>
                                 <div class="btn-group" role="group">

@@ -8,8 +8,13 @@
         <div class="auth-wrapper auth-basic px-2">
             <div class="auth-inner my-2">
                 <div style="text-align: center" class="mb-2">
-                    <img src="{{$settings->AppImage}}" style="max-width: 10%; margin-right: -10px" />
+                    <img src="{{$settings->AppImage}}" style="max-width: 20%; margin-right: -10px" />
                 </div>
+                @if(session()->has('message'))
+                <div style="text-align: center; border-radius: 20px; padding: 20px;" class="mb-2 bg-primary">
+                    <h4 class="">{{session()->get('message')}}</h4>
+                </div>
+                @endif
                 <!-- Login basic -->
                 <div class="card mb-0">
                     <div class="card-body">

@@ -7,14 +7,14 @@
             </div>
             <div class="modal-body flex-grow-1">
                 <div class="mb-1">
-                    <label class="form-label" for="basic-icon-default-fullname">Last Name*</label>
-                    <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Staff's lastname"/>
-                    @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                </div>
-                <div class="mb-1">
                     <label class="form-label" for="basic-icon-default-fullname">First Name*</label>
                     <input type="text" wire:model.lazy="firstname" class="form-control dt-full-name  {{$errors->has('firstname')? 'is-invalid' : '' }}"  placeholder="Staff's firstname" />
                     @error('firstname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                </div>
+                <div class="mb-1">
+                    <label class="form-label" for="basic-icon-default-fullname">Last Name*</label>
+                    <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Staff's lastname"/>
+                    @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
                 <div class="mb-1">
                     <label class="form-label" for="basic-icon-default-email">Email*</label>

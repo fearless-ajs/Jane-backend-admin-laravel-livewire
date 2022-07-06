@@ -25,14 +25,14 @@
                         <input type="text" wire:model.lazy="phone"  class="form-control  {{$errors->has('phone')? 'is-invalid' : '' }}" placeholder="Phone number">
                         @error('phone') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserStatus">Status*</label>
-                        <select id="modalEditUserStatus"  wire:model.lazy="status" name="modalEditUserStatus" class="form-select" aria-label="Default select example">
-                            <option value="">Status</option>
-                            <option value="1">Available</option>
-                            <option value="0">Unavailable</option>
-                        </select>
-                    </div>
+{{--                    <div class="col-12 col-md-6">--}}
+{{--                        <label class="form-label" for="modalEditUserStatus">Status*</label>--}}
+{{--                        <select id="modalEditUserStatus"  wire:model.lazy="status" name="modalEditUserStatus" class="form-select" aria-label="Default select example">--}}
+{{--                            <option value="">Status</option>--}}
+{{--                            <option value="1">Available</option>--}}
+{{--                            <option value="0">Unavailable</option>--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-contact">Country*</label>
                         <select wire:model.lazy="country"  class="form-select {{$errors->has('country')? 'is-invalid' : '' }}">
@@ -306,7 +306,7 @@
                         <div wire:loading wire:target="banner" >
                             Validating banner <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </div>
-                        <label wire:loading.remove wire:target="banner" class="form-label" for="basic-icon-default-company">Banner (1980x660)</label>
+                        <label wire:loading.remove wire:target="banner" class="form-label" for="basic-icon-default-company">Banner (1680px x 450px, Max: 5MB)</label>
                         <input type="file" wire:model="banner"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('banner')? 'is-invalid' : '' }}"/>
                         @error('banner') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>

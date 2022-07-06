@@ -114,15 +114,15 @@
 
 
             <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">{{  Auth::user()->lastname . ' ' . Auth::user()->firstname }}</span><span class="user-status">Company</span></div><span class="avatar"><img class="round" src="{{\Illuminate\Support\Facades\Auth::user()->userImage}}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
+                    <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">{{  Auth::user()->firstname . ' ' . Auth::user()->lastname }}</span><span class="user-status">Company</span></div><span class="avatar"><img class="round" src="{{\Illuminate\Support\Facades\Auth::user()->userImage}}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="{{route('company.my-profile')}}"><i class="me-50" data-feather="user"></i> Profile</a>
+                    <a class="dropdown-item" href="{{route('company.my-profile')}}"><i class="me-50 fa fa-user" ></i>Personal Profile</a>
                     @if(Auth::user()->userHasRole('Super Administrator'))
-                        <a class="dropdown-item" href="{{route('company.settings')}}"><i class="me-50" data-feather="settings"></i> Company</a>
+                        <a class="dropdown-item" href="{{route('company.settings')}}"><i class="me-50 fa fa-cog"></i> Company profile</a>
                     @endif
 
-                    <a class="dropdown-item" href="{{route('sign-out')}}"><i class="me-50" data-feather="power"></i> Logout</a>
+                    <a class="dropdown-item" href="{{route('sign-out')}}"><i class="me-50 fa fa-sign-out-alt"></i> Logout</a>
                 </div>
             </li>
         </ul>

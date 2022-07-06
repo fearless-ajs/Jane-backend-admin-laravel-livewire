@@ -10,14 +10,14 @@
                 </div>
                 <form class="row gy-1 pt-75" wire:submit.prevent="updateWorker">
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">Last Name*</label>
-                        <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Staff's lastname"/>
-                        @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-fullname">First Name*</label>
                         <input type="text" wire:model.lazy="firstname" class="form-control dt-full-name  {{$errors->has('firstname')? 'is-invalid' : '' }}"  placeholder="Staff's firstname" />
                         @error('firstname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="basic-icon-default-fullname">Last Name*</label>
+                        <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Staff's lastname"/>
+                        @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="basic-icon-default-email">Email*</label>

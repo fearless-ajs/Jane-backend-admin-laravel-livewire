@@ -22,7 +22,7 @@
                                 <div class="btn-group dropdown-sort" wire:ignore>
                                     @if(Auth::user()->hasModuleAccess('catalogue', 'create'))
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCatalogueModal">
-                                            Add catalogue
+                                            Add item
                                         </button>
                                     @endif
                                 </div>

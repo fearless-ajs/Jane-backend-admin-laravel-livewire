@@ -5,7 +5,7 @@
             <div class="card card-congratulation-medal">
                 <div class="card-body">
                     <h5>{{Auth::user()->firstname. '  ' .Auth::user()->lastname }}</h5>
-                    <p class="card-text font-small-3">Contact dashboard</p>
+                    <p class="card-text font-small-3">Dashboard</p>
                     <h3 class="mb-75 mt-2 pt-50">
                         <a href="#">{{ \Carbon\Carbon::now()->translatedFormat(' j F Y')}}</a>
                     </h3>

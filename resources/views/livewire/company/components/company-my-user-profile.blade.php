@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card profile-header mb-2">
                 <!-- profile cover photo -->
-                <img class="card-img-top" src="{{asset('app-assets/images/profile/user-uploads/timeline.jpg')}}" alt="User Profile Image" />
+                <img class="card-img-top" src="{{asset($user->company->CompanyBanner)}}" alt="User Profile Image" />
                 <!--/ profile cover photo -->
 
                 <div class="position-relative">
@@ -35,23 +35,23 @@
                             <div class="profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
                                 <ul class="nav nav-pills mb-0">
                                     <li class="nav-item">
-                                        <a class="nav-link fw-bold active" href="#" >
+                                        <a class="nav-link fw-bold" href="#" >
                                             <span class="d-none d-md-block">About</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>
                                     <li class="nav-item" style="margin-left: 10px">
                                         <a class="nav-link fw-bold active" href="#" data-bs-toggle="modal" data-bs-target="#editUserPrimaryProfileForm">
-                                            <span class="d-none d-md-block">Update primary profile</span>
+                                            <span class="d-none d-md-block">Update personal profile</span>
                                             <i data-feather="rss" class="d-block d-md-none"></i>
                                         </a>
                                     </li>
                                 </ul>
                                 <!-- edit button -->
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserWorkerInfoForm">
-                                    <i data-feather="edit" class="d-block d-md-none"></i>
-                                    <span class="fw-bold d-none d-md-block">Update other information</span>
-                                </button>
+{{--                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserWorkerInfoForm">--}}
+{{--                                    <i data-feather="edit" class="d-block d-md-none"></i>--}}
+{{--                                    <span class="fw-bold d-none d-md-block">Update other information</span>--}}
+{{--                                </button>--}}
                             </div>
                         </div>
                         <!--/ collapse  -->
@@ -104,7 +104,7 @@
                         <div class="d-flex justify-content-start align-items-center mb-1">
                             <!-- avatar -->
                             <div class="avatar me-1">
-                                <img src="{{$user->userImage}}" alt="avatar img" height="50" width="50" />
+                                <img src="{{$user->userImage}}" alt="avatar img" height="50" width="50" style="cursor: default" />
                             </div>
                             <!--/ avatar -->
                             <div class="profile-user-info">
@@ -116,46 +116,24 @@
 {{--                            {{$contact->description}}--}}
 {{--                        </p>--}}
 
-                        <!-- like share -->
-                        <div class="row d-flex justify-content-start align-items-center flex-wrap pb-50">
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                                <a href="#" class="d-flex align-items-center text-muted text-nowrap">
-                                    <i>Organization: </i>
-                                    <span> {{$user->company->name}}</span>
-                                </a>
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <small>{{$user->email}}</small>
                             </div>
-
-                            <!-- share and like count and icons -->
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-
-                                <a href="#" class="text-nowrap">
-                                    <i class="text-body font-medium-3 mx-50 fa fa-mobile"></i>
-                                    <span class="text-muted">Mobile: {{$user->worker->phone}}</span>
-                                </a>
-                            </div>
-
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-start mb-2">
-                                <a href="#" class="d-flex align-items-center text-muted text-nowrap">
-                                    <i>Fax: {{$user->fax}}</i>
-                                </a>
-                            </div>
-
-                            <!-- share and like count and icons -->
-                            <div class="col-sm-6 d-flex justify-content-between justify-content-sm-end align-items-center mb-2">
-                                <a href="#" class="text-nowrap">
-                                    <i  class="text-body font-medium-3 fa fa-envelope"></i>
-                                    <span class="text-muted me-1">Email: {{$user->email}}</span>
-                                </a>
-
-{{--                                <a href="#" class="text-nowrap">--}}
-{{--                                    <i class="text-body font-medium-3 mx-50 fa fa-calendar"></i>--}}
-{{--                                    <span class="text-muted">Date of birth: {{$contact->date_of_birth}}</span>--}}
-{{--                                </a>--}}
-                            </div>
-
-                            <!-- share and like count and icons -->
                         </div>
-                        <!-- like share -->
+
+                        <div class="d-flex align-items-start mb-1">
+                            <div class="profile-user-info w-100">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">City</h6>
+                                </div>
+                                <small>{{$user->worker->phone}}</small>
+                            </div>
+                        </div>
 
                         <div class="d-flex align-items-start mb-1">
                             <div class="profile-user-info w-100">

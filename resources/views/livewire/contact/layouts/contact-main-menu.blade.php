@@ -31,9 +31,7 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('contact.dashboard')}}"><i class="fa fa-home"></i><span class="menu-title text-truncate" >Dashboard</span></a>
             </li>
-            <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
-            </li>
-
+        
             <li class="nav-item @if(Route::currentRouteName() == 'contact.signed-invoices' || Route::currentRouteName() == 'contact.unsigned-invoices') active @endif"><a class="d-flex align-items-center" href="#"><i class="fa fa-file"></i><span class="menu-title text-truncate" data-i18n="Invoice">Invoices</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center @if(Route::currentRouteName() == 'contact.unsigned-invoices') active @endif" href="{{route('contact.unsigned-invoices')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">Unsigned</span></a>

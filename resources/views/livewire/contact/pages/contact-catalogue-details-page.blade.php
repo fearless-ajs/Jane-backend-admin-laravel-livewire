@@ -12,7 +12,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('contact.dashboard')}}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{route('contact.catalogues')}}">Catalogues</a>
+                                <li class="breadcrumb-item"><a href="{{route('contact.catalogues')}}">Catalog</a>
                                 </li>
                                 <li class="breadcrumb-item active">{{$catalogue->name}}
                                 </li>

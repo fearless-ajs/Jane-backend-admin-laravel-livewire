@@ -74,7 +74,7 @@ class CompanyEditSettingsForm extends Component
         // Let us check if an image is supplied
         if ($this->banner){
             // Save the banner
-            $img = Image::make($this->banner)->resize(1980, 660)->encode('jpg');
+            $img = Image::make($this->banner)->resize(1680, 450)->encode('jpg');
             $name = Str::random(50).'_'.$this->banner->getClientOriginalName();
             Storage::disk('images')->put($name, $img);
             $this->banner = $name;

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Laratrust\Traits\LaratrustUserTrait;
@@ -102,6 +103,15 @@ class User extends Authenticatable
     public function contact(){
         return $this->hasOne(Contact::class, 'user_id', 'id');
     }
+
+    public function contacts(){
+        return $this->hasMany(Contact::class, 'user_id', 'id');
+    }
+
+//    public function getContactsAttribute(){
+//        $contacts = Contact::where('user_id', Auth::user()->id);
+//        return $contacts;
+//    }
 
     public function billingAddress(){
         return $this->hasOne(ContactBillingAddress::class, 'user_id', 'id');

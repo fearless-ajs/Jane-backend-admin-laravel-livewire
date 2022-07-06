@@ -134,7 +134,7 @@
 
                     <div class="col-12">
                         <div class="form-group" wire:ignore>
-                            <label>Images <sup>max 20MB</sup></label><br>
+                            <label>Images(Multiple) <sup>max 20MB</sup></label><br>
                             <input name="images[]"  class="form-control {{$errors->has('images.*')? 'is-invalid' : '' }}" type="file" wire:model="images" multiple data-min-file-count="1" data-theme="fas">
                             @error('images') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                             <small wire:loading wire:target="images" class="form-text text-muted"><i class="fa fa-spin"><i class="fa fa-spinner"></i></i>&nbsp;&nbsp; Loading preview...</small>

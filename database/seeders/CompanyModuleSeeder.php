@@ -74,66 +74,6 @@ class CompanyModuleSeeder extends Seeder
         }
 
 
-        // Product CompanyModule
-        if (!CompanyModule::where('name', 'product')->where('access', 'create')->first()){
-            CompanyModule::create([
-                'name'   => 'product',
-                'access' => 'create'
-            ]);
-        }
-
-        if (!CompanyModule::where('name', 'product')->where('access', 'edit')->first()){
-            CompanyModule::create([
-                'name'   => 'product',
-                'access' => 'edit'
-            ]);
-        }
-
-        if (!CompanyModule::where('name', 'product')->where('access', 'delete')->first()){
-            CompanyModule::create([
-                'name'   => 'product',
-                'access' => 'delete'
-            ]);
-        }
-
-        if (!CompanyModule::where('name', 'product')->where('access', 'read')->first()){
-            CompanyModule::create([
-                'name'   => 'product',
-                'access' => 'read'
-            ]);
-        }
-
-
-        // Service CompanyModule
-        if (!CompanyModule::where('name', 'service')->where('access', 'create')->first()){
-            CompanyModule::create([
-                'name'   => 'service',
-                'access' => 'create'
-            ]);
-        }
-
-        if (!CompanyModule::where('name', 'service')->where('access', 'edit')->first()){
-            CompanyModule::create([
-                'name'   => 'service',
-                'access' => 'edit'
-            ]);
-        }
-
-        if (!CompanyModule::where('name', 'service')->where('access', 'delete')->first()){
-            CompanyModule::create([
-                'name'   => 'service',
-                'access' => 'delete'
-            ]);
-        }
-
-        if (!CompanyModule::where('name', 'service')->where('access', 'read')->first()){
-            CompanyModule::create([
-                'name'   => 'service',
-                'access' => 'read'
-            ]);
-        }
-
-
         // Category CompanyModule
         if (!CompanyModule::where('name', 'category')->where('access', 'create')->first()){
             CompanyModule::create([

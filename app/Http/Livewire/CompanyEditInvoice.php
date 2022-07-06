@@ -94,7 +94,6 @@ class CompanyEditInvoice extends Component
         $this->validateOnly($field, [
             'to'                        => 'required|numeric',
             'worker'                    => 'required|numeric',
-            'date_issued'               => 'required|string|max:255',
             'due_date'                  => 'required|string|max:255',
             'payment_methods'           => 'nullable|array',
             'invoice_note'              => 'nullable|string|max:2000',
@@ -392,7 +391,6 @@ class CompanyEditInvoice extends Component
         $this->validate([
             'to'                => 'required|numeric',
             'worker'            => 'required|numeric',
-            'date_issued'       => 'required|max:255',
             'due_date'          => 'required|max:255',
             'payment_methods'   => 'nullable|array',
             'invoice_note'      => 'nullable|max:2000'

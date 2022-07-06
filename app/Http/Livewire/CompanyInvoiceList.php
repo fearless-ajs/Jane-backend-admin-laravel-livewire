@@ -8,11 +8,18 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyInvoiceList extends Component
+class CompanyInvoiceList extends LiveNotify
 {
     use WithPagination;
+    protected $listeners = [
+        'delete'    =>  'delete'
+    ];
 
     public function remove($invoice_id){
+        return $this->confirmDelete('warning', 'Do you want to delete?', 'Press ok to continue', $invoice_id);
+    }
+
+    public function delete($invoice_id){
         $invoice = Invoice::find($invoice_id);
         if ($invoice){
             // Delete invoice catalogues
@@ -26,6 +33,7 @@ class CompanyInvoiceList extends Component
         $this->reset();
         return $this->emit('alert', ['type' => 'success', 'message' => 'Invoice deleted']);
     }
+
 
     public function render()
     {

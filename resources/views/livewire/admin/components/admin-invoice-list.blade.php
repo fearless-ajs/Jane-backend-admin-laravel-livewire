@@ -61,11 +61,25 @@
                         @foreach($invoices as $invoice)
                             <tr>
                                 <td>{{$loop->index + 1}}</td>
-                                <td>{{$invoice->contactInfo->user->lastname. '  '.$invoice->contactInfo->user->firstname}}</td>
+
+                                <td>
+                                    @if($invoice->ContactInfo)
+                                        {{$invoice->contactInfo->firstname. '  '.$invoice->contactInfo->lastname}}
+                                    @else
+                                        <span class="text-danger">Contact deleted</span>
+                                    @endif
+                                </td>
+
                                 <td>{{$settings->app_currency_symbol}}{{$invoice->products_total_price + $invoice->services_total_price}}</td>
                                 <td>{{ \Carbon\Carbon::parse($invoice->date_issued)->translatedFormat(' j F Y')}}</td>
                                 <td>{{ \Carbon\Carbon::parse($invoice->due_date)->translatedFormat(' j F Y')}}</td>
-                                <td>{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</td>
+
+                                @if($invoice->worker)
+                                    <td>{{$invoice->worker->firstname. '  ' .$invoice->worker->lastname }}</td>
+                                @else
+                                    <span class="text-danger">Staff not available</span>
+                                @endif
+
                                 @if($invoice->signed)
                                     <td>Signed</td>
                                 @else
@@ -105,11 +119,22 @@
                 @foreach($invoices as $invoice)
                     <tr>
                         <td>{{$loop->index + 1}}</td>
-                        <td>{{$invoice->contactInfo->user->lastname. '  '.$invoice->contactInfo->user->firstname}}</td>
+                        <td>
+                            @if($invoice->ContactInfo)
+                                {{$invoice->contactInfo->firstname. '  '.$invoice->contactInfo->lastname}}
+                            @else
+                                <span class="text-danger">Contact not available</span>
+                            @endif
+                        </td>
                         <td>{{$settings->app_currency_symbol}}{{$invoice->products_total_price + $invoice->services_total_price}}</td>
                         <td>{{ \Carbon\Carbon::parse($invoice->date_issued)->translatedFormat(' j F Y')}}</td>
                         <td>{{ \Carbon\Carbon::parse($invoice->due_date)->translatedFormat(' j F Y')}}</td>
-                        <td>{{$invoice->worker->user->lastname. '  ' .$invoice->worker->user->firstname }}</td>
+                        @if($invoice->worker)
+                            <td>{{$invoice->worker->firstname. '  ' .$invoice->worker->lastname }}</td>
+                        @else
+                            <span class="text-danger">Contact not available</span>
+                        @endif
+
                         @if($invoice->signed)
                             <td>Signed</td>
                         @else

@@ -40,7 +40,7 @@ class CompanyCreateWorkerForm extends LiveNotify
         $this->validateOnly($field, [
             'lastname'              => 'required|string|max:255',
             'firstname'             => 'required|string|max:255',
-            'email'                 => 'required|email',
+            'email'                 => 'required|email|unique:users',
             'phone'                 => 'required|numeric',
             'image'                 => 'nullable|image',
             'country'               => 'required|string|max:255',
@@ -61,7 +61,7 @@ class CompanyCreateWorkerForm extends LiveNotify
         $this->validate([
             'lastname'              => 'required|string|max:255',
             'firstname'             => 'required|string|max:255',
-            'email'                 => 'required|email',
+            'email'                 => 'required|email|unique:users',
             'phone'                 => 'required|numeric',
             'image'                 => 'nullable|image',
             'country'               => 'required|string|max:255',
@@ -87,7 +87,7 @@ class CompanyCreateWorkerForm extends LiveNotify
                 'email'              => $this->email,
                 'user_type'          => 'Company-worker',
                 'company_id'         => $this->company->id,
-                'image'              => ($this->image)?$this->image:null,
+                'image'              => ($this->image)?$this->image:'user-avatar.jpg',
                 'password'           => $this->password
             ]);
         }
@@ -104,7 +104,7 @@ class CompanyCreateWorkerForm extends LiveNotify
             'state'         => $this->state,
             'country'       => $this->country,
             'address'       => $this->address,
-            'image'         => ($this->image)?$this->image:null,
+            'image'         => ($this->image)?$this->image:'user-avatar.jpg',
         ]);
 
        // Create user Role

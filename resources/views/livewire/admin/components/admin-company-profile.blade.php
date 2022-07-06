@@ -143,7 +143,7 @@
                         <div class="d-flex justify-content-start align-items-center mb-1">
                             <!-- avatar -->
                             <div class="avatar me-1">
-                                <img src="{{$company->companyBanner}}" alt="avatar img" height="50" width="50" />
+                                <img src="{{$company->companyBanner}}" alt="avatar img" height="50" style="cursor: default" width="50" />
                             </div>
                             <!--/ avatar -->
                             <div class="profile-user-info">

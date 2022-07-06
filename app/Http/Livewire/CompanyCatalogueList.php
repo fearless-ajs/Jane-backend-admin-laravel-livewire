@@ -12,12 +12,15 @@ use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyCatalogueList extends Component
+class CompanyCatalogueList extends LiveNotify
 {
     use WithPagination;
     use FileManager;
 
-    protected $listeners = ['refreshCompanyCatalogueList' => '$refresh'];
+    protected $listeners = [
+        'refreshCompanyCatalogueList' => '$refresh',
+        'delete'    =>  'delete'
+    ];
     public $settings;
     public $company;
 
@@ -28,6 +31,11 @@ class CompanyCatalogueList extends Component
 
     public $categories;
     public $category;
+
+
+    public function remove($invoice_id){
+        return $this->confirmDelete('warning', 'Do you want to delete?', 'Press ok to continue', $invoice_id);
+    }
 
     public function mount($company){
         $this->settings = Setting::first();
@@ -69,7 +77,7 @@ class CompanyCatalogueList extends Component
         $this->order = $order;
     }
 
-    public function remove($product_id){
+    public function delete($product_id){
         $catalogue =  CompanyCatalogue::find($product_id);
 
 

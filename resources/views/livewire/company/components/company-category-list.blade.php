@@ -20,7 +20,7 @@
         <thead class="table-light">
         <tr>
             <th>Name</th>
-            <th>Created_at</th>
+            <th>Created</th>
             <th></th>
         </tr>
         </thead>

@@ -10,6 +10,7 @@
 {{--                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-calendar.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Calendar"><i class="ficon fa fa-calendar"></i></a></li>--}}
 {{--                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-todo.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Todo"><i class="ficon fa fa-edit" ></i></a></li>--}}
 {{--            </ul>--}}
+
 {{--            <ul class="nav navbar-nav">--}}
 {{--                <li class="nav-item d-none d-lg-block"><a class="nav-link bookmark-star"><i class="ficon text-warning fa fa-star" ></i></a>--}}
 {{--                    <div class="bookmark-input search-input">--}}
@@ -203,11 +204,11 @@
 
 
             <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">{{  Auth::user()->lastname . ' ' . Auth::user()->firstname }}</span><span class="user-status">Admin</span></div><span class="avatar"><img class="round" src="{{Auth::user()->UserImage}}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
+                    <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">{{  Auth::user()->firstname . ' ' . Auth::user()->lastname }}</span><span class="user-status">Admin</span></div><span class="avatar"><img class="round" src="{{Auth::user()->UserImage}}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="{{route('admin.settings')}}"><i class="me-50" data-feather="settings"></i> Settings</a>
-                    <a class="dropdown-item" href="{{route('sign-out')}}"><i class="me-50" data-feather="power"></i> Logout</a>
+                    <a class="dropdown-item" href="{{route('admin.settings')}}"><i class="me-50 fa fa-cog"></i> Settings</a>
+                    <a class="dropdown-item" href="{{route('sign-out')}}"><i class="me-50 fa fa-sign-out-alt"></i> Logout</a>
                 </div>
             </li>
         </ul>

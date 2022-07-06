@@ -31,8 +31,6 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class=" nav-item @if(Route::currentRouteName() == 'company.dashboard') active @endif"><a class="d-flex align-items-center" href="{{route('company.dashboard')}}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboard</span></a>
             </li>
-            <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
-            </li>
 
 
             @if(Auth::user()->hasModuleAccess('invoice', 'read') || Auth::user()->hasModuleAccess('invoice', 'create') || Auth::user()->hasModuleAccess('invoice', 'edit'))
@@ -60,7 +58,7 @@
 
 
             @if(Auth::user()->hasModuleAccess('tax', 'read') || Auth::user()->hasModuleAccess('tax', 'edit') || Auth::user()->hasModuleAccess('tax', 'create'))
-                <li class=" nav-item @if(Route::currentRouteName() == 'company.categories') active @endif"><a class="d-flex align-items-center" href="{{route('company.taxes')}}"><i class="fa fa-file-archive"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Taxes</span></a>
+                <li class=" nav-item @if(Route::currentRouteName() == 'company.taxes') active @endif"><a class="d-flex align-items-center" href="{{route('company.taxes')}}"><i class="fa fa-file-archive"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Taxes</span></a>
                 </li>
             @endif
 

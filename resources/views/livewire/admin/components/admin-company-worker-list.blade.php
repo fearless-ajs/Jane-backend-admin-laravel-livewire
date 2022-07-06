@@ -24,7 +24,7 @@
                 <th>Phone</th>
                 <th>Country</th>
                 <th>Status</th>
-                <th>Created_at</th>
+                <th>Created</th>
                 <th></th>
                 <th></th>
             </tr>

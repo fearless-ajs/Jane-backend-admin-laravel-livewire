@@ -22,14 +22,14 @@
                         @error('title') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-fullname">lastname</label>
-                        <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Lastname" />
-                        @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-fullname">firstname</label>
                         <input type="text" wire:model.lazy="firstname" class="form-control dt-full-name  {{$errors->has('first')? 'is-invalid' : '' }}"  placeholder="Firstname" />
                         @error('firstname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="basic-icon-default-fullname">lastname</label>
+                        <input type="text" wire:model.lazy="lastname" class="form-control dt-full-name  {{$errors->has('lastname')? 'is-invalid' : '' }}"  placeholder="Lastname" />
+                        @error('lastname') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-email">Office phone</label>
@@ -46,11 +46,11 @@
                         <input type="text" wire:model.lazy="organization"  class="form-control dt-email  {{$errors->has('organization')? 'is-invalid' : '' }}" placeholder="Organization" >
                         @error('organization') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="basic-icon-default-email">Fax</label>
-                        <input type="text" wire:model.lazy="fax"  class="form-control dt-email  {{$errors->has('fax')? 'is-invalid' : '' }}" placeholder="FAX" >
-                        @error('fax') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
-                    </div>
+{{--                    <div class="col-12 col-md-6">--}}
+{{--                        <label class="form-label" for="basic-icon-default-email">Fax</label>--}}
+{{--                        <input type="text" wire:model.lazy="fax"  class="form-control dt-email  {{$errors->has('fax')? 'is-invalid' : '' }}" placeholder="FAX" >--}}
+{{--                        @error('fax') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror--}}
+{{--                    </div>--}}
 
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="basic-icon-default-email">Primary email</label>

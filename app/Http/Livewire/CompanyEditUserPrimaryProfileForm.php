@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Mail\UserMailChanged;
 use App\Mail\WelcomeMail;
 use App\Models\User;
+use App\Models\Worker;
+use App\Traits\FileManager;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -12,7 +14,7 @@ use Livewire\WithFileUploads;
 
 class CompanyEditUserPrimaryProfileForm extends LiveNotify
 {
-    use WithFileUploads;
+    use WithFileUploads, FileManager;
     public $user;
 
     public $lastname;
@@ -20,9 +22,20 @@ class CompanyEditUserPrimaryProfileForm extends LiveNotify
     public $email;
     public $image;
 
+
+    public $worker;
+    public $phone;
+
+    public $city;
+    public $state;
+    public $country;
+    public $address;
+
     public function mount($user){
         $this->user = $user;
+        $this->worker = $user->worker;
         $this->generateFormData();
+        $this->generateWorkerFormData();
     }
 
     public function generateFormData(){
@@ -31,12 +44,26 @@ class CompanyEditUserPrimaryProfileForm extends LiveNotify
         $this->email     = $this->user->email;
     }
 
+
+    public function generateWorkerFormData(){
+        $this->phone = $this->worker->phone;
+        $this->city = $this->worker->city;
+        $this->state = $this->worker->state;
+        $this->country = $this->worker->country;
+        $this->address = $this->worker->address;
+    }
+
     public function updated($field){
         $this->validateOnly($field, [
             'lastname'              => 'required|string|max:255',
             'firstname'             => 'required|string|max:255',
             'email'                 => 'required|email', // Don't check the user with tha id
-            'image'                 => 'nullable|image|max:5000'
+            'image'                 => 'nullable|image|max:5000',
+            'phone'                 => 'required|numeric',
+            'country'               => 'required|string|max:255',
+            'state'                 => 'required|string|max:255',
+            'city'                  => 'required|string|max:255',
+            'address'               => 'required|string|max:255',
         ]);
     }
 
@@ -45,7 +72,12 @@ class CompanyEditUserPrimaryProfileForm extends LiveNotify
             'lastname'              => 'required|string|max:255',
             'firstname'             => 'required|string|max:255',
             'email'                 => 'required|email', // Don't check the user with tha id
-            'image'                 => 'nullable|image|max:5000'
+            'image'                 => 'nullable|image|max:5000',
+            'phone'                 => 'required|numeric',
+            'country'               => 'required|string|max:255',
+            'state'                 => 'required|string|max:255',
+            'city'                  => 'required|string|max:255',
+            'address'               => 'required|string|max:255',
         ]);
 
         // Check if the email is taken
@@ -61,8 +93,16 @@ class CompanyEditUserPrimaryProfileForm extends LiveNotify
         }
 
         if ($this->image){
-            $this->image =  $this->image->store('/', 'images');
+            $this->image =  $this->saveUserAvatar($this->image, 'images');
         }
+
+        Worker::where('id', $this->worker->id)->update([
+            'phone'                 => $this->phone,
+            'country'               => $this->country,
+            'state'                 => $this->state,
+            'city'                  => $this->city,
+            'address'               => $this->address,
+        ]);
 
         User::where('id', $this->user->id)->update([
             'lastname'      => $this->lastname,
@@ -87,6 +127,7 @@ class CompanyEditUserPrimaryProfileForm extends LiveNotify
                 return $this->alert('success', 'Profile updated', 'please check your email to verify your email');
             }
         }
+
 
 
         $this->emit('refreshCompanyMyUserUserProfile');

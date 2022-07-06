@@ -21,7 +21,7 @@
         <tr>
             <th>Title</th>
             <th>Days</th>
-            <th>Created_at</th>
+            <th>Created</th>
             <th></th>
             <th></th>
         </tr>

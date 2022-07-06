@@ -357,7 +357,7 @@
                     email to verify your identity.
                 </small>
             </div>
-            @livewire('company-edit-user-primary-profile-form', ['user' => Auth::user()])
+            @livewire('admin-edit-user-primary-profile-form', ['user' => Auth::user()])
         </div>
     </div>
 </div>
