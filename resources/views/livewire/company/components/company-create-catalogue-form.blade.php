@@ -47,7 +47,7 @@
                         <label class="form-label" for="basic-icon-default-email">Category*</label>
                         @if(count($categories) > 0)
                             <select wire:model.lazy="category" class="form-select {{$errors->has('category')? 'is-invalid' : '' }}">
-                                <option value="">-- Category --</option>
+                                <option value="">-- Select --</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->name}}">{{$category->name}}</option>
                                 @endforeach

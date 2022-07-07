@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('catalogue_id');
             $table->bigInteger('quantity')->nullable();
             $table->boolean('delivered')->default(false);
+            $table->enum('type', ['product', 'service']);
             $table->bigInteger('total_price');
             $table->softDeletes();
             $table->timestamps();

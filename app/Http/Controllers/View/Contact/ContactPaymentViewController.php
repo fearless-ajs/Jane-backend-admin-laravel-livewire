@@ -40,4 +40,14 @@ class ContactPaymentViewController extends Controller
         return view('livewire.contact.pages.contact-checkout-page', ['data' => $data]);
     }
 
+    public function orders (){
+        $data = [
+            'title' => 'My Cart',
+            'keywords' => 'My Cart',
+            'description' => 'My Cart'
+        ];
+
+        return view('livewire.contact.pages.contact-orders-page', ['data' => $data]);
+    }
+
 }

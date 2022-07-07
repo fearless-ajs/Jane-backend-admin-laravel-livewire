@@ -12,7 +12,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('contact.dashboard')}}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{url()->previous()}}">Invoices</a>
+                                <li class="breadcrumb-item"><a href="{{route('contact.unsigned-invoices')}}">Invoices</a>
                                 </li>
                                 <li class="breadcrumb-item active">Preview
                                 </li>

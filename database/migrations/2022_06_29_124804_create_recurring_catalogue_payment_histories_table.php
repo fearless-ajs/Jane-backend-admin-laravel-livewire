@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('catalogue_id');
             $table->dateTime('last_payment_date');
-            $table->dateTime('last_payment_amount');
+            $table->float('last_payment_amount');
             $table->dateTime('next_due_date');
             $table->boolean('active')->default(false);
             $table->timestamps();

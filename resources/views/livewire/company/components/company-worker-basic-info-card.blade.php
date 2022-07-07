@@ -63,18 +63,18 @@
                         @endif
 
                     </li>
-                    <li class="mb-75">
-                        <span class="fw-bolder me-25">Permissions:</span>
-                        @if($worker->user->userPermissions)
-                            @foreach($worker->user->userPermissions as $permission)
-                                <span>{{$permission->permission->display_name}}</span>
-                                @if(!$loop->last)
-                                    <span>,</span>
-                                @endif
-                            @endforeach
-                        @endif
+{{--                    <li class="mb-75">--}}
+{{--                        <span class="fw-bolder me-25">Permissions:</span>--}}
+{{--                        @if($worker->user->userPermissions)--}}
+{{--                            @foreach($worker->user->userPermissions as $permission)--}}
+{{--                                <span>{{$permission->permission->display_name}}</span>--}}
+{{--                                @if(!$loop->last)--}}
+{{--                                    <span>,</span>--}}
+{{--                                @endif--}}
+{{--                            @endforeach--}}
+{{--                        @endif--}}
 
-                    </li>
+{{--                    </li>--}}
                     <li class="mb-75">
                         <span class="fw-bolder me-25">City:</span>
                         <span>{{$worker->city}}</span>

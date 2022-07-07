@@ -87,7 +87,7 @@
 @livewire('contact-main-menu')
 
 <!-- BEGIN: Content-->
-@if(Route::currentRouteName() == 'contact.catalogues' || Route::currentRouteName() == 'contact.cart' || Route::currentRouteName() == 'contact.checkout')
+@if(Route::currentRouteName() == 'contact.catalogues' || Route::currentRouteName() == 'contact.cart' || Route::currentRouteName() == 'contact.checkout' || Route::currentRouteName() == 'contact.orders')
     <div class="app-content content ecommerce-application">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>

@@ -277,6 +277,11 @@
                     </div>
                     <p style="text-align: center;" class="mt-2">Signed: {{ \Carbon\Carbon::parse($invoice->contactSignature->created_at)->translatedFormat(' j F Y')}}</p>
                 @endif
+                @if($invoice->paid)
+                    <p class="text-center">
+                        <span class="text-success text-center">Paid: {{ \Carbon\Carbon::parse($invoice->payment_date)->translatedFormat(' j F Y')}} </span>
+                    </p>
+                @endif
             </div>
         </div>
     </div>

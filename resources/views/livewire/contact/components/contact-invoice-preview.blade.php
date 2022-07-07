@@ -1,7 +1,14 @@
 <div class="row invoice-preview">
+
     <!-- Invoice -->
     <div class="col-xl-9 col-md-8 col-12">
+        @if(session()->has('message'))
+            <div style="text-align: center; border-radius: 20px; padding: 20px;" class="mb-2 bg-success">
+                <h4 class="">{{session()->get('message')}}</h4>
+            </div>
+        @endif
         <div class="card invoice-preview-card">
+
             <div class="card-body invoice-padding pb-0">
                 <!-- Header starts -->
                 <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
@@ -54,7 +61,7 @@
                             <tbody>
                             <tr>
                                 <td class="pe-1">Total Due:</td>
-                                <td><span class="fw-bold">{{$settings->app_currency_symbol}}{{number_format($invoice->products_total_price + $invoice->services_total_price)}}</span></td>
+                                <td><span class="fw-bold">{{$settings->currency->currency_symbol}}{{($invoice->products_total_price + $totalProductTax) + ($invoice->services_total_price + $totalServiceTax)}}</span></td>
                             </tr>
                             <tr>
                                 <td class="pe-1">Bank name:</td>
@@ -267,9 +274,16 @@
                 @livewire('contact-signature-pad', ['invoice' => $invoice])
 
                 @if($invoice->signed)
-                    <button class="btn btn-outline-success w-100 mb-75" wire:click="makePayment">
-                        Proceed to payment
-                    </button>
+                    @if($invoice->paid)
+                        <p class="text-center">
+                            <span class="text-success text-center">Paid: {{ \Carbon\Carbon::parse($invoice->payment_date)->translatedFormat(' j F Y')}} </span>
+                        </p>
+                    @else
+                        <a href="{{route('contact.pay-invoice-form-now', $invoice->id)}}" class="btn btn-outline-success w-100 mb-75">
+                            Proceed to payment
+                        </a>
+                    @endif
+
                 @endif
 
             </div>

@@ -36,6 +36,8 @@ return new class extends Migration
 
             $table->boolean('paid')->default(false);
             $table->float('amount_paid')->default(0);
+            $table->dateTime('payment_date')->nullable();
+
             $table->float('total_tax')->default(0);
             $table->float('total_price_with_tax')->default(0);
 //

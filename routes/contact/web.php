@@ -38,11 +38,15 @@ Route::middleware(['auth', 'check-two-factor'])->name('contact.')->group(functio
 
         Route::get('/payment-info',                         [ContactPaymentViewController::class, 'paymentInfo'])->name('payment-info');
         Route::get('/cart',                                 [ContactPaymentViewController::class, 'cart'])->name('cart');
-        Route::get('/checkout-now',                          [ContactPaymentViewController::class, 'checkout'])->name('checkout');
+        Route::get('/checkout-now',                         [ContactPaymentViewController::class, 'checkout'])->name('checkout');
+        Route::get('/orders',                               [ContactPaymentViewController::class, 'orders'])->name('orders');
 
 
         Route::get('checkout','App\Http\Controllers\View\Contact\CheckoutController@checkoutCart')->name('pay-cart-for-now');
         Route::post('checkout','App\Http\Controllers\View\Contact\CheckoutController@afterCartpayment')->name('checkout.credit-card');
+
+        Route::get('checkout-invoice/{invoice_id}','App\Http\Controllers\View\Contact\CheckoutController@checkoutInvoice')->name('pay-invoice-form-now');
+        Route::post('checkout-invoice','App\Http\Controllers\View\Contact\CheckoutController@afterInvoicepayment')->name('checkout.invoice-credit-card');
 
     });
 

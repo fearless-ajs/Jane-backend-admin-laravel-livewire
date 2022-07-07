@@ -18,8 +18,8 @@ trait CompanyDefaultPermissions
         // Invoice roles and permissions
         $invoicePermission = CompanyPermission::create([
             'company_id'    => $company_id,
-            'display_name'  => 'Manage Invoice',
-            'name'          => 'manage-invoice',
+            'display_name'  => 'Manage Invoices',
+            'name'          => 'manage-invoices',
             'description'   => 'This permission allows invoice to be managed',
             'type'          => 'default'
         ]);
@@ -55,7 +55,7 @@ trait CompanyDefaultPermissions
         $contactPermission =  CompanyPermission::create([
             'company_id'    => $company_id,
             'display_name'  => 'Manage Contacts',
-            'name'          => 'manage-contact',
+            'name'          => 'manage-contacts',
             'description'   => 'This permission allows user to manage contacts',
             'type'          => 'default'
         ]);
@@ -89,8 +89,8 @@ trait CompanyDefaultPermissions
         // Category role and permission
         $categoryPermission =  CompanyPermission::create([
             'company_id'    => $company_id,
-            'display_name'  => 'Manage Category',
-            'name'          => 'manage-category',
+            'display_name'  => 'Manage Categories',
+            'name'          => 'manage-categories',
             'description'   => 'This permission allows category management',
             'type'          => 'default'
         ]);
@@ -266,8 +266,8 @@ trait CompanyDefaultPermissions
         // Catalogue role and permission
         $cataloguePermission =  CompanyPermission::create([
             'company_id'    => $company_id,
-            'display_name'  => 'Manage Catalogue',
-            'name'          => 'manage-catalogue',
+            'display_name'  => 'Manage Catalogs',
+            'name'          => 'manage-catalogs',
             'description'   => 'This permission allows user to manage catalogues',
             'type'          => 'default'
         ]);
@@ -301,8 +301,8 @@ trait CompanyDefaultPermissions
         // Billing Cycle role and permission
         $cyclePermission =  CompanyPermission::create([
             'company_id'    => $company_id,
-            'display_name'  => 'Manage Billing Cycle',
-            'name'          => 'manage-billing-cycle',
+            'display_name'  => 'Manage Billing Cycles',
+            'name'          => 'manage-billing-cycles',
             'description'   => 'This permission allows user to manage billing cycle',
             'type'          => 'default'
         ]);
@@ -335,8 +335,8 @@ trait CompanyDefaultPermissions
         // Tax role and permission
         $taxPermission =  CompanyPermission::create([
             'company_id'    => $company_id,
-            'display_name'  => 'Manage Tax',
-            'name'          => 'manage-tax',
+            'display_name'  => 'Manage Taxes',
+            'name'          => 'manage-taxes',
             'description'   => 'This permission allows user to manage taxes',
             'type'          => 'default'
         ]);

@@ -18,6 +18,12 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->boolean('checkout')->default(false);
             $table->float('total_price');
+
+            $table->boolean('paid')->default(false);
+            $table->float('amount_paid')->default(0);
+            $table->dateTime('payment_date')->nullable();
+
+
             $table->timestamps();
             $table->softDeletes();
         });

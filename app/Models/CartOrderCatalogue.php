@@ -10,4 +10,8 @@ class CartOrderCatalogue extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = [];
+
+    public function catalogue(){
+        return $this->hasOne(CompanyCatalogue::class, 'id','catalogue_id');
+    }
 }
