@@ -17,10 +17,15 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('invoice_order_id');
             $table->bigInteger('catalogue_id');
+            $table->bigInteger('company_id');
             $table->bigInteger('quantity')->nullable();
             $table->boolean('delivered')->default(false);
             $table->enum('type', ['product', 'service']);
             $table->bigInteger('total_price');
+
+            $table->boolean('terminated')->default(false);
+            $table->enum('pipeline', ['order_placed', 'order_in_progress', 'shipped', 'out_for_delivery', 'delivered', 'cancelled'])->default('order_placed');
+
             $table->softDeletes();
             $table->timestamps();
         });

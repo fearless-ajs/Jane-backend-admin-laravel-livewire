@@ -74,7 +74,7 @@
                         @endif
                         <div class="d-flex flex-column flex-sm-row pt-1">
 
-                            @if(Auth::user()->hasModuleAccess('product', 'edit'))
+                            @if(Auth::user()->hasModuleAccess('catalogue', 'edit'))
                                 <button type="button" class="btn btn-primary me-0 me-sm-1 mb-1 mb-sm-0" data-bs-toggle="modal" data-bs-target="#editCatalogueModal">
                                     Update {{$catalogue->type}}
                                 </button>
@@ -94,7 +94,7 @@
         </div>
 
 
-        @if(Auth::user()->hasModuleAccess('product', 'edit'))
+        @if(Auth::user()->hasModuleAccess('catalogue', 'edit'))
             @livewire('company-edit-catalogue-form', ['catalogue' => $catalogue])
         @endif
 

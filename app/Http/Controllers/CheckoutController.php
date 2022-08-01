@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Traits\InvoiceProvider;
+use App\Traits\StripeServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
+    use InvoiceProvider;
+
     public function checkout()
     {
         // Enter Your Stripe Secret
@@ -33,5 +39,29 @@ class CheckoutController extends Controller
     public function afterPayment()
     {
         echo 'Payment Received, Thanks you for using our services.';
+    }
+
+    public function createCustomer(){
+        return $this->showMessage($this->createStripeCustomerAccount());
+    }
+    public function createStripeCustomerIntent(){
+        $user = Auth::user();
+        return $this->showMessage($this->setUpStripeCustomerIntent($user));
+    }
+
+    public function getStripeCustomerPaymentMethods(){
+        $user = User::find(10);
+        return $this->showMessage($this->fetchStripeCustomerPaymentMethods($user));
+    }
+
+    public function checkInvoices(){
+       if ($this->checkForExpiredInvoices()){
+           return $this->showMessage('Success', 200);
+       }
+    }
+
+    public function sampleMail(){
+      $this->sendSampleMail();
+      return 'success';
     }
 }

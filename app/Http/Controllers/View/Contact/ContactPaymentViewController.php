@@ -13,6 +13,17 @@ class ContactPaymentViewController extends Controller
 
     public function paymentInfo (){
         $data = [
+            'title' => 'Payment Method',
+            'keywords' => 'Payment Method',
+            'description' => 'Payment Method'
+        ];
+        return view('livewire.contact.pages.contact-payment-method-page', ['data' => $data]);
+    }
+
+
+
+    public function billingAddress (){
+        $data = [
             'title' => 'Payment Info',
             'keywords' => 'Payment Info',
             'description' => 'Payment Info'

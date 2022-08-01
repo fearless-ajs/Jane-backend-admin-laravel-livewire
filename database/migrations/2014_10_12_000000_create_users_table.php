@@ -34,6 +34,7 @@ return new class extends Migration
             $table->bigInteger('company_id')->nullable();
 
             $table->rememberToken();
+            $table->string('stripe_customer_id', 500)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

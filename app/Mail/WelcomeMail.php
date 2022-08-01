@@ -30,6 +30,6 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Welcome to crm')->markdown('emails.welcome', ['contact' => $this->user]);
+        return $this->subject('Welcome to Sandpiper')->markdown('emails.welcome', ['contact' => $this->user]);
     }
 }

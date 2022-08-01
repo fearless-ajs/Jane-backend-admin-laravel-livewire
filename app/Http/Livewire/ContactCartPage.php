@@ -52,7 +52,7 @@ class ContactCartPage extends Component
                 }
             }
 
-            if (count($this->cart->products) > 0){
+            if (count($this->cart->services) > 0){
                 foreach ($this->cart->services as $item){
                     $productTax = (($item->catalogue->tax->percentage / 100) * $item->catalogue->price);
                     $serviceTotalPrice = $serviceTotalPrice + $item->catalogue->price;

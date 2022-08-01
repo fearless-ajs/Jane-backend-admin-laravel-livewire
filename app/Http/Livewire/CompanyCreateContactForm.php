@@ -163,16 +163,16 @@ class CompanyCreateContactForm extends Component
                 'address'           => $this->address,
             ]);
         }
-        $paymentMethod = ContactPaymentMethod::where('user_id', $user->id)->first();
-        if (!$paymentMethod){
-            ContactPaymentMethod::create([
-                'user_id'           => $user->id,
-                'name_on_card'      =>  $user->lastname. ' ' . $user->firstname,
-                'card_number'       =>  0000000000000000,
-                'exp'               =>  '12/23',
-                'cvv'               =>  000
-            ]);
-        }
+//        $paymentMethod = ContactPaymentMethod::where('user_id', $user->id)->first();
+//        if (!$paymentMethod){
+//            ContactPaymentMethod::create([
+//                'user_id'           => $user->id,
+//                'name_on_card'      =>  $user->lastname. ' ' . $user->firstname,
+//                'card_number'       =>  0000000000000000,
+//                'exp'               =>  '12/23',
+//                'cvv'               =>  000
+//            ]);
+//        }
 
 
         // Check for product and service and insert as transactions

@@ -69,6 +69,11 @@
         @endif
 
 
+            @if(Auth::user()->hasModuleAccess('catalogue', 'read') || Auth::user()->hasModuleAccess('catalogue', 'edit') || Auth::user()->hasModuleAccess('catalogue', 'edit'))
+                <li class=" nav-item @if(Route::currentRouteName() == 'company.orders') active @endif"><a class="d-flex align-items-center" href="{{route('company.orders')}}"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">Orders</span></a>
+                </li>
+            @endif
+
             <li class=" navigation-header"><span data-i18n="Forms &amp; Tables">Management</span><i data-feather="more-horizontal"></i>
             </li>
             @if(Auth::user()->hasModuleAccess('role', 'read') || Auth::user()->hasModuleAccess('role', 'edit') || Auth::user()->hasModuleAccess('role', 'create'))

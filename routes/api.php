@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\RAC\PermissionController;
 use App\Http\Controllers\Api\RAC\RoleController;
 use App\Http\Controllers\Api\RAC\RoleOperationController;
 use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,3 +40,11 @@ Route::post('/attach-permission-to-role/{role}/{permission}', [RoleOperationCont
 Route::post('/detach-permission-from-role/{role}/{permission}', [RoleOperationController::class, 'detachPermissionFromRole']);
 Route::post('/attach-role-to-contact/{role}/{contact}', [RoleOperationController::class, 'attachRoleToUser']);
 Route::post('/detach-role-from-contact/{role}/{contact}', [RoleOperationController::class, 'detachRoleFromUser']);
+
+Route::post('/stripe/create-customer',       [CheckoutController::class, 'createCustomer']);
+Route::post('/stripe/setup-customer-intent', [CheckoutController::class, 'createStripeCustomerIntent']);
+Route::get('/stripe/payment-methods',        [CheckoutController::class, 'getStripeCustomerPaymentMethods']);
+Route::get('/stripe/check-invoices',         [CheckoutController::class, 'checkInvoices']);
+Route::get('/stripe/send-sample-mail',         [CheckoutController::class, 'sampleMail']);
+
+

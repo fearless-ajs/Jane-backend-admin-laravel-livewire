@@ -14,4 +14,8 @@ class CartOrderCatalogue extends Model
     public function catalogue(){
         return $this->hasOne(CompanyCatalogue::class, 'id','catalogue_id');
     }
+
+    public function cartOrder(){
+        return $this->belongsTo(CartOrder::class, 'cart_order_id');
+    }
 }

@@ -281,6 +281,7 @@
                     <p class="text-center">
                         <span class="text-success text-center">Paid: {{ \Carbon\Carbon::parse($invoice->payment_date)->translatedFormat(' j F Y')}} </span>
                     </p>
+                    <a class="btn btn-outline-success w-100 mb-75" href="{{route('company.invoice-orders', $invoice->id)}}"> Track order </a>
                 @endif
             </div>
         </div>

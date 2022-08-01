@@ -38,6 +38,14 @@ class Company extends Model
         return $this->hasMany(Product::class,'company_id');
     }
 
+    public function cartOrders(){
+        return $this->hasMany(CartOrderCatalogue::class,'company_id');
+    }
+
+    public function invoiceOrders(){
+        return $this->hasMany(InvoiceOrderCatalogue::class,'company_id');
+    }
+
     public function catalogues(){
         return $this->hasMany(CompanyCatalogue::class,'company_id');
     }

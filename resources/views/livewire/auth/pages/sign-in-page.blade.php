@@ -12,7 +12,7 @@
                 </div>
                 @if(session()->has('message'))
                 <div style="text-align: center; border-radius: 20px; padding: 20px;" class="mb-2 bg-primary">
-                    <h4 class="">{{session()->get('message')}}</h4>
+                    <h5 class="">{{session()->get('message')}}</h5>
                 </div>
                 @endif
                 <!-- Login basic -->
@@ -20,7 +20,9 @@
                     <div class="card-body">
                         <h2 class="mb-1 text-center text-primary font-large-1 mb-2">{{$settings->app_name}}</h2>
                         <h4 class="card-title mb-1 text-center">Welcome to {{$settings->app_name}}! 👋</h4>
+                        @if(!session()->has('data'))
                         <p class="card-text mb-2 text-center">Please sign-in to your account and start the adventure</p>
+                        @endif
 
                         @livewire('sign-in-form')
 

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Company;
+use App\Models\CompanyBillingCycle;
 use App\Models\CompanyRole;
 use App\Models\CompanyRoleUser;
 use App\Models\CompanyTeam;
@@ -11,6 +12,7 @@ use App\Models\User;
 use App\Models\Worker;
 use App\Traits\CompanyDefaultPermissions;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -75,13 +77,47 @@ class VerifyEmailCard extends LiveNotify
         $user->save();
 
         $this->createDefaultPermissions($company->id, $company_role, $user);
+        $this->createDefaultBillingCycles($company->id);
         // Create default roles
 
         $this->success = true;
         $this->loading = false;
+        // clears the resend verification data on the login page
+        Session::forget('data');
         return true;
     }
 
+    public function createDefaultBillingCycles($company_id){
+        CompanyBillingCycle::create([
+            'company_id'    =>  $company_id,
+            'title'         =>  'Daily',
+            'days'          =>  1
+        ]);
+
+        CompanyBillingCycle::create([
+            'company_id'    =>  $company_id,
+            'title'         =>  'Every 7 days',
+            'days'          =>  7
+        ]);
+
+        CompanyBillingCycle::create([
+            'company_id'    =>  $company_id,
+            'title'         =>  'Every 14 days',
+            'days'          =>  14
+        ]);
+
+        CompanyBillingCycle::create([
+            'company_id'    =>  $company_id,
+            'title'         =>  'Every 30 days',
+            'days'          =>  30
+        ]);
+
+        CompanyBillingCycle::create([
+            'company_id'    =>  $company_id,
+            'title'         =>  'Every 365 days',
+            'days'          =>  365
+        ]);
+    }
 
     public function render()
     {

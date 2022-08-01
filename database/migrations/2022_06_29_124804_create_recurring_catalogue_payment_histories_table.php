@@ -17,10 +17,16 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('catalogue_id');
+            $table->bigInteger('active_service_id');
             $table->dateTime('last_payment_date');
             $table->float('last_payment_amount');
             $table->dateTime('next_due_date');
             $table->boolean('active')->default(false);
+            $table->boolean('charge_attempted')->default(false);
+            $table->float('amount_charged')->default(0.00);
+
+            $table->enum('charge_attempt_status', ['pending', 'succeeded', 'failed']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

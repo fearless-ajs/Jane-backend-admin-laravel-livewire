@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthViewController extends Controller
 {
@@ -135,6 +136,10 @@ class AuthViewController extends Controller
             Auth::user()->deleteTwoFactorCode();
             Auth::logout();
         }
+        // clears the resend verification data on the login page
+        Session::forget('data');
+
+        // Redirects to login page
         return redirect()->route('sign-in');
     }
 }

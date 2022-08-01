@@ -39,4 +39,13 @@ class ContactInvoiceViewController extends Controller
         return view('livewire.contact.pages.contact-invoice-preview-page', ['data' => $data, 'invoice' => $invoice]);
     }
 
+    public function invoiceOrders ($invoice_id){
+        $data = [
+            'title' => 'Invoice Orders',
+            'keywords' => 'Invoice orders',
+            'description' => 'Invoice orders',
+        ];
+        return view('livewire.contact.pages.contact-invoice-order-list-page', ['data' => $data, 'invoice_id' => $invoice_id]);
+    }
+
 }

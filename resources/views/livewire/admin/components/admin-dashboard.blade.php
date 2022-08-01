@@ -74,8 +74,8 @@
                                     </div>
                                 </div>
                                 <div class="my-auto">
-                                    <h4 class="fw-bolder mb-0">{{count($invoices)}}</h4>
-                                    <p class="card-text font-small-3 mb-0">Invoices</p>
+                                    <h4 class="fw-bolder mb-0">{{$settings->currency->currency_symbol}}{{number_format($totalRevenue)}}</h4>
+                                    <p class="card-text font-small-3 mb-0">Revenue</p>
                                 </div>
                             </div>
                         </div>
@@ -87,60 +87,12 @@
     </div>
 
     <div class="row match-height">
-        <div class="col-lg-4 col-12">
-            <div class="row match-height">
-                <!-- Bar Chart - Orders -->
-                <div class="col-lg-6 col-md-3 col-6">
-                    <div class="card">
-                        <div class="card-body pb-50">
-                            <h6>Orders</h6>
-                            <h2 class="fw-bolder mb-1">2,76k</h2>
-                            <div id="statistics-order-chart"></div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Bar Chart - Orders -->
-
-                <!-- Line Chart - Profit -->
-                <div class="col-lg-6 col-md-3 col-6">
-                    <div class="card card-tiny-line-stats">
-                        <div class="card-body pb-50">
-                            <h6>Profit</h6>
-                            <h2 class="fw-bolder mb-1">6,24k</h2>
-                            <div id="statistics-profit-chart"></div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Line Chart - Profit -->
-
-                <!-- Earnings Card -->
-                <div class="col-lg-12 col-md-6 col-12">
-                    <div class="card earnings-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <h4 class="card-title mb-1">Earnings</h4>
-                                    <div class="font-small-2">This Month</div>
-                                    <h5 class="mb-1">$4055.56</h5>
-                                    <p class="card-text text-muted font-small-2">
-                                        <span class="fw-bolder">68.2%</span><span> more earnings than last month.</span>
-                                    </p>
-                                </div>
-                                <div class="col-6">
-                                    <div id="earnings-chart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Earnings Card -->
-            </div>
-        </div>
 
         <!-- Revenue Report Card -->
-        <div class="col-lg-8 col-12">
+        <div class="col-lg-12 col-12">
             <div class="card card-company-table">
                 <div class="card-body p-0">
+                    <h4 class="fw-bolder mb-2 mt-2" style="padding-left: 20px;">Recent companies</h4>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -204,6 +156,37 @@
             </div>
         </div>
         <!--/ Revenue Report Card -->
+
+
+        <!-- Company Table Card -->
+        <div class="col-lg-8 col-12">
+            @livewire('admin-top-sold-products')
+        </div>
+        <!--/ Company Table Card -->
+
+        <!-- Developer Meetup Card -->
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="card card-developer-meetup">
+                <div class="card-body">
+                    <div class="meetup-header d-flex align-items-center">
+                        <div class="meetup-day">
+                            <h6 class="mb-0">{{ \Carbon\Carbon::now()->translatedFormat('F')}}</h6>
+                            <h3 class="mb-0">{{ \Carbon\Carbon::now()->translatedFormat(' j')}}</h3>
+                        </div>
+                        <div class="my-auto">
+                            <h4 class="card-title mb-25">SERVICE REPORT CHART</h4>
+                            <p class="card-text mb-0">Most used {{$settings->app_name}} services</p>
+                        </div>
+                    </div>
+                    <div class="mt-0">
+
+                        @livewire('admin-top-sold-services')
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ Developer Meetup Card -->
     </div>
 
 </section>

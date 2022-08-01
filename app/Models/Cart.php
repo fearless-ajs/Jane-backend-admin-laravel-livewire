@@ -23,6 +23,10 @@ class Cart extends Model
         return $this->hasMany(CartService::class, 'cart_id');
     }
 
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function isCataloguePresent($catalog_id){
         $catalog = CompanyCatalogue::find($catalog_id);
         if ($catalog->type == 'service'){

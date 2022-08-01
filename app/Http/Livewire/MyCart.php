@@ -41,7 +41,7 @@ class MyCart extends Component
                 }
             }
 
-            if (count($this->cart->products) > 0){
+            if (count($this->cart->services) > 0){
                 foreach ($this->cart->services as $item){
                     $serviceTotalPrice = $serviceTotalPrice + $item->total_service_price;
                 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\View\Company\CompanyContactViewController;
 use App\Http\Controllers\View\Company\CompanyInvoiceViewController;
+use App\Http\Controllers\View\Company\CompanyOrderViewController;
 use App\Http\Controllers\View\Company\CompanyPermissionsViewController;
 use App\Http\Controllers\View\Company\CompanyProductViewController;
 use App\Http\Controllers\View\Company\CompanyRolesViewController;
@@ -25,6 +26,8 @@ Route::middleware(['auth', 'check-two-factor'])->name('company.')->group(functio
 
     Route::get('/invoices/print/{id}',      [CompanyInvoiceViewController::class, 'printInvoice'])->name('print-invoice');
     Route::middleware('role:company')->group(function (){
+
+        Route::get('/chart-test',                     [CompanyViewController::class, 'chartTest'])->name('chart-test');
 
             // Current user information
             Route::get('/auth/user/profile',        [CompanyUsersViewController::class, 'myProfile'])->name('my-profile');
@@ -52,13 +55,19 @@ Route::middleware(['auth', 'check-two-factor'])->name('company.')->group(functio
             Route::middleware('company-guard:catalogue,read')->get('/catalogues',               [CompanyProductViewController::class, 'catalogues'])->name('catalogues');
             Route::middleware('company-guard:catalogue,read')->get('/catalogues/{id}',          [CompanyProductViewController::class, 'catalogueDetails'])->name('catalogue-details');
 
+            Route::middleware('company-guard:catalogue,read')->get('/orders',                   [CompanyOrderViewController::class, 'orders'])->name('orders');
+            Route::middleware('company-guard:catalogue,read')->get('/orders/{id}',              [CompanyOrderViewController::class, 'orderDetails'])->name('order-details');
+
+
+            Route::middleware('company-guard:catalogue,read')->get('/invoice-orders/{invoice_id}',     [CompanyOrderViewController::class, 'invoiceOrders'])->name('invoice-orders');
+            Route::middleware('company-guard:catalogue,read')->get('/invoice-order-details/{order_id}',     [CompanyOrderViewController::class, 'invoiceOrderDetails'])->name('invoice-order-details');
+
 //            Route::middleware('company-guard:service,read')->get('/services',                 [CompanyServiceViewController::class, 'services'])->name('services');
 //            Route::middleware('company-guard:service,read')->get('/services/{id}',            [CompanyServiceViewController::class, 'serviceDetails'])->name('service-details');
 
-
-            Route::middleware('company-guard:category,read')->get('/categories',               [CompanyProductViewController::class, 'categories'])->name('categories');
-            Route::middleware('company-guard:billing-cycle,read')->get('/billing-cycle',            [CompanyProductViewController::class, 'billingCycle'])->name('billing-cycles');
-            Route::middleware('company-guard:tax,read')->get('/taxes',                    [CompanyProductViewController::class, 'taxes'])->name('taxes');
+            Route::middleware('company-guard:category,read')->get('/categories',                [CompanyProductViewController::class, 'categories'])->name('categories');
+            Route::middleware('company-guard:billing-cycle,read')->get('/billing-cycle',        [CompanyProductViewController::class, 'billingCycle'])->name('billing-cycles');
+            Route::middleware('company-guard:tax,read')->get('/taxes',                          [CompanyProductViewController::class, 'taxes'])->name('taxes');
 
 
             Route::middleware('company-guard:invoice,read')->get('/invoices',                 [CompanyInvoiceViewController::class, 'invoices'])->name('invoices');

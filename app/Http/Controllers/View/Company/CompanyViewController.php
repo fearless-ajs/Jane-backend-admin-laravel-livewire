@@ -23,8 +23,18 @@ class CompanyViewController extends Controller
             'keywords' => 'Admin dashboard',
             'description' => 'Admin dashboard'
         ];
-        return view('livewire.company.pages.company-dashboard-page', ['data' => $data, 'settings'   => $this->settings]);
+        return view('livewire.company.pages.company-dashboard-page', ['data' => $data, 'company' => Auth::user()->company]);
     }
+
+    public function chartTest (){
+        $data = [
+            'title' => 'Company dashboard',
+            'keywords' => 'Admin dashboard',
+            'description' => 'Admin dashboard'
+        ];
+        return view('livewire.company.pages.company-chart-test-page', ['data' => $data, 'settings'   => $this->settings]);
+    }
+
 
     public function usersList (){
         $data = [

@@ -2,11 +2,13 @@
 
 namespace App\Console;
 
+use App\Traits\InvoiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    use InvoiceProvider;
     /**
      * Define the application's command schedule.
      *
@@ -16,7 +18,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-    }
+        $schedule->command('billing:start')->daily();
+       }
 
     /**
      * Register the commands for the application.

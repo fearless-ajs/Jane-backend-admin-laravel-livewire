@@ -31,16 +31,21 @@ Route::middleware(['auth', 'check-two-factor'])->name('contact.')->group(functio
         Route::get('/invoices/signed',                      [ContactInvoiceViewController::class, 'signedInvoices'])->name('signed-invoices');
         Route::get('/invoices/unsigned',                    [ContactInvoiceViewController::class, 'unSignedInvoices'])->name('unsigned-invoices');
         Route::get('/invoices/{invoice_id}',                [ContactInvoiceViewController::class, 'previewInvoice'])->name('invoices-preview');
+        Route::get('/invoice-orders/{invoice_id}',          [ContactInvoiceViewController::class, 'invoiceOrders'])->name('invoice-orders');
 
         Route::get('/catalogues',                           [ContactCatalogueViewController::class, 'catalogues'])->name('catalogues');
         Route::get('/catalogues/{catalogue_id}',            [ContactCatalogueViewController::class, 'catalogueDetails'])->name('catalogue-details');
 
 
-        Route::get('/payment-info',                         [ContactPaymentViewController::class, 'paymentInfo'])->name('payment-info');
-        Route::get('/cart',                                 [ContactPaymentViewController::class, 'cart'])->name('cart');
-        Route::get('/checkout-now',                         [ContactPaymentViewController::class, 'checkout'])->name('checkout');
-        Route::get('/orders',                               [ContactPaymentViewController::class, 'orders'])->name('orders');
+        Route::get('/payment-info',                         [ContactPaymentViewController::class, 'billingAddress'])->name('payment-info');
+        Route::get('/payment-method',                       [ContactPaymentViewController::class, 'paymentInfo'])->name('payment-method');
 
+        Route::get('/cart',                                  [ContactPaymentViewController::class, 'cart'])->name('cart');
+        Route::get('/checkout-now',                          [ContactPaymentViewController::class, 'checkout'])->name('checkout');
+        Route::get('/orders',                                [ContactPaymentViewController::class, 'orders'])->name('orders');
+
+        Route::get('/subscriptions',                         [ContactViewController::class, 'subscriptions'])->name('subscriptions');
+        Route::get('/subscriptions/{id}',                    [ContactViewController::class, 'subscriptionDetails'])->name('subscription-details');
 
         Route::get('checkout','App\Http\Controllers\View\Contact\CheckoutController@checkoutCart')->name('pay-cart-for-now');
         Route::post('checkout','App\Http\Controllers\View\Contact\CheckoutController@afterCartpayment')->name('checkout.credit-card');

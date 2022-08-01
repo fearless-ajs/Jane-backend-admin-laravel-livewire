@@ -40,7 +40,7 @@ class ContactCheckoutCartWithCard extends Component
                 }
             }
 
-            if (count($this->cart->products) > 0){
+            if (count($this->cart->services) > 0){
                 foreach ($this->cart->services as $item){
                     $itemTax = (($item->catalogue->tax->percentage / 100) * $item->catalogue->price);
                     $serviceTotalPrice = $serviceTotalPrice+$serviceTotalPrice + $item->catalogue->price;

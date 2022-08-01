@@ -14,7 +14,7 @@ class ContactOrders extends Component
     public function render()
     {
         return view('livewire.contact.components.contact-orders', [
-            'orders'    =>  CartOrder::orderBy('fulfilled', 'ASC')->orderBy('id', 'DESC')->where('user_id', Auth::user()->id)->paginate(12)
+            'orders'    =>  CartOrder::orderBy('fulfilled', 'ASC')->orderBy('id', 'DESC')->where('user_id', Auth::user()->id)->paginate(2)
         ]);
     }
 }

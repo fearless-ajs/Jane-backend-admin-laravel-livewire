@@ -16,10 +16,7 @@ return new class extends Migration
         Schema::create('contact_payment_methods', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('card_number');
-            $table->string('name_on_card');
-            $table->string('exp');
-            $table->bigInteger('cvv');
+            $table->string('stripe_payment_id', 500);
             $table->softDeletes();
             $table->timestamps();
         });

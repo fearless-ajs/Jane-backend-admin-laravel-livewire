@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\User;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -71,8 +72,10 @@ class SignUpForm extends LiveNotify
 
         }
         // Display a notification about verification link
-        $this->reset();
         $this->alert('success', 'User registered', 'please check your email to verify your account');
+        Session::put('data', [
+            'email'     => $this->email
+        ]);
         return redirect(route('login'))->with('message', 'Registration successful, please check your email to verify your account');
     }
 

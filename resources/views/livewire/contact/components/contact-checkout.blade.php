@@ -450,8 +450,15 @@
                                             <div class="detail-amt fw-bolder">{{$settings->currency->currency_symbol}}{{$totalPriceWithTax}}</div>
                                         </li>
                                     </ul>
-                                    <button type="button" disabled  wire:loading wire:target="makePayment"  class="btn btn-primary w-100 btn-next place-order"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
-                                    <a href="{{route('contact.pay-cart-for-now')}}"  class="btn btn-primary w-100 btn-next place-order">Make payment now</a>
+                                    <p>Your primary debit card will be used for this transaction, you can <a href="{{route('contact.payment-method')}}">click here</a> to update your primary payment card</p>
+
+                                    @if($card)
+                                        <button wire:click="makePayment" wire:loading.remove wire:target="makePayment" type="button" class="btn btn-primary w-100 btn-next place-order">Make payment now</button>
+                                        <button wire:loading wire:target="makePayment" type="button" disabled class="btn btn-primary w-100 btn-next place-order">Processing payment...</button>
+                                    @else
+                                        <a href="{{route('contact.payment-method')}}"  class="btn btn-primary w-100 btn-next place-order">Please update your payment details</a>
+
+                                    @endif
 
                                 </div>
                             </div>

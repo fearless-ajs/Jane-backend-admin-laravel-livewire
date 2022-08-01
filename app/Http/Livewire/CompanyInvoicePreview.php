@@ -2,12 +2,29 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\InvoiceOrderEmailForCompanyMail;
+use App\Mail\InvoiceOrderEmailForContactMail;
+use App\Models\ActiveService;
+use App\Models\ContactPaymentMethod;
+use App\Models\Invoice;
+use App\Models\InvoiceOrder;
+use App\Models\InvoiceOrderCatalogue;
+use App\Models\InvoiceTransaction;
+use App\Models\RecurringCataloguePaymentHistory;
 use App\Models\Setting;
+use App\Traits\StripeServiceProvider;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class CompanyInvoicePreview extends Component
+class CompanyInvoicePreview extends LiveNotify
 {
+    use StripeServiceProvider;
+
     public $invoice;
     public $totalProductTax = 0.00;
     public $totalServiceTax = 0.00;
@@ -32,7 +49,11 @@ class CompanyInvoicePreview extends Component
                 $this->totalServiceTax =  $this->totalServiceTax + $service->total_tax;
             }
         }
+
     }
+
+
+
 
     public function download(){
         $data = [

@@ -139,4 +139,8 @@ class User extends Authenticatable
         $this->two_factor_expires_at = null;
         $this->save();
     }
+
+    public function intent(){
+        return $this->hasOne(UserStripeSetupIntent::class, 'user_id');
+    }
 }

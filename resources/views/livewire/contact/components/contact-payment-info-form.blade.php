@@ -10,12 +10,12 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link @if($paymentMethod) active @endif" href="#" wire:click="showPaymentMethod">
-                        <i class="font-medium-3 me-50 fa fa-money-bill"></i>
-                        <span class="fw-bold">Payment Card</span>
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link @if($paymentMethod) active @endif" href="#" wire:click="showPaymentMethod">--}}
+{{--                        <i class="font-medium-3 me-50 fa fa-money-bill"></i>--}}
+{{--                        <span class="fw-bold">Payment Card</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
             </ul>
 

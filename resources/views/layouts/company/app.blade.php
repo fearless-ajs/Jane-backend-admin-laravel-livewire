@@ -74,7 +74,7 @@
 @livewire('company-main-menu')
 
 <!-- BEGIN: Content-->
-@if(Route::currentRouteName() == 'company.catalogues')
+@if(Route::currentRouteName() == 'company.catalogues' || Route::currentRouteName() == 'company.orders' || Route::currentRouteName() == 'company.invoice-orders')
 <div class="app-content content ecommerce-application">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
@@ -108,6 +108,9 @@
 
 
 @livewireScripts
+
+<script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
+@livewireChartsScripts
 
 <!-- BEGIN: Vendor JS-->
 <script src="{{asset('app-assets/vendors/js/vendors.min.js')}}"></script>

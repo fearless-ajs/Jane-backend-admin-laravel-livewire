@@ -278,10 +278,20 @@
                         <p class="text-center">
                             <span class="text-success text-center">Paid: {{ \Carbon\Carbon::parse($invoice->payment_date)->translatedFormat(' j F Y')}} </span>
                         </p>
+                        <a class="btn btn-outline-success w-100 mb-75" href="{{route('contact.invoice-orders', $invoice->id)}}"> Track order </a>
                     @else
-                        <a href="{{route('contact.pay-invoice-form-now', $invoice->id)}}" class="btn btn-outline-success w-100 mb-75">
-                            Proceed to payment
-                        </a>
+                        <small style="text-align: center" class="text-center mb-1">Your payment card will be used for this transaction, you can <a href="{{route('contact.payment-method')}}">click here</a> to update your payment card</small>
+                        @if($card)
+                            <button wire:click="makePayment" wire:loading.remove wire:target="makePayment" type="button" class="btn btn-primary w-100 btn-next place-order">Make payment now</button>
+                            <button wire:loading wire:target="makePayment" type="button" disabled class="btn btn-primary w-100 btn-next place-order">Processing payment...</button>
+                        @else
+                            <a href="{{route('contact.payment-method')}}"  class="btn btn-primary w-100 btn-next place-order">Update card</a>
+
+                        @endif
+
+{{--                        <a href="{{route('contact.pay-invoice-form-now', $invoice->id)}}" class="btn btn-outline-success w-100 mb-75">--}}
+{{--                            Proceed to payment--}}
+{{--                        </a>--}}
                     @endif
 
                 @endif

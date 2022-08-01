@@ -31,15 +31,15 @@
                                                     <h6 class="mb-0"><a href="{{route('contact.catalogue-details', $cartItem->catalogue->id)}}" class="text-body"> {{$cartItem->catalogue->name}}</a></h6>
                                                     <span class="item-company">By <a href="#" class="company-name"> {{$cartItem->catalogue->manufacturer}}</a></span>
                                                 </div>
-                                                @if($cartItem->catalogue->quantity < 1)
-                                                    <span class="text-danger mb-1">Out Of Stock</span>
-                                                @else
-                                                    @if($cartItem->catalogue->quantity < $cartItem->quantity)
-                                                        <span class="text-danger mb-1">Quantity above available product</span>
-                                                    @else
-                                                        <span class="text-success mb-1">In Stock</span>
-                                                    @endif
-                                                @endif
+{{--                                                @if($cartItem->catalogue->quantity < 1)--}}
+{{--                                                    <span class="text-danger mb-1">Out Of Stock</span>--}}
+{{--                                                @else--}}
+{{--                                                    @if($cartItem->catalogue->quantity < $cartItem->quantity)--}}
+{{--                                                        <span class="text-danger mb-1">Quantity above available product</span>--}}
+{{--                                                    @else--}}
+{{--                                                        <span class="text-success mb-1">In Stock</span>--}}
+{{--                                                    @endif--}}
+{{--                                                @endif--}}
 
                                                 <div class="item-quantity mb-1">
                                                     <span class="quantity-title">Qty: </span>
@@ -54,6 +54,32 @@
                                                     <span class="badge badge-light-primary" style="cursor:pointer;">Ordered on:{{ \Carbon\Carbon::parse($cartItem->created_at)->translatedFormat(' j F Y')}}  </span>
                                                 </div>
 
+                                                <div class="mt-1">
+                                                    @if($cartItem->pipeline == 'order_placed')
+                                                        <span class="badge badge-light-warning">Status: Waiting confirmation </span>
+                                                    @endif
+
+                                                    @if($cartItem->pipeline == 'order_in_progress')
+                                                        <span class="badge badge-light-info">Status: Waiting shipping </span>
+                                                    @endif
+
+                                                    @if($cartItem->pipeline == 'shipped')
+                                                        <span class="badge badge-light-primary">Status: Shipped </span>
+                                                    @endif
+
+                                                    @if($cartItem->pipeline == 'out_for_delivery')
+                                                        <span class="badge badge-light-primary">Status: Out for delivery </span>
+                                                    @endif
+
+                                                    @if($cartItem->pipeline == 'delivered')
+                                                        <span class="badge badge-light-success">Status: Delivered </span>
+                                                    @endif
+
+                                                    @if($cartItem->pipeline == 'cancelled')
+                                                        <span class="badge badge-light-danger">Status: Cancelled </span>
+                                                    @endif
+                                                </div>
+
                                             </div>
                                             <div class="item-options text-center">
                                                 <div class="item-wrapper">
@@ -64,15 +90,43 @@
                                                         {{--                                                    </p>--}}
                                                     </div>
                                                 </div>
-                                                @if($cartItem->delivered)
+
+                                                @if($cartItem->pipeline == 'order_placed')
+                                                    <button type="button" class="btn btn-light mt-1 remove-wishlist" style="cursor: default">
+                                                        <span class="text text-warning">Waiting confirmation</span>
+                                                    </button>
+                                                @endif
+
+                                                @if($cartItem->pipeline == 'order_in_progress')
+                                                    <button type="button" class="btn btn-light mt-1 remove-wishlist" style="cursor: default">
+                                                        <span class="text text-info">Waiting shipping</span>
+                                                    </button>
+                                                @endif
+
+                                                @if($cartItem->pipeline == 'shipped')
+                                                    <button type="button" class="btn btn-light mt-1 remove-wishlist" style="cursor: default">
+                                                        <span class="text text-primary">Shipped</span>
+                                                    </button>
+                                                @endif
+
+                                                @if($cartItem->pipeline == 'out_for_delivery')
+                                                    <button type="button" class="btn btn-light mt-1 remove-wishlist" style="cursor: default">
+                                                        <span class="text text-primary">Out for delivery</span>
+                                                    </button>
+                                                @endif
+
+                                                @if($cartItem->pipeline == 'delivered')
                                                     <button type="button" class="btn btn-light mt-1 remove-wishlist" style="cursor: default">
                                                         <span class="text text-success">Delivered</span>
                                                     </button>
-                                                @else
+                                                @endif
+
+                                                @if($cartItem->pipeline == 'cancelled')
                                                     <button type="button" class="btn btn-light mt-1 remove-wishlist" style="cursor: default">
-                                                        <span class="text text-danger">Pending</span>
+                                                        <span class="text text-danger">Cancelled</span>
                                                     </button>
                                                 @endif
+
                                             </div>
                                         </div>
                                         @endif
@@ -99,7 +153,13 @@
                                                             <span class="badge badge-light-primary" style="cursor:pointer;">Ordered on:{{ \Carbon\Carbon::parse($cartItem->created_at)->translatedFormat(' j F Y')}}  </span>
                                                         </div>
 
-
+                                                        <div class="mt-1">
+                                                            @if($cartItem->pipeline == 'cancelled')
+                                                                <span class="badge badge-light-danger">Status: Cancelled </span>
+                                                            @else
+                                                                <span class="badge badge-light-success">Status: Active </span>
+                                                            @endif
+                                                        </div>
                                                         {{--                                                <div class="item-quantity mb-1">--}}
                                                         {{--                                                    <span class="quantity-title">Qty: </span>--}}
                                                         {{--                                                    <div class="quantity-counter-wrapper">--}}
@@ -125,13 +185,13 @@
                                                             </div>
                                                         </div>
 
-                                                        @if($cartItem->delivered)
+                                                       @if($cartItem->pipeline == 'cancelled'))
                                                             <button type="button" class="btn btn-light mt-1 remove-wishlist" style="cursor: default">
-                                                                <span class="text text-success">Delivered</span>
+                                                                <span class="text text-success">Cancelled</span>
                                                             </button>
                                                         @else
                                                             <button type="button" class="btn btn-light mt-1 remove-wishlist" style="cursor: default">
-                                                                <span class="text text-danger">Pending</span>
+                                                                <span class="text text-success">Active</span>
                                                             </button>
                                                         @endif
                                                     </div>
@@ -144,14 +204,12 @@
 
                     </div>
 
-                    {{ $orders->links('components.general.pagination-links') /* For pagination links */}}
-
-
                 </div>
                 <!-- Checkout Place order Ends -->
             </div>
             <!-- </div> -->
         </div>
+        {{ $orders->links('components.general.pagination-links') /* For pagination links */}}
     </div>
 
 </div>

@@ -10,4 +10,13 @@ class InvoiceOrderCatalogue extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = [];
+
+    public function catalogue(){
+        return $this->belongsTo(CompanyCatalogue::class, 'catalogue_id');
+    }
+
+    public function invoiceOrder(){
+        return $this->belongsTo(InvoiceOrder::class, 'invoice_order_id');
+    }
+
 }

@@ -2,7 +2,12 @@
 
 
     @if(!$invoice->contactSignature)
-    <p class="text-xl font-semibold text-gray-700 flex items-center justify-between" style="text-align: center !important;"><span>Sign here</span> </p>
+    <p class="text-xl font-semibold text-gray-700 flex items-center justify-between" style="text-align: center !important;">
+        <span>Sign here</span>
+    </p>
+        <p  class="text-xl font-semibold text-gray-700 flex items-center justify-between" style="text-align: center !important;">
+            <span wire:loading style="text-align: center" class="badge badge-light-success">Processing.. </span>
+        </p>
 
     <div>
         <canvas x-ref="signature_canvas" class="border rounded shadow">
@@ -28,6 +33,8 @@
         </div>
         <p style="text-align: center;" class="mt-2">Signed: {{ \Carbon\Carbon::parse($invoice->contactSignature->created_at)->translatedFormat(' j F Y')}}</p>
     @endif
+
+
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>

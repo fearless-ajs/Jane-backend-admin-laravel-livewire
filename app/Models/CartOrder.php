@@ -14,4 +14,8 @@ class CartOrder extends Model
     public function items(){
         return $this->hasMany(CartOrderCatalogue::class, 'cart_order_id');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

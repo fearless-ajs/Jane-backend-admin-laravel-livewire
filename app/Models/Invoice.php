@@ -44,4 +44,8 @@ class Invoice extends Model
     public function catalogues(){
         return $this->hasMany(InvoiceCatalogue::class, 'invoice_id');
     }
+
+    public function contact(){
+        return $this->hasOne(Contact::class, 'id', 'contact_id');
+    }
 }

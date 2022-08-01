@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Setting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,17 +14,20 @@ class ContactUserAccountCreationMail extends Mailable
 
     public object $user;
     public object $company;
+    public $settings;
 
     /**
      * Create a new message instance.
      *
      * @param $user
+     *
      * @param $company
      */
     public function __construct($user, $company)
     {
         $this->user    = $user;
         $this->company = $company;
+        $this->settings = Setting::first();
     }
 
     /**
@@ -33,6 +37,6 @@ class ContactUserAccountCreationMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Welcome to crm')->markdown('emails.contact-user-account-creation', ['contact' => $this->user]);
+        return $this->subject($this->settings->app_name)->markdown('emails.contact-user-account-creation', ['contact' => $this->user]);
     }
 }

@@ -2,14 +2,27 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\CartOrderEmailForContactMail;
+use App\Models\ActiveService;
+use App\Models\Cart;
+use App\Models\CartOrder;
+use App\Models\CartOrderCatalogue;
+use App\Models\CartTransaction;
 use App\Models\ContactBillingAddress;
 use App\Models\ContactPaymentMethod;
+use App\Models\RecurringCataloguePaymentHistory;
+use App\Traits\StripeServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
-class ContactCheckout extends Component
+class ContactCheckout extends LiveNotify
 
 {
+
+    use StripeServiceProvider;
 
     public $cartCataloguesTotal = 0;
     public $cart;
@@ -19,11 +32,6 @@ class ContactCheckout extends Component
     public $totalTax;
 
     public $card;
-    public $encryptedCardNumber;
-    public $card_number;
-    public $name;
-    public $exp;
-    public $cvv;
 
     public $fullname;
     public $phone;
@@ -46,7 +54,6 @@ class ContactCheckout extends Component
         $this->fetchCart();
         $this->fetchBillingAddressInfo();
         $this->fetchCardInfo();
-        $this->encryptedCardNumber = $this->stringToSecret($this->card_number);
     }
 
 
@@ -89,25 +96,7 @@ class ContactCheckout extends Component
     public function fetchCardInfo(){
         $card = ContactPaymentMethod::where('user_id', Auth::user()->id)->first();
         if ($card){
-            $this->card         = $card;
-            $this->card_number  = $card->card_number;
-            $this->name         = $card->name_on_card;
-            $this->exp          = $card->exp;
-            $this->cvv          = $card->cvv;
-        }else{
-            $card = ContactPaymentMethod::create([
-                'user_id'       =>  Auth::user()->id,
-                'name_on_card'  =>  Auth::user()->lastname. ' ' . Auth::user()->firstname,
-                'card_number'   =>  0000000000000000,
-                'exp'           =>  '12/23',
-                'cvv'           =>  000
-            ]);
-
-            $this->card         = $card;
-            $this->card_number  = $card->card_number;
-            $this->name         = $card->name_on_card;
-            $this->exp          = $card->exp;
-            $this->cvv          = $card->cvv;
+            $this->card= $card;
         }
     }
 
@@ -138,10 +127,10 @@ class ContactCheckout extends Component
                 }
             }
 
-            if (count($this->cart->products) > 0){
+            if (count($this->cart->services) > 0){
                 foreach ($this->cart->services as $item){
                     $itemTax = (($item->catalogue->tax->percentage / 100) * $item->catalogue->price);
-                    $serviceTotalPrice = $serviceTotalPrice+$serviceTotalPrice + $item->catalogue->price;
+                    $serviceTotalPrice = ($serviceTotalPrice + $item->catalogue->price);
                     $totalTax+=$itemTax;
                 }
             }
@@ -150,6 +139,8 @@ class ContactCheckout extends Component
         $this->totalPrice        = $serviceTotalPrice + $productTotalPrice;
         $this->totalTax          = $totalTax;
         $this->totalPriceWithTax = $totalTax + $this->totalPrice;
+
+//        dd($serviceTotalPrice);
         return true;
     }
 
@@ -159,16 +150,6 @@ class ContactCheckout extends Component
         }
     }
 
-    private function stringToSecret(string $string = NULL)
-    {
-        if (!$string) {
-            return NULL;
-        }
-        $length = strlen($string);
-        $visibleCount = (int) round($length / 4);
-        $hiddenCount = $length - ($visibleCount * 2);
-        return substr($string, 0, $visibleCount) . str_repeat('*', $hiddenCount) . substr($string, ($visibleCount * -1), $visibleCount);
-    }
 
     public function saveBillingAddress(){
         $this->validate([
@@ -201,10 +182,140 @@ class ContactCheckout extends Component
     }
 
     public function makePayment(){
-
-
-        return $this->emit('alert', ['type' => 'success', 'message' => 'Payment successful']);
+        $user = Auth::user();
+        $response = $this->makeStripeOnSessionPayment($user, $this->card->stripe_payment_id,$this->totalPriceWithTax * 100);
+        if ($response->status == 'succeeded'){
+            return $this->afterCartPayment();
+        }
+//        $this->makeStripeOffSessionPayment($user)
+        return $this->alert('error', 'Payment error', 'Something went wrong with the payment, please check your card');
     }
+
+    public function afterCartPayment()
+    {
+        $cart = Cart::findOrFail(Auth::user()->cart->id);
+
+        // Create th order along with the status, calculate tax
+        $cartOrder = CartOrder::create([
+            'user_id'       =>  Auth::user()->id,
+            'cart_id'       =>  $cart->id,
+            'total_price'   =>  $cart->total_price,
+            'total_paid'    =>  $cart->total_price,
+            'fulfilled'     =>  false,
+            'address'       =>  Auth::user()->billingAddress->address,
+            'country'       =>  Auth::user()->billingAddress->country,
+            'state'         =>  Auth::user()->billingAddress->state,
+            'city'          =>  Auth::user()->billingAddress->city
+        ]);
+
+        if ($cart->services){
+            foreach ($cart->services as $catalogue){
+                $cartOrderCatalogue =  CartOrderCatalogue::create([
+                    'cart_order_id'     => $cartOrder->id,
+                    'catalogue_id'      => $catalogue->catalogue->id,
+                    'company_id'        => $catalogue->catalogue->company->id,
+                    'total_price'       => $catalogue->total_service_price,
+                    'type'              => 'service'
+                ]);
+
+                // Activate the services
+                $activeRecord = ActiveService::create([
+                    'user_id'                           => Auth::user()->id,
+                    'catalogue_id'                      => $catalogue->catalogue->id,
+                    'cart_order_catalogue_id'           => $cartOrderCatalogue->id,
+                    'invoice_order_catalogue_id'        => null,
+                    'active'                            => true
+                ]);
+
+                RecurringCataloguePaymentHistory::create([
+                    'user_id'               =>  Auth::user()->id,
+                    'catalogue_id'          =>  $catalogue->catalogue->id,
+                    'active_service_id'     =>  $activeRecord->id,
+                    'last_payment_date'     =>  Carbon::parse(Date::now()),
+                    'last_payment_amount'   =>  $catalogue->total_service_price,
+                    'next_due_date'         =>  ($catalogue->catalogue->cycle)?Carbon::parse(Date::now())->addDays($catalogue->catalogue->cycle->days):Carbon::parse(Date::now())->addDays(30)
+                ]);
+            }
+        }
+
+        if ($cart->products){
+            foreach ($cart->products as $catalogue){
+                CartOrderCatalogue::create([
+                    'cart_order_id'     => $cartOrder->id,
+                    'catalogue_id'      => $catalogue->catalogue->id,
+                    'company_id'        => $catalogue->catalogue->company->id,
+                    'quantity'          => $catalogue->quantity,
+                    'total_price'       => $catalogue->total_product_price,
+                    'type'              => 'product'
+                ]);
+
+                $catalogue->catalogue->quantity = $catalogue->catalogue->quantity - $catalogue->quantity;
+                $catalogue->catalogue->save();
+            }
+        }
+
+        // Create the transaction history
+        CartTransaction::create([
+            'user_id'       =>  Auth::user()->id,
+            'cart_id'       => $cart->id,
+            'cart_order_id' => $cartOrder->id,
+            'amount'        => $cart->total_price,
+            'successful'    => true
+        ]);
+
+
+        $cart->checkout     = true;
+        $cart->paid         = true;
+        $cart->amount_paid  = $cart->total_price;
+        $cart->payment_date = Carbon::parse(Date::now());
+        $cart->save();
+
+
+        // Mail the contact of the successful order
+        $data = [
+            'email_title'   => 'Order placed successfully',
+            'user'          => $cart->user,
+            'products'      => ($cart->products)?$cart->products:null,
+            'services'      => ($cart->services)?$cart->services:null,
+        ];
+
+
+        try {
+            retry(5, function () use ($data) {
+                Mail::to($data['user']->email)->send(new CartOrderEmailForContactMail($data));
+            });
+        } catch (\Exception $e) {
+
+        }
+
+        // Mail the companies involved of the purchase(group_by company)
+        $data = [
+            'email_title'   => 'Order placed successfully',
+            'user'          => $cart->user,
+            'products'      => ($cart->products)?$cart->products:null,
+            'services'      => ($cart->services)?$cart->services:null,
+        ];
+
+
+
+//        // Keep a record and manage services properly
+//        if (count($cart->services) > 0) {
+//            foreach ($cart->services as $service) {
+//                RecurringCataloguePaymentHistory::create([
+//                    'user_id'               =>  Auth::user()->id,
+//                    'catalogue_id'          =>  $service->catalogue->id,
+//                    'last_payment_date'     =>  Carbon::parse(Date::now()),
+//                    'last_payment_amount'   =>  $service->total_price_with_tax,
+//                    'next_due_date'         =>  ($service->catalogue->cycle)?Carbon::parse(Date::now())->addDays($service->catalogue->cycle->days):Carbon::parse(Date::now())->addDays(30)
+//                ]);
+//            }
+//        }
+
+
+        // Redirect to the orders page
+        return redirect(route('contact.orders'))->with('message', 'Payment successful, your order will be processed immediately');
+    }
+
 
     public function render()
     {

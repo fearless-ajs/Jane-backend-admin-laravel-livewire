@@ -5,7 +5,7 @@
     <div class="content-body">
         <!-- Dashboard Ecommerce Starts -->
 
-        @livewire('company-dashboard')
+        @livewire('company-dashboard', ['company'   => $company])
 
         <!-- Dashboard Ecommerce ends -->
 

@@ -1,6 +1,6 @@
 @component('mail::message')
 # Hi, {{ $user->firstname  }}
-<p>Your CRM account was successfully created! 🎉🙏</p>
+<p>Your {{$settings->app_name}} account was successfully created! 🎉🙏</p>
 <p>Kindly verify your email address to ensure we have the working
     email, we need this to activate your account.</p>
 
@@ -10,5 +10,5 @@
 @endcomponent
 
 Thanks,<br>
-{{ config('app.name') }}
+{{$settings->app_name}}
 @endcomponent

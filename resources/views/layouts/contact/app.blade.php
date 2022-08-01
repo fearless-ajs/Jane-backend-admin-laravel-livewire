@@ -87,7 +87,7 @@
 @livewire('contact-main-menu')
 
 <!-- BEGIN: Content-->
-@if(Route::currentRouteName() == 'contact.catalogues' || Route::currentRouteName() == 'contact.cart' || Route::currentRouteName() == 'contact.checkout' || Route::currentRouteName() == 'contact.orders')
+@if(Route::currentRouteName() == 'contact.catalogues' || Route::currentRouteName() == 'contact.cart' || Route::currentRouteName() == 'contact.checkout' || Route::currentRouteName() == 'contact.subscription-details' || Route::currentRouteName() == 'contact.orders'  || Route::currentRouteName() == 'contact.invoice-orders')
     <div class="app-content content ecommerce-application">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -150,6 +150,51 @@
         toastr[param['type']](param['message'], param['type']);
     });
 </script>
+
+
+<script  src="{{asset('app-assets/js/sweetalert.js')}}"></script>
+<script>
+    window.addEventListener('swal:modal', event => {
+        swal({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type
+        });
+    });
+
+    window.addEventListener('swal:confirm', event => {
+        swal({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type,
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+
+            if(willDelete){
+                window.livewire.emit('acceptTwoFactor', event.detail.id);
+            }
+        });
+    });
+</script>
+
+<script>
+    window.addEventListener('swal:confirmDelete', event => {
+        swal({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type,
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+
+            if(willDelete){
+                window.livewire.emit('delete', event.detail.id);
+            }
+        });
+    });
+</script>
+
 
 <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
 

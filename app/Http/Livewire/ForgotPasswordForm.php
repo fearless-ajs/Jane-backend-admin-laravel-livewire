@@ -14,6 +14,12 @@ class ForgotPasswordForm extends LiveNotify
 {
     public $email;
 
+    public function updated($field){
+        $this->validateOnly($field, [
+            'email'     =>  'required|email'
+        ]);
+    }
+
     public function sendLink(){
         $this->validate([
             'email'     =>  'required|email'
@@ -22,7 +28,7 @@ class ForgotPasswordForm extends LiveNotify
         // Check if the email exist in the database
         $user = User::where('email', $this->email)->first();
         if (!$user){
-            $this->emit('alert', ['type' => 'error', 'message' => 'Email not found']);
+            return $this->emit('alert', ['type' => 'error', 'message' => 'Email not found']);
         }
 
         // generate a reset token and send to user
