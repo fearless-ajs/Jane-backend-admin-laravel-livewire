@@ -311,12 +311,15 @@
                         @error('banner') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                     </div>
 
-                    <div class="col-12 text-center mt-2 pt-50">
+                    <div class="col-12 text-center mt-2 pt-50"  wire:loading.remove wire:target="banner">
                         <button type="submit"  wire:loading.remove wire:target="updateSettings"  class="btn btn-primary me-1">Save changes</button>
                         <button type="submit"  wire:loading wire:target="updateSettings"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
                             Discard
                         </button>
+                    </div>
+                    <div class="col-12 text-center mt-2 pt-50"  wire:loading wire:target="banner">
+                        <button type="button" disabled class="btn btn-outline-secondary mt-1">Please wait...</button>
                     </div>
                 </form>
             </div>

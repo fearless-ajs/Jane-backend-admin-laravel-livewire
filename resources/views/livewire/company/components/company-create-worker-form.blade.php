@@ -309,7 +309,8 @@
 
 
                 <div class="mb-1">
-                    <label class="form-label" for="basic-icon-default-company">Staff image</label>
+                    <small wire:loading wire:target="image" class="form-text text-muted mb-1"><i class="fa fa-spin"><i class="fa fa-spinner"></i></i>&nbsp;&nbsp; Validating image...</small>
+                    <label  wire:loading.remove wire:target="image"  class="form-label" for="basic-icon-default-company">Image(Max: 2MB)</label>
                     <input type="file" wire:model.lazy="image"  id="basic-icon-default-contact" class="form-control dt-contact {{$errors->has('image')? 'is-invalid' : '' }}"/>
                     @error('image') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
@@ -326,9 +327,15 @@
                     @error('password_confirmation') <span style="color: crimson; font-size: 10px;">{{ $message }}</span> @enderror
                 </div>
 
-                <button type="submit"  wire:loading.remove wire:target="create"  class="btn btn-primary me-1 data-submit">Add staff</button>
-                <button type="submit"  wire:loading wire:target="create"  class="btn btn-primary me-1 data-submit"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
-                <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <div class="mb-1" wire:loading.remove wire:target="image">
+                    <button type="submit"  wire:loading.remove wire:target="create"  class="btn btn-primary me-1 data-submit">Add staff</button>
+                    <button type="submit"  wire:loading wire:target="create"  class="btn btn-primary me-1 data-submit"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+                <div class="mb-1" wire:loading wire:target="image">
+                    <button type="button" disabled class="btn btn-outline-secondary mt-1">Please wait...</button>
+                </div>
+
             </div>
         </form>
     </div>

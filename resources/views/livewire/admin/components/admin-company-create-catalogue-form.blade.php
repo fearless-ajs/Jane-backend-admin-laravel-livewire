@@ -69,7 +69,7 @@
                         <label class="form-label" for="basic-icon-default-company">Billing</label>
                         <div class="demo-inline-spacing">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" wire:model="billing" id="inlineRadio1" value="once" checked />
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" wire:model="billing" id="inlineRadio1" value="once" />
                                 <label class="form-check-label" for="inlineRadio1">One time</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -150,13 +150,18 @@
                         </div>
                     </div>
 
-                    <div class="col-12 text-center mt-2 pt-50">
+                    <div class="col-12 text-center mt-2 pt-50"  wire:loading.remove wire:target="images">
                         <button type="submit"  wire:loading.remove wire:target="addCatalogue"  class="btn btn-primary me-1">Add item</button>
                         <button type="submit"  wire:loading wire:target="addCatalogue"  class="btn btn-primary me-1"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
                             Discard
                         </button>
                     </div>
+
+                    <div class="col-12 text-center mt-2 pt-50"  wire:loading wire:target="images">
+                        <button type="button" disabled class="btn btn-outline-secondary mt-1">Please wait...</button>
+                    </div>
+
                 </form>
             </div>
         </div>

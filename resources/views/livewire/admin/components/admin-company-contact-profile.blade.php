@@ -11,8 +11,8 @@
                 <div class="position-relative">
                     <!-- profile picture -->
                     <div class="profile-img-container d-flex align-items-center">
-                        <div class="profile-img">
-                            <img src="{{$contact->ContactImage}}" class="rounded img-fluid" alt="Card image" />
+                        <div class="profile-img" style="max-width: 10%">
+                            <img src="{{$contact->ContactImage}}" class="rounded img-fluid"  alt="Card image" />
                         </div>
                         <!-- profile title -->
                         <div class="profile-title ms-3">
